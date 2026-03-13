@@ -70,43 +70,6 @@ export class DataFetcher {
   }
 
   /**
-   * Fetch top 100 coins by 24h volume from Binance spot (single batch request).
-   */
-  async fetchTop250Coins(): Promise<CoinMarketData[]> {
-    try {
-      logger.info('Fetching top coins from Binance...');
-
-      const response = await this.binanceClient.get('/ticker/24hr');
-      const allTickers: any[] = response.data;
-
-      const usdtTickers = allTickers
-        .filter((t: any) => t.symbol.endsWith('USDT'))
-        .sort((a: any, b: any) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume))
-        .slice(0, 100);
-
-      const coins: CoinMarketData[] = usdtTickers.map((ticker: any) => ({
-        symbol: ticker.symbol.replace('USDT', ''),
-        price: parseFloat(ticker.lastPrice),
-        priceChange24h: parseFloat(ticker.priceChange),
-        priceChangePercent24h: parseFloat(ticker.priceChangePercent),
-        volume24h: parseFloat(ticker.quoteVolume),
-        marketCap: 0,
-        marketCapRank: 0,
-        highPrice24h: parseFloat(ticker.highPrice),
-        lowPrice24h: parseFloat(ticker.lowPrice),
-        circulatingSupply: 0,
-        totalSupply: 0,
-      }));
-
-      logger.info(`Fetched top ${coins.length} coins by volume`);
-      return coins;
-    } catch (error) {
-      logger.error(`Failed to fetch coins: ${error}`, 'fetchTop250Coins');
-      throw error;
-    }
-  }
-
-  /**
    * Fetch 24hr tickers for given symbols (single batch request, then filter).
    */
   async fetch24hrTickers(symbols: string[]): Promise<Map<string, BinanceTickerData>> {

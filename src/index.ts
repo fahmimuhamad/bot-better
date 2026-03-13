@@ -12,7 +12,7 @@ import { BotConfig, Position, BinanceTickerData } from './types';
 import { OHLCV } from './backtest/data-loader';
 import { getOrderStatus, getTradingBalance } from './exchange/trading-client';
 import { sendTelegramMessage } from './utils/telegram';
-import { RegimeMonitor } from './utils/regime-detector';
+import { RegimeMonitor, detectRegime, resampleCandles } from './utils/regime-detector';
 import { DailyReportScheduler } from './utils/daily-report';
 import { TelegramCommandHandler } from './utils/telegram-commands';
 
@@ -31,16 +31,10 @@ const CURATED_COINS_1H = [
   'QUICK','DENT','IOTX','COTI','FLUX','GTC','MEME','DF','GNS',
 ];
 
-// SCAN_COINS env: comma-separated override, e.g. "BTC,ETH,DOGE"
-// If not set, uses the curated list for the active TIMEFRAME
-function buildCoinList(): string[] {
-  const override = process.env.SCAN_COINS;
-  if (override && override.trim()) {
-    return override.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
-  }
-  return (process.env.TIMEFRAME || '1h') === '4h' ? CURATED_COINS_4H : CURATED_COINS_1H;
-}
-const CURATED_COINS = buildCoinList();
+// SCAN_COINS env override (comma-separated); if set, used regardless of regime
+const SCAN_COINS_OVERRIDE = process.env.SCAN_COINS?.trim()
+  ? process.env.SCAN_COINS.split(',').map(s => s.trim().toUpperCase()).filter(Boolean)
+  : null;
 
 /**
  * Parse configuration from environment
@@ -80,6 +74,7 @@ class TradingBot {
   private isRunning = false;
   private cycleCount = 0;
   private startBalance = 0;
+  private currentRegime: 'bull' | 'bear' = 'bear';
   private regimeMonitor    = new RegimeMonitor();
   private dailyReport      = new DailyReportScheduler();
   private botStartTime     = Date.now();
@@ -161,39 +156,57 @@ class TradingBot {
     try {
       logger.info(`\n=== CYCLE #${this.cycleCount} Started ===`);
 
-      // Step 1: Fetch data for curated coins only
-      const scanSymbols = CURATED_COINS.map(sym => `${sym}USDT`);
+      // Step 0: Auto regime detection — BTC daily EMA200
+      const btcDaily = await this.dataFetcher.fetchOhlcvData('BTC', '1d', 250);
+      const detectedRegime = detectRegime(btcDaily as OHLCV[]);
+      if (detectedRegime !== this.currentRegime) {
+        logger.info(`🔄 Regime switched: ${this.currentRegime.toUpperCase()} → ${detectedRegime.toUpperCase()}`);
+        this.currentRegime = detectedRegime;
+      }
+
+      // Select coin list and signal timeframe based on regime
+      // SCAN_COINS env overrides regime-based selection if set
+      const activeCoinList = SCAN_COINS_OVERRIDE
+        ? SCAN_COINS_OVERRIDE
+        : this.currentRegime === 'bull' ? CURATED_COINS_4H : CURATED_COINS_1H;
+      const signalTimeframe = this.currentRegime === 'bull' ? '4h' : '1h';
+
+      // Step 1: Fetch data for active coins
+      // fetchCoinsBySymbols expects USDT-suffixed symbols; tickers/funding expect base names
+      const scanSymbols = activeCoinList.map(sym => `${sym}USDT`);
       const coins = await this.dataFetcher.fetchCoinsBySymbols(scanSymbols);
       const [tickers, fundingRates] = await Promise.all([
-        this.dataFetcher.fetch24hrTickers(scanSymbols),
-        this.dataFetcher.fetchFundingRates(scanSymbols),
+        this.dataFetcher.fetch24hrTickers(activeCoinList),
+        this.dataFetcher.fetchFundingRates(activeCoinList),
       ]);
       this.lastTickers = tickers;
 
       logger.info(`Data fetched`, {
-        curated: CURATED_COINS.length,
-        timeframe: process.env.TIMEFRAME || '1h',
+        regime: this.currentRegime.toUpperCase(),
+        coins: activeCoinList.length,
+        timeframe: signalTimeframe,
         tickers: tickers.size,
         fundingRates: fundingRates.size,
       });
 
-      // Step 1b: Fetch OHLCV for curated coins
+      // Step 1b: Fetch OHLCV for active coins (timeframe matches regime)
       const ohlcvMap = new Map<string, OHLCV[]>();
       await Promise.all(
         coins.map(async (c) => {
-          const candles = await this.dataFetcher.fetchOhlcvData(c.symbol, process.env.TIMEFRAME || '1h', 250);
+          const candles = await this.dataFetcher.fetchOhlcvData(c.symbol, signalTimeframe, 250);
           if (candles.length >= 20) ohlcvMap.set(c.symbol, candles as OHLCV[]);
         })
       );
       logger.debug(`OHLCV loaded for ${ohlcvMap.size} symbols`);
 
-      // Step 2: Generate signals
+      // Step 2: Generate signals with HTF candles (resample signal TF × 4 for trend filter)
       const signals = coins
         .map(c => {
           const ticker = tickers.get(c.symbol);
           const ohlcv = ohlcvMap.get(c.symbol);
           if (!ticker || !ohlcv) return null;
-          return this.signalGenerator.generateSignal(c, ticker, fundingRates.get(c.symbol), ohlcv);
+          const htfCandles = resampleCandles(ohlcv as OHLCV[], 4);
+          return this.signalGenerator.generateSignal(c, ticker, fundingRates.get(c.symbol), ohlcv as OHLCV[], htfCandles);
         })
         .filter((s): s is NonNullable<typeof s> => s !== null);
       const filteredSignals = signals.filter(s => s.confidence >= this.config.minConfidence);
@@ -327,8 +340,8 @@ class TradingBot {
     logger.info('🚀 Starting trading cycles', {
       refreshCycle: this.config.refreshCycle + 'ms',
       mode: this.config.dryRun ? 'DRY RUN' : 'LIVE',
-      timeframe: process.env.TIMEFRAME || '1h',
-      adxMin: process.env.ADX_MIN || '32',
+      regimeDetection: 'auto (BTC daily EMA200)',
+      coinListOverride: SCAN_COINS_OVERRIDE ? SCAN_COINS_OVERRIDE.join(',') : 'none',
     });
 
     // Run initial cycle

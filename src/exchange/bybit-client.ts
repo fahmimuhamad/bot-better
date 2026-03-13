@@ -342,37 +342,6 @@ export class BybitClient {
   }
 
   /**
-   * Set stop loss and take profit (legacy; market TP/SL on full position).
-   */
-  async setStopLossAndTakeProfit(
-    symbol: string,
-    stopLoss: number,
-    takeProfit: number,
-    side: 'Buy' | 'Sell'
-  ): Promise<boolean> {
-    try {
-      const body = {
-        category: 'linear',
-        symbol,
-        stopLoss: stopLoss.toString(),
-        takeProfit: takeProfit.toString(),
-        tpTriggerBy: 'MarkPrice',
-        slTriggerBy: 'MarkPrice',
-      };
-
-      await this.request('POST', '/v5/position/trading-stop', body);
-
-      logger.info(
-        `SL/TP set: ${symbol} SL=${stopLoss}, TP=${takeProfit}`
-      );
-      return true;
-    } catch (error: any) {
-      logger.error(`Failed to set SL/TP: ${error.message}`);
-      return false;
-    }
-  }
-
-  /**
    * Set stop loss as a limit order (conditional: when trigger hits, place limit at slLimitPrice).
    * Returns the conditional order ID so it can be cancelled when TP1 fills (then set SL to entry).
    */
@@ -607,78 +576,6 @@ export class BybitClient {
     return Math.floor(qty * Math.pow(10, decimals)) / Math.pow(10, decimals);
   }
 
-  /**
-   * Get recent trades for a symbol
-   */
-  async getRecentTrades(symbol: string, limit: number = 100): Promise<any[]> {
-    try {
-      const result = await this.request(
-        'GET',
-        `/v5/market/recent-trade?category=linear&symbol=${symbol}&limit=${limit}`
-      );
-
-      return result.list || [];
-    } catch (error) {
-      logger.error(`Failed to get recent trades: ${error}`);
-      return [];
-    }
-  }
-
-  /**
-   * Get klines (candlestick data)
-   */
-  async getKlines(
-    symbol: string,
-    interval: string = '1h',
-    limit: number = 100
-  ): Promise<any[]> {
-    try {
-      const result = await this.request(
-        'GET',
-        `/v5/market/kline?category=linear&symbol=${symbol}&interval=${interval}&limit=${limit}`
-      );
-
-      return result.list || [];
-    } catch (error) {
-      logger.error(`Failed to get klines: ${error}`);
-      return [];
-    }
-  }
-
-  /**
-   * Get current ticker price
-   */
-  async getTickerPrice(symbol: string): Promise<number | null> {
-    try {
-      const result = await this.request(
-        'GET',
-        `/v5/market/tickers?category=linear&symbol=${symbol}`
-      );
-
-      if (result.list && result.list.length > 0) {
-        return parseFloat(result.list[0].lastPrice);
-      }
-
-      return null;
-    } catch (error) {
-      logger.error(`Failed to get ticker price: ${error}`);
-      return null;
-    }
-  }
-
-  /**
-   * Check connection
-   */
-  async checkConnection(): Promise<boolean> {
-    try {
-      const balance = await this.getBalance();
-      logger.info(`✅ Bybit connection successful. Balance: ${balance} USDT`);
-      return true;
-    } catch (error) {
-      logger.error(`❌ Bybit connection failed: ${error}`);
-      return false;
-    }
-  }
 }
 
 export default BybitClient;

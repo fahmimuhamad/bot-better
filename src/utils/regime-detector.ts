@@ -1,12 +1,15 @@
 /**
  * Market Regime Detector
  *
- * Uses BTC 4H EMA alignment to determine whether the market is in a
- * sustained bull or bear trend, and recommends the matching bot config.
+ * Two regime signals:
  *
- * Bull: EMA20 > EMA50 > EMA200  → use TIMEFRAME=4h, ADX_MIN=25
- * Bear: EMA20 < EMA50 < EMA200  → use TIMEFRAME=1h, ADX_MIN=32
- * Neutral: mixed alignment       → no recommendation
+ * 1. detectRegime(btcDailyCandles) — BTC daily EMA200
+ *    Used by the live bot each cycle to auto-select coin list + timeframe:
+ *    BULL (close > EMA200) → CURATED_COINS_4H, 4h signals
+ *    BEAR (close < EMA200) → CURATED_COINS_1H, 1h signals
+ *
+ * 2. detectRegimeFromOhlcv(btc4hOhlcv) — BTC 4H EMA20/50/200 alignment
+ *    Used by RegimeMonitor to send Telegram alerts when regime mismatches.
  */
 
 import axios from 'axios';
@@ -135,4 +138,44 @@ export class RegimeMonitor {
       logger.warn(`Regime check failed: ${error}`);
     }
   }
+}
+
+// ─── Live bot auto-regime helpers ────────────────────────────────────────────
+
+/**
+ * Detect bull/bear regime from BTC daily candles using EMA200.
+ * BULL = BTC daily close > EMA200, BEAR otherwise.
+ * Used by the live bot each cycle to auto-select coin list + signal timeframe.
+ */
+export function detectRegime(btcDailyCandles: OHLCV[]): 'bull' | 'bear' {
+  if (btcDailyCandles.length < 200) return 'bear';
+  const closes = btcDailyCandles.map(c => c.close);
+  const k = 2 / 201;
+  let ema = closes.slice(0, 200).reduce((s, v) => s + v, 0) / 200;
+  for (let i = 200; i < closes.length; i++) {
+    ema = closes[i] * k + ema * (1 - k);
+  }
+  return closes[closes.length - 1] > ema ? 'bull' : 'bear';
+}
+
+/**
+ * Resample lower-TF candles into a higher TF.
+ * ratio=4: 1h→4h, 4h→16h, etc.
+ */
+export function resampleCandles(candles: OHLCV[], ratio: number): OHLCV[] {
+  const result: OHLCV[] = [];
+  for (let i = 0; i + ratio <= candles.length; i += ratio) {
+    const g = candles.slice(i, i + ratio);
+    result.push({
+      timestamp:        g[0].timestamp,
+      open:             g[0].open,
+      high:             Math.max(...g.map(c => c.high)),
+      low:              Math.min(...g.map(c => c.low)),
+      close:            g[g.length - 1].close,
+      volume:           g.reduce((s, c) => s + c.volume, 0),
+      quoteAssetVolume: g.reduce((s, c) => s + c.quoteAssetVolume, 0),
+      numberOfTrades:   g.reduce((s, c) => s + c.numberOfTrades, 0),
+    });
+  }
+  return result;
 }

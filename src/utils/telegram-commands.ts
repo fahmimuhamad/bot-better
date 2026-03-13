@@ -5,43 +5,24 @@
  * Only accepts messages from TELEGRAM_CHAT_ID for security.
  *
  * Commands:
- *   /status   — current config, balance, open positions
+ *   /status   — current regime, balance, open positions
  *   /report   — on-demand daily report
- *   /setbull  — switch to 4h / ADX_MIN=25 and restart
- *   /setbear  — switch to 1h / ADX_MIN=32 and restart
- *   /restart  — restart the bot
+ *   /stop     — pause new trades (open positions still managed)
+ *   /start    — resume trading
+ *   /restart  — restart the bot process
  */
 
 import axios from 'axios';
-import * as fs from 'fs';
-import * as path from 'path';
 import logger from './logger';
 import positionManager from '../trading/position-manager';
 import { buildDailyReportMessage } from './daily-report';
 import { BinanceTickerData } from '../types';
 
-type BalanceGetter   = () => number;
-type TickersGetter   = () => Map<string, BinanceTickerData>;
-type BotStartGetter  = () => number;
-type BotStopper      = () => void;
-type BotStarter      = () => Promise<void>;
-
-function getEnvPath(): string {
-  return path.resolve(process.cwd(), '.env');
-}
-
-/** Replace a key=value line in the .env file */
-function updateEnvKey(key: string, value: string): void {
-  const envPath = getEnvPath();
-  let content = fs.readFileSync(envPath, 'utf-8');
-  const regex = new RegExp(`^${key}=.*$`, 'm');
-  if (regex.test(content)) {
-    content = content.replace(regex, `${key}=${value}`);
-  } else {
-    content += `\n${key}=${value}`;
-  }
-  fs.writeFileSync(envPath, content, 'utf-8');
-}
+type BalanceGetter  = () => number;
+type TickersGetter  = () => Map<string, BinanceTickerData>;
+type BotStartGetter = () => number;
+type BotStopper     = () => void;
+type BotStarter     = () => Promise<void>;
 
 async function send(text: string): Promise<void> {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
@@ -72,11 +53,11 @@ async function handleCommand(
   switch (cmd) {
 
     case '/status': {
-      const openPos    = positionManager.getOpenPositions();
-      const stats      = positionManager.getDailyStats();
-      const balance    = getBalance();
-      const uptimeH    = ((Date.now() - getBotStart()) / 3600000).toFixed(1);
-      const mode       = process.env.ENABLE_DRY_RUN === 'true' ? 'DRY RUN' : 'LIVE';
+      const openPos  = positionManager.getOpenPositions();
+      const stats    = positionManager.getDailyStats();
+      const balance  = getBalance();
+      const uptimeH  = ((Date.now() - getBotStart()) / 3600000).toFixed(1);
+      const mode     = process.env.ENABLE_DRY_RUN === 'true' ? 'DRY RUN' : 'LIVE';
 
       const posLines = openPos.length > 0
         ? openPos.map(p => `  • ${p.symbol} ${p.side} @ $${p.entryPrice.toFixed(4)}`).join('\n')
@@ -86,9 +67,10 @@ async function handleCommand(
         `⚙️ *Bot Status*`,
         ``,
         `Mode: ${mode}`,
-        `Timeframe: \`${process.env.TIMEFRAME || '1h'}\`  ADX≥${process.env.ADX_MIN || '32'}`,
+        `Regime: auto (BTC daily EMA200)`,
         `Balance: $${balance.toFixed(2)}`,
-        `Uptime: ${uptimeH}h  |  Cycles: ${stats.totalTrades} trades today`,
+        `Uptime: ${uptimeH}h  |  Trades today: ${stats.totalTrades}`,
+        `Win rate: ${stats.winRate.toFixed(1)}%  |  PnL: $${stats.totalPnL.toFixed(2)}`,
         ``,
         `*Open Positions (${openPos.length}):*`,
         posLines,
@@ -104,24 +86,6 @@ async function handleCommand(
         getBotStart()
       );
       await send(msg);
-      break;
-    }
-
-    case '/setbull': {
-      await send(`🟢 Switching to *BULL mode*...\n\`TIMEFRAME=4h\`  \`ADX_MIN=25\`\n\nRestarting bot...`);
-      updateEnvKey('TIMEFRAME', '4h');
-      updateEnvKey('ADX_MIN', '25');
-      logger.info('Telegram command: switching to BULL mode (4h/ADX25), restarting');
-      setTimeout(() => process.exit(0), 1000);
-      break;
-    }
-
-    case '/setbear': {
-      await send(`🔴 Switching to *BEAR mode*...\n\`TIMEFRAME=1h\`  \`ADX_MIN=32\`\n\nRestarting bot...`);
-      updateEnvKey('TIMEFRAME', '1h');
-      updateEnvKey('ADX_MIN', '32');
-      logger.info('Telegram command: switching to BEAR mode (1h/ADX32), restarting');
-      setTimeout(() => process.exit(0), 1000);
       break;
     }
 
@@ -160,12 +124,10 @@ async function handleCommand(
     default: {
       await send([
         `*Available commands:*`,
-        `/status  — balance, open positions, config`,
+        `/status  — regime, balance, open positions`,
         `/report  — full PnL report`,
         `/stop    — pause the bot (no new trades)`,
         `/start   — resume the bot`,
-        `/setbull — switch to 4h bull mode + restart`,
-        `/setbear — switch to 1h bear mode + restart`,
         `/restart — restart the bot`,
       ].join('\n'));
     }
@@ -173,13 +135,13 @@ async function handleCommand(
 }
 
 export class TelegramCommandHandler {
-  private offset       = 0;
-  private running      = false;
-  private getBalance:  BalanceGetter;
-  private getTickers:  TickersGetter;
-  private getBotStart: BotStartGetter;
-  private stopBot:     BotStopper;
-  private startBot:    BotStarter;
+  private offset        = 0;
+  private running       = false;
+  private getBalance:   BalanceGetter;
+  private getTickers:   TickersGetter;
+  private getBotStart:  BotStartGetter;
+  private stopBot:      BotStopper;
+  private startBot:     BotStarter;
   private isBotRunning: () => boolean;
 
   constructor(
@@ -230,18 +192,12 @@ export class TelegramCommandHandler {
           }
         );
 
-        const updates = resp.data.result as any[];
-
-        for (const update of updates) {
+        for (const update of resp.data.result as any[]) {
           this.offset = update.update_id + 1;
 
           const msg = update.message;
-          if (!msg || !msg.text) continue;
-
-          // Security: only respond to the configured chat ID
+          if (!msg?.text) continue;
           if (String(msg.chat.id) !== String(chatId)) continue;
-
-          // Only handle messages that start with /
           if (!msg.text.startsWith('/')) continue;
 
           logger.info(`Telegram command received: ${msg.text}`);
@@ -250,7 +206,6 @@ export class TelegramCommandHandler {
       } catch (error: any) {
         if (this.running) {
           logger.warn(`Telegram poll error: ${error.message}`);
-          // Back off 5s on error before retrying
           await new Promise(r => setTimeout(r, 5000));
         }
       }
