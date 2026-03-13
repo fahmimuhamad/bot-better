@@ -37,7 +37,7 @@ const EMA_FAST          = 20;     // EMA20: short-term trend & pullback target
 const EMA_MID           = 50;     // EMA50: medium-term trend confirmation
 const EMA_SLOW          = 200;    // EMA200: macro trend direction
 const ADX_PERIOD        = 14;
-const ADX_MIN           = 32;     // Hard floor — no trades in ranging markets (require stronger trend)
+const ADX_MIN           = parseInt(process.env.ADX_MIN || '32');  // configurable: 32 for 1H, 25 for 4H
 const ATR_PERIOD        = 14;
 const RSI_PERIOD        = 14;
 const PULLBACK_BELOW    = 0.015;  // LONG:  price must be within 1.5% BELOW EMA20 (the demand zone)
@@ -447,8 +447,6 @@ export class SignalGenerator {
 
     // DI spread filter: the dominant DI must CLEARLY lead the other.
     // Prevents "ADX high but no clear direction" (e.g. volatile chop where DI+ ≈ DI-).
-    // LONG: DI+ must be > DI- by at least 5 points  (bulls are dominating)
-    // SHORT: DI- must be > DI+ by at least 5 points  (bears are dominating)
     if (direction === 'LONG'  && diPlus  - diMinus < 8) return null;
     if (direction === 'SHORT' && diMinus - diPlus  < 8) return null;
 
@@ -473,6 +471,16 @@ export class SignalGenerator {
     if (ema20Slope === null) return null;
     if (direction === 'LONG'  && ema20Slope < -0.001) return null;  // EMA20 falling — skip LONG
     if (direction === 'SHORT' && ema20Slope >  0.001) return null;  // EMA20 rising — skip SHORT
+
+    // ── LONG ONLY: falling knife protection ────────────────────────────────
+    // Don't enter LONG if price has crashed >10% from its 7-day high.
+    // Prevents buying into a bull-market reversal that still shows bullish EMAs
+    // (EMAs lag — they stay bullish for days after a peak reversal).
+    if (direction === 'LONG' && ohlcvData.length >= 168) {
+      const recent7dHigh = Math.max(...ohlcvData.slice(-168).map(c => c.high));
+      const dropFromHigh = (recent7dHigh - price) / recent7dHigh;
+      if (dropFromHigh > 0.10) return null;
+    }
 
     // ── HARD REQUIREMENT 3: True Pullback — price came from trend direction ──
     if (!this.isPullbackZone(ohlcvData, ema20, direction)) return null;

@@ -8,9 +8,13 @@ import { DataFetcher } from './data/fetcher';
 import { SignalGenerator } from './signals/generator';
 import OrderExecutor from './trading/order-executor';
 import positionManager from './trading/position-manager';
-import { BotConfig, Position } from './types';
+import { BotConfig, Position, BinanceTickerData } from './types';
 import { OHLCV } from './backtest/data-loader';
 import { getOrderStatus, getTradingBalance } from './exchange/trading-client';
+import { sendTelegramMessage } from './utils/telegram';
+import { RegimeMonitor } from './utils/regime-detector';
+import { DailyReportScheduler } from './utils/daily-report';
+import { TelegramCommandHandler } from './utils/telegram-commands';
 
 /**
  * Parse configuration from environment
@@ -50,6 +54,16 @@ class TradingBot {
   private isRunning = false;
   private cycleCount = 0;
   private startBalance = 0;
+  private regimeMonitor    = new RegimeMonitor();
+  private dailyReport      = new DailyReportScheduler();
+  private botStartTime     = Date.now();
+  private lastBalance      = 0;
+  private lastTickers      = new Map<string, BinanceTickerData>();
+  private commandHandler   = new TelegramCommandHandler(
+    () => this.lastBalance || this.startBalance,
+    () => this.lastTickers,
+    () => this.botStartTime
+  );
 
   constructor(config: BotConfig) {
     this.config = config;
@@ -125,6 +139,7 @@ class TradingBot {
         this.dataFetcher.fetch24hrTickers(scanSymbols),
         this.dataFetcher.fetchFundingRates(scanSymbols),
       ]);
+      this.lastTickers = tickers;
 
       logger.info(`Data fetched`, {
         coins: coins.length,
@@ -137,14 +152,21 @@ class TradingBot {
       const ohlcvMap = new Map<string, OHLCV[]>();
       await Promise.all(
         topCoinsForOhlcv.map(async (c) => {
-          const candles = await this.dataFetcher.fetchOhlcvData(c.symbol, '1h', 250);
+          const candles = await this.dataFetcher.fetchOhlcvData(c.symbol, process.env.TIMEFRAME || '1h', 250);
           if (candles.length >= 20) ohlcvMap.set(c.symbol, candles as OHLCV[]);
         })
       );
       logger.debug(`OHLCV loaded for ${ohlcvMap.size} symbols`);
 
       // Step 2: Generate signals (with OHLCV so momentum/trend/consensus can pass)
-      const signals = this.signalGenerator.generateSignals(coins, tickers, fundingRates, ohlcvMap);
+      const signals = topCoinsForOhlcv
+        .map(c => {
+          const ticker = tickers.get(c.symbol);
+          const ohlcv = ohlcvMap.get(c.symbol);
+          if (!ticker || !ohlcv) return null;
+          return this.signalGenerator.generateSignal(c, ticker, fundingRates.get(c.symbol), ohlcv);
+        })
+        .filter((s): s is NonNullable<typeof s> => s !== null);
       const filteredSignals = signals.filter(s => s.confidence >= this.config.minConfidence);
 
       logger.info(`Signals generated`, {
@@ -172,6 +194,7 @@ class TradingBot {
           logger.warn('Could not fetch current balance; using start balance', { error: String(e) });
         }
       }
+      this.lastBalance = currentBalance;
       logger.info('Balance for position sizing', { currentBalance: currentBalance.toFixed(2), riskPerTrade: this.config.riskPerTrade + '%' });
 
       // Step 4: Execute new trades (position size calculated from current balance + RISK_PER_TRADE from .env)
@@ -231,7 +254,13 @@ class TradingBot {
         }
       }
 
-      // Step 6: Log statistics
+      // Step 6: Regime check — alert via Telegram if market regime mismatches .env TIMEFRAME
+      await this.regimeMonitor.checkAndAlert(sendTelegramMessage);
+
+      // Step 6b: Daily report — send to Telegram at 7am WIB
+      this.dailyReport.tick(sendTelegramMessage, currentBalance, this.startBalance, tickers, this.botStartTime);
+
+      // Step 7: Log statistics
       const stats = positionManager.getDailyStats();
       logger.info(`Daily Statistics`, {
         totalTrades: stats.totalTrades,
@@ -265,9 +294,12 @@ class TradingBot {
     }
 
     this.isRunning = true;
+    this.commandHandler.start();
     logger.info('🚀 Starting trading cycles', {
       refreshCycle: this.config.refreshCycle + 'ms',
       mode: this.config.dryRun ? 'DRY RUN' : 'LIVE',
+      timeframe: process.env.TIMEFRAME || '1h',
+      adxMin: process.env.ADX_MIN || '32',
     });
 
     // Run initial cycle
@@ -301,6 +333,7 @@ class TradingBot {
    */
   stop(): void {
     this.isRunning = false;
+    this.commandHandler.stop();
     logger.info('🛑 Bot stopped', {
       cyclesRun: this.cycleCount,
       openPositions: positionManager.getOpenPositions().length,

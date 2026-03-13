@@ -57,7 +57,7 @@ export class BybitClient {
   }
 
   /** Bybit v5: recv_window (ms) for request validity */
-  private readonly recvWindow = '5000';
+  private readonly recvWindow = '20000';
 
   /**
    * Build string to sign per Bybit v5: timestamp + api_key + recv_window + queryString (GET) or jsonBody (POST)

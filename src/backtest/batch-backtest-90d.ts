@@ -17,7 +17,7 @@ const AVAILABLE_COINS = [
   'ARB', 'OP', 'SHIB', 'SUI', 'RENDER', 'FLOW', 'HBAR',
 ];
 
-function parseBatchArgs(): { days: number; count: number; confidence: number; balance: number; seed?: number; reportPath?: string; summaryJsonPath?: string; startDate?: string; endDate?: string } {
+function parseBatchArgs(): { days: number; count: number; confidence: number; balance: number; seed?: number; reportPath?: string; summaryJsonPath?: string; startDate?: string; endDate?: string; timeframe: string } {
   let days = 90;
   let count = 20;
   let confidence = 50;
@@ -27,6 +27,7 @@ function parseBatchArgs(): { days: number; count: number; confidence: number; ba
   let summaryJsonPath: string | undefined;
   let startDate: string | undefined;
   let endDate: string | undefined;
+  let timeframe = '1h';
   for (let i = 2; i < process.argv.length; i++) {
     if (process.argv[i] === '--days' && process.argv[i + 1]) {
       days = parseInt(process.argv[i + 1], 10);
@@ -55,9 +56,12 @@ function parseBatchArgs(): { days: number; count: number; confidence: number; ba
     } else if (process.argv[i] === '--end-date' && process.argv[i + 1]) {
       endDate = process.argv[i + 1];
       i++;
+    } else if (process.argv[i] === '--timeframe' && process.argv[i + 1]) {
+      timeframe = process.argv[i + 1];
+      i++;
     }
   }
-  return { days, count, confidence, balance, seed, reportPath, summaryJsonPath, startDate, endDate };
+  return { days, count, confidence, balance, seed, reportPath, summaryJsonPath, startDate, endDate, timeframe };
 }
 
 interface BacktestResult {
@@ -100,7 +104,8 @@ async function runSingleBacktest(
   confidence: number = 50,
   startBalance: number = 10000,
   startDate?: string,
-  endDate?: string
+  endDate?: string,
+  timeframe: string = '1h'
 ): Promise<BacktestResult> {
   const result: BacktestResult = {
     symbol,
@@ -130,7 +135,7 @@ async function runSingleBacktest(
     const balanceArg = ` --balance ${startBalance}`;
     const dateArg = startDate ? ` --start-date ${startDate}` : '';
     const dateEndArg = endDate ? ` --end-date ${endDate}` : '';
-    const command = `cd ${path.join(__dirname, '..')} && npm run backtest -- --symbol ${symbol} --days ${days} --timeframe 1h --json ${jsonOutput} --no-md${balanceArg}${confidenceArg}${dateArg}${dateEndArg}`;
+    const command = `cd ${path.join(__dirname, '..')} && npm run backtest -- --symbol ${symbol} --days ${days} --timeframe ${timeframe} --json ${jsonOutput} --no-md${balanceArg}${confidenceArg}${dateArg}${dateEndArg}`;
     
     logger.info(`Executing backtest for ${symbol}...`);
     try {
@@ -378,7 +383,7 @@ Generated: ${new Date().toISOString()}
  */
 async function main() {
   try {
-    const { days, count, confidence, balance, seed, reportPath, summaryJsonPath, startDate, endDate } = parseBatchArgs();
+    const { days, count, confidence, balance, seed, reportPath, summaryJsonPath, startDate, endDate, timeframe } = parseBatchArgs();
     const dateLabel = startDate ? ` | ${startDate} → ${endDate || 'now'}` : ``;
     logger.info('═'.repeat(60));
     logger.info(`Starting Batch Backtest for ${count} Coins | $${balance} initial balance${dateLabel}${confidence !== 50 ? ` | min confidence ${confidence}%` : ''}${seed !== undefined ? ` | seed ${seed}` : ''}`);
@@ -403,7 +408,7 @@ async function main() {
       logger.info(`\n[${completed}/${selectedCoins.length}] Processing ${coin}...`);
       
       try {
-        const result = await runSingleBacktest(coin, days, confidence, balance, startDate, endDate);
+        const result = await runSingleBacktest(coin, days, confidence, balance, startDate, endDate, timeframe);
         results.push(result);
       } catch (error: any) {
         logger.error(`Failed to run backtest for ${coin}: ${error.message}`);
