@@ -422,7 +422,8 @@ export class SignalGenerator {
     coin: CoinMarketData,
     ticker: BinanceTickerData,
     fundingRate?: FundingRate,
-    ohlcvData?: OHLCV[]
+    ohlcvData?: OHLCV[],
+    htfOhlcvData?: OHLCV[]  // Higher timeframe candles (e.g. 4h when base is 1h)
   ): TradeSignal | null {
 
     // Need at least 220 candles for EMA200 + ADX stability
@@ -439,6 +440,23 @@ export class SignalGenerator {
     const direction = this.getTrendDirection(ema20, ema50, ema200);
     if (!direction) return null;  // Ranging/transitioning market → skip
 
+    // ── HTF DIRECTION FILTER ──────────────────────────────────────────────
+    // If higher-timeframe data is provided, the HTF EMA stack must MATCH the
+    // signal direction. This prevents shorting during a bull market and
+    // longing during a bear market — the #1 cause of false signals.
+    if (htfOhlcvData && htfOhlcvData.length >= EMA_MID) {
+      const htfEma20  = this.getEMAValue(htfOhlcvData, EMA_FAST);
+      const htfEma50  = this.getEMAValue(htfOhlcvData, EMA_MID);
+      const htfEma200 = htfOhlcvData.length >= EMA_SLOW
+        ? this.getEMAValue(htfOhlcvData, EMA_SLOW)
+        : null;
+      if (htfEma20 !== null && htfEma50 !== null) {
+        const htfDirection = htfEma200 !== null
+          ? this.getTrendDirection(htfEma20, htfEma50, htfEma200)
+          : (htfEma20 > htfEma50 ? 'LONG' : htfEma20 < htfEma50 ? 'SHORT' : null);
+        if (!htfDirection || htfDirection !== direction) return null;
+      }
+    }
 
     // ── HARD REQUIREMENT 2: ADX > ADX_MIN + DI directional bias ─────────
     const adxResult = this.calculateADX(ohlcvData);

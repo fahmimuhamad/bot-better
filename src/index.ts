@@ -16,6 +16,32 @@ import { RegimeMonitor } from './utils/regime-detector';
 import { DailyReportScheduler } from './utils/daily-report';
 import { TelegramCommandHandler } from './utils/telegram-commands';
 
+// Curated coin lists — optimized per timeframe
+const CURATED_COINS_4H = [
+  'BTC','ETH','BNB','ADA','DOGE','AVAX',
+  'ARB','OP','SHIB','SUI','FLOW','HBAR','TON',
+  'ZIL','ALICE','CVC','GLM','PEOPLE','OG',
+  'QUICK','OXT','DENT','AGLD','GTC',
+];
+const CURATED_COINS_1H = [
+  'BTC','ETH','BNB','ADA','DOGE','AVAX',
+  'ARB','OP','SHIB','SUI','FLOW','HBAR','TON',
+  'SAND','CHZ','ZIL','ALICE','ID','CVC','GLM','SXP',
+  'PEOPLE','STG','DODO','OG','PORTO',
+  'QUICK','DENT','IOTX','COTI','FLUX','GTC','MEME','DF','GNS',
+];
+
+// SCAN_COINS env: comma-separated override, e.g. "BTC,ETH,DOGE"
+// If not set, uses the curated list for the active TIMEFRAME
+function buildCoinList(): string[] {
+  const override = process.env.SCAN_COINS;
+  if (override && override.trim()) {
+    return override.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+  }
+  return (process.env.TIMEFRAME || '1h') === '4h' ? CURATED_COINS_4H : CURATED_COINS_1H;
+}
+const CURATED_COINS = buildCoinList();
+
 /**
  * Parse configuration from environment
  */
@@ -62,7 +88,10 @@ class TradingBot {
   private commandHandler   = new TelegramCommandHandler(
     () => this.lastBalance || this.startBalance,
     () => this.lastTickers,
-    () => this.botStartTime
+    () => this.botStartTime,
+    () => this.stop(),
+    () => this.start(),
+    () => this.isRunning
   );
 
   constructor(config: BotConfig) {
@@ -132,9 +161,9 @@ class TradingBot {
     try {
       logger.info(`\n=== CYCLE #${this.cycleCount} Started ===`);
 
-      // Step 1: Fetch data (scan universe = top coins by volume; tickers/funding for same list)
-      const coins = await this.dataFetcher.fetchTop250Coins();
-      const scanSymbols = coins.map(c => c.symbol);
+      // Step 1: Fetch data for curated coins only
+      const scanSymbols = CURATED_COINS.map(sym => `${sym}USDT`);
+      const coins = await this.dataFetcher.fetchCoinsBySymbols(scanSymbols);
       const [tickers, fundingRates] = await Promise.all([
         this.dataFetcher.fetch24hrTickers(scanSymbols),
         this.dataFetcher.fetchFundingRates(scanSymbols),
@@ -142,24 +171,24 @@ class TradingBot {
       this.lastTickers = tickers;
 
       logger.info(`Data fetched`, {
-        coins: coins.length,
+        curated: CURATED_COINS.length,
+        timeframe: process.env.TIMEFRAME || '1h',
         tickers: tickers.size,
         fundingRates: fundingRates.size,
       });
 
-      // Step 1b: Fetch OHLCV for top coins (needed for trend/momentum/consensus; without it we get 0 signals)
-      const topCoinsForOhlcv = coins.slice(0, 25);
+      // Step 1b: Fetch OHLCV for curated coins
       const ohlcvMap = new Map<string, OHLCV[]>();
       await Promise.all(
-        topCoinsForOhlcv.map(async (c) => {
+        coins.map(async (c) => {
           const candles = await this.dataFetcher.fetchOhlcvData(c.symbol, process.env.TIMEFRAME || '1h', 250);
           if (candles.length >= 20) ohlcvMap.set(c.symbol, candles as OHLCV[]);
         })
       );
       logger.debug(`OHLCV loaded for ${ohlcvMap.size} symbols`);
 
-      // Step 2: Generate signals (with OHLCV so momentum/trend/consensus can pass)
-      const signals = topCoinsForOhlcv
+      // Step 2: Generate signals
+      const signals = coins
         .map(c => {
           const ticker = tickers.get(c.symbol);
           const ohlcv = ohlcvMap.get(c.symbol);

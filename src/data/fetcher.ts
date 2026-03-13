@@ -35,6 +35,41 @@ export class DataFetcher {
   }
 
   /**
+   * Build CoinMarketData for a specific list of symbols (e.g. curated list).
+   */
+  async fetchCoinsBySymbols(symbols: string[]): Promise<CoinMarketData[]> {
+    try {
+      const response = await this.binanceClient.get('/ticker/24hr');
+      const allTickers: any[] = response.data;
+      const tickerMap = new Map(allTickers.map((t: any) => [t.symbol, t]));
+
+      return symbols
+        .map(sym => {
+          const fullSym = sym.endsWith('USDT') ? sym : `${sym}USDT`;
+          const t = tickerMap.get(fullSym);
+          if (!t) return null;
+          return {
+            symbol: fullSym.replace('USDT', ''),
+            price: parseFloat(t.lastPrice),
+            priceChange24h: parseFloat(t.priceChange),
+            priceChangePercent24h: parseFloat(t.priceChangePercent),
+            volume24h: parseFloat(t.quoteVolume),
+            marketCap: 0,
+            marketCapRank: 0,
+            highPrice24h: parseFloat(t.highPrice),
+            lowPrice24h: parseFloat(t.lowPrice),
+            circulatingSupply: 0,
+            totalSupply: 0,
+          } as CoinMarketData;
+        })
+        .filter((c): c is CoinMarketData => c !== null);
+    } catch (error) {
+      logger.error(`Failed to fetch coins by symbols: ${error}`, 'fetchCoinsBySymbols');
+      throw error;
+    }
+  }
+
+  /**
    * Fetch top 100 coins by 24h volume from Binance spot (single batch request).
    */
   async fetchTop250Coins(): Promise<CoinMarketData[]> {

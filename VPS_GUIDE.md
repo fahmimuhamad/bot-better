@@ -188,3 +188,76 @@ ssh root@YOUR_VPS_IP "pm2 restart trading-bot"
 ```
 
 The bot will also send you a Telegram alert automatically when it detects a regime change.
+
+---
+
+## Running a Backtest on VPS
+
+### Single Coin Backtest
+
+```bash
+cd ~/trading-bot
+npx ts-node src/backtest/run-backtest.ts --symbol BTC --days 90 --timeframe 1h
+```
+
+With a specific date range:
+
+```bash
+npx ts-node src/backtest/run-backtest.ts --symbol BTC --start-date 2024-01-01 --end-date 2024-12-31 --timeframe 1h
+```
+
+### Batch Backtest (curated coins)
+
+```bash
+cd ~/trading-bot
+npx ts-node src/backtest/batch-backtest-90d.ts --seed 42 --days 90 --timeframe 1h
+```
+
+### Full Market Backtest (all coins, 365 days)
+
+Runs on the top 200 coins by volume — takes **1-3 hours**. Run in background so it keeps going if you disconnect.
+
+**Step 1 — Create logs folder**
+```bash
+mkdir -p ~/trading-bot/logs
+```
+
+**Step 2 — Start in background**
+```bash
+cd ~/trading-bot
+nohup npx ts-node src/backtest/batch-backtest-all-coins.ts --days 365 --top 200 --timeframe 1h --balance 10000 > logs/all-coins-365d.log 2>&1 &
+```
+
+**Step 3 — Watch progress**
+```bash
+tail -f logs/all-coins-365d.log
+```
+Press `Ctrl+C` to stop watching — the backtest keeps running.
+
+**Step 4 — Check if still running**
+```bash
+jobs
+# or
+ps aux | grep ts-node | grep -v grep
+```
+
+**Step 5 — When done, download report to MacBook**
+
+Run this on your **MacBook**:
+```bash
+scp root@YOUR_VPS_IP:/root/trading-bot/logs/full-market-backtest-365d-1h.md ~/Desktop/
+```
+
+Open it from your Desktop.
+
+### Uploading a new backtest file to VPS
+
+If you made changes on MacBook and need to push a single file:
+```bash
+scp /Users/fahmimuhamad/Documents/trading-bot/src/backtest/FILENAME.ts root@YOUR_VPS_IP:/root/trading-bot/src/backtest/FILENAME.ts
+```
+
+Then rebuild on VPS:
+```bash
+cd ~/trading-bot && npm run build
+```

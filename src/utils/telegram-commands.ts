@@ -23,6 +23,8 @@ import { BinanceTickerData } from '../types';
 type BalanceGetter   = () => number;
 type TickersGetter   = () => Map<string, BinanceTickerData>;
 type BotStartGetter  = () => number;
+type BotStopper      = () => void;
+type BotStarter      = () => Promise<void>;
 
 function getEnvPath(): string {
   return path.resolve(process.cwd(), '.env');
@@ -60,7 +62,10 @@ async function handleCommand(
   text: string,
   getBalance: BalanceGetter,
   getTickers: TickersGetter,
-  getBotStart: BotStartGetter
+  getBotStart: BotStartGetter,
+  stopBot: BotStopper,
+  startBot: BotStarter,
+  isBotRunning: () => boolean
 ): Promise<void> {
   const cmd = text.trim().toLowerCase().split(' ')[0];
 
@@ -120,6 +125,31 @@ async function handleCommand(
       break;
     }
 
+    case '/stop': {
+      if (!isBotRunning()) {
+        await send(`⚠️ Bot is already stopped.`);
+        break;
+      }
+      await send(`🛑 *Stopping bot...*\n\nNo new trades will be opened. Open positions are still managed.`);
+      logger.info('Telegram command: stop bot');
+      stopBot();
+      break;
+    }
+
+    case '/start': {
+      if (isBotRunning()) {
+        await send(`⚠️ Bot is already running.`);
+        break;
+      }
+      await send(`▶️ *Starting bot...*`);
+      logger.info('Telegram command: start bot');
+      startBot().catch(err => {
+        logger.error(`Failed to start bot via Telegram: ${err}`);
+        send(`❌ Failed to start bot: ${err}`);
+      });
+      break;
+    }
+
     case '/restart': {
       await send(`🔄 Restarting bot...`);
       logger.info('Telegram command: manual restart');
@@ -132,6 +162,8 @@ async function handleCommand(
         `*Available commands:*`,
         `/status  — balance, open positions, config`,
         `/report  — full PnL report`,
+        `/stop    — pause the bot (no new trades)`,
+        `/start   — resume the bot`,
         `/setbull — switch to 4h bull mode + restart`,
         `/setbear — switch to 1h bear mode + restart`,
         `/restart — restart the bot`,
@@ -141,20 +173,29 @@ async function handleCommand(
 }
 
 export class TelegramCommandHandler {
-  private offset   = 0;
-  private running  = false;
+  private offset       = 0;
+  private running      = false;
   private getBalance:  BalanceGetter;
   private getTickers:  TickersGetter;
   private getBotStart: BotStartGetter;
+  private stopBot:     BotStopper;
+  private startBot:    BotStarter;
+  private isBotRunning: () => boolean;
 
   constructor(
     getBalance: BalanceGetter,
     getTickers: TickersGetter,
-    getBotStart: BotStartGetter
+    getBotStart: BotStartGetter,
+    stopBot: BotStopper,
+    startBot: BotStarter,
+    isBotRunning: () => boolean
   ) {
-    this.getBalance  = getBalance;
-    this.getTickers  = getTickers;
-    this.getBotStart = getBotStart;
+    this.getBalance   = getBalance;
+    this.getTickers   = getTickers;
+    this.getBotStart  = getBotStart;
+    this.stopBot      = stopBot;
+    this.startBot     = startBot;
+    this.isBotRunning = isBotRunning;
   }
 
   start(): void {
@@ -204,7 +245,7 @@ export class TelegramCommandHandler {
           if (!msg.text.startsWith('/')) continue;
 
           logger.info(`Telegram command received: ${msg.text}`);
-          await handleCommand(msg.text, this.getBalance, this.getTickers, this.getBotStart);
+          await handleCommand(msg.text, this.getBalance, this.getTickers, this.getBotStart, this.stopBot, this.startBot, this.isBotRunning);
         }
       } catch (error: any) {
         if (this.running) {
