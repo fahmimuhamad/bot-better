@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+*.js
+*.d.ts
+*.map
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+lerna-debug.log*
+
+# Runtime
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# PM2
+logs/
+.pm2/
+
+# Backups
+*.backup
+*.bak
+*.tmp
+trading-bot.testnet.backup/
+logs.testnet.backup/
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Sensitive files (never commit!)
+.env
+.env.production
+API_KEYS.txt
+secrets.json
+
+# Temporary
+tmp/
+temp/
+build/

@@ -1,0 +1,7202 @@
+[
+  {
+    "timestamp": 1770728400000,
+    "open": 1.305,
+    "high": 1.318,
+    "low": 1.304,
+    "close": 1.315,
+    "volume": 117702.54066,
+    "quoteAssetVolume": 117702.54066,
+    "numberOfTrades": 805
+  },
+  {
+    "timestamp": 1770732000000,
+    "open": 1.315,
+    "high": 1.326,
+    "low": 1.302,
+    "close": 1.312,
+    "volume": 225447.71205,
+    "quoteAssetVolume": 225447.71205,
+    "numberOfTrades": 1511
+  },
+  {
+    "timestamp": 1770735600000,
+    "open": 1.31,
+    "high": 1.33,
+    "low": 1.305,
+    "close": 1.321,
+    "volume": 194868.94428,
+    "quoteAssetVolume": 194868.94428,
+    "numberOfTrades": 1377
+  },
+  {
+    "timestamp": 1770739200000,
+    "open": 1.321,
+    "high": 1.328,
+    "low": 1.31,
+    "close": 1.314,
+    "volume": 157437.86734,
+    "quoteAssetVolume": 157437.86734,
+    "numberOfTrades": 1346
+  },
+  {
+    "timestamp": 1770742800000,
+    "open": 1.314,
+    "high": 1.323,
+    "low": 1.31,
+    "close": 1.319,
+    "volume": 114436.33415,
+    "quoteAssetVolume": 114436.33415,
+    "numberOfTrades": 911
+  },
+  {
+    "timestamp": 1770746400000,
+    "open": 1.32,
+    "high": 1.321,
+    "low": 1.293,
+    "close": 1.299,
+    "volume": 148556.10058,
+    "quoteAssetVolume": 148556.10058,
+    "numberOfTrades": 1184
+  },
+  {
+    "timestamp": 1770750000000,
+    "open": 1.298,
+    "high": 1.3,
+    "low": 1.285,
+    "close": 1.293,
+    "volume": 200092.82993,
+    "quoteAssetVolume": 200092.82993,
+    "numberOfTrades": 1164
+  },
+  {
+    "timestamp": 1770753600000,
+    "open": 1.292,
+    "high": 1.298,
+    "low": 1.289,
+    "close": 1.294,
+    "volume": 109198.48072,
+    "quoteAssetVolume": 109198.48072,
+    "numberOfTrades": 705
+  },
+  {
+    "timestamp": 1770757200000,
+    "open": 1.294,
+    "high": 1.299,
+    "low": 1.287,
+    "close": 1.295,
+    "volume": 93083.34005,
+    "quoteAssetVolume": 93083.34005,
+    "numberOfTrades": 706
+  },
+  {
+    "timestamp": 1770760800000,
+    "open": 1.296,
+    "high": 1.3,
+    "low": 1.293,
+    "close": 1.294,
+    "volume": 65501.14907,
+    "quoteAssetVolume": 65501.14907,
+    "numberOfTrades": 379
+  },
+  {
+    "timestamp": 1770764400000,
+    "open": 1.294,
+    "high": 1.3,
+    "low": 1.292,
+    "close": 1.3,
+    "volume": 84667.92531,
+    "quoteAssetVolume": 84667.92531,
+    "numberOfTrades": 567
+  },
+  {
+    "timestamp": 1770768000000,
+    "open": 1.3,
+    "high": 1.313,
+    "low": 1.298,
+    "close": 1.311,
+    "volume": 73881.99229,
+    "quoteAssetVolume": 73881.99229,
+    "numberOfTrades": 574
+  },
+  {
+    "timestamp": 1770771600000,
+    "open": 1.311,
+    "high": 1.319,
+    "low": 1.307,
+    "close": 1.315,
+    "volume": 96134.02691,
+    "quoteAssetVolume": 96134.02691,
+    "numberOfTrades": 587
+  },
+  {
+    "timestamp": 1770775200000,
+    "open": 1.315,
+    "high": 1.326,
+    "low": 1.31,
+    "close": 1.311,
+    "volume": 96789.60398,
+    "quoteAssetVolume": 96789.60398,
+    "numberOfTrades": 697
+  },
+  {
+    "timestamp": 1770778800000,
+    "open": 1.311,
+    "high": 1.32,
+    "low": 1.3,
+    "close": 1.312,
+    "volume": 159875.26981,
+    "quoteAssetVolume": 159875.26981,
+    "numberOfTrades": 879
+  },
+  {
+    "timestamp": 1770782400000,
+    "open": 1.312,
+    "high": 1.313,
+    "low": 1.286,
+    "close": 1.291,
+    "volume": 411436.28049,
+    "quoteAssetVolume": 411436.28049,
+    "numberOfTrades": 1793
+  },
+  {
+    "timestamp": 1770786000000,
+    "open": 1.291,
+    "high": 1.297,
+    "low": 1.279,
+    "close": 1.285,
+    "volume": 234388.69524,
+    "quoteAssetVolume": 234388.69524,
+    "numberOfTrades": 1099
+  },
+  {
+    "timestamp": 1770789600000,
+    "open": 1.285,
+    "high": 1.287,
+    "low": 1.257,
+    "close": 1.261,
+    "volume": 424164.64413,
+    "quoteAssetVolume": 424164.64413,
+    "numberOfTrades": 1905
+  },
+  {
+    "timestamp": 1770793200000,
+    "open": 1.262,
+    "high": 1.266,
+    "low": 1.256,
+    "close": 1.26,
+    "volume": 123421.0574,
+    "quoteAssetVolume": 123421.0574,
+    "numberOfTrades": 623
+  },
+  {
+    "timestamp": 1770796800000,
+    "open": 1.26,
+    "high": 1.264,
+    "low": 1.258,
+    "close": 1.263,
+    "volume": 90356.84982,
+    "quoteAssetVolume": 90356.84982,
+    "numberOfTrades": 543
+  },
+  {
+    "timestamp": 1770800400000,
+    "open": 1.263,
+    "high": 1.267,
+    "low": 1.252,
+    "close": 1.253,
+    "volume": 102725.78347,
+    "quoteAssetVolume": 102725.78347,
+    "numberOfTrades": 674
+  },
+  {
+    "timestamp": 1770804000000,
+    "open": 1.254,
+    "high": 1.256,
+    "low": 1.243,
+    "close": 1.249,
+    "volume": 199295.475,
+    "quoteAssetVolume": 199295.475,
+    "numberOfTrades": 1021
+  },
+  {
+    "timestamp": 1770807600000,
+    "open": 1.248,
+    "high": 1.267,
+    "low": 1.248,
+    "close": 1.266,
+    "volume": 120470.07155,
+    "quoteAssetVolume": 120470.07155,
+    "numberOfTrades": 654
+  },
+  {
+    "timestamp": 1770811200000,
+    "open": 1.266,
+    "high": 1.272,
+    "low": 1.259,
+    "close": 1.264,
+    "volume": 420567.71262,
+    "quoteAssetVolume": 420567.71262,
+    "numberOfTrades": 1345
+  },
+  {
+    "timestamp": 1770814800000,
+    "open": 1.265,
+    "high": 1.278,
+    "low": 1.256,
+    "close": 1.278,
+    "volume": 574386.85579,
+    "quoteAssetVolume": 574386.85579,
+    "numberOfTrades": 2156
+  },
+  {
+    "timestamp": 1770818400000,
+    "open": 1.279,
+    "high": 1.316,
+    "low": 1.251,
+    "close": 1.254,
+    "volume": 804719.48706,
+    "quoteAssetVolume": 804719.48706,
+    "numberOfTrades": 4024
+  },
+  {
+    "timestamp": 1770822000000,
+    "open": 1.254,
+    "high": 1.259,
+    "low": 1.234,
+    "close": 1.245,
+    "volume": 561911.60225,
+    "quoteAssetVolume": 561911.60225,
+    "numberOfTrades": 2762
+  },
+  {
+    "timestamp": 1770825600000,
+    "open": 1.246,
+    "high": 1.274,
+    "low": 1.241,
+    "close": 1.244,
+    "volume": 201302.60738,
+    "quoteAssetVolume": 201302.60738,
+    "numberOfTrades": 1411
+  },
+  {
+    "timestamp": 1770829200000,
+    "open": 1.243,
+    "high": 1.27,
+    "low": 1.241,
+    "close": 1.256,
+    "volume": 164324.37317,
+    "quoteAssetVolume": 164324.37317,
+    "numberOfTrades": 1039
+  },
+  {
+    "timestamp": 1770832800000,
+    "open": 1.256,
+    "high": 1.287,
+    "low": 1.248,
+    "close": 1.28,
+    "volume": 225995.63505,
+    "quoteAssetVolume": 225995.63505,
+    "numberOfTrades": 1573
+  },
+  {
+    "timestamp": 1770836400000,
+    "open": 1.28,
+    "high": 1.286,
+    "low": 1.267,
+    "close": 1.27,
+    "volume": 154887.22544,
+    "quoteAssetVolume": 154887.22544,
+    "numberOfTrades": 1212
+  },
+  {
+    "timestamp": 1770840000000,
+    "open": 1.269,
+    "high": 1.285,
+    "low": 1.261,
+    "close": 1.28,
+    "volume": 147372.84711,
+    "quoteAssetVolume": 147372.84711,
+    "numberOfTrades": 1042
+  },
+  {
+    "timestamp": 1770843600000,
+    "open": 1.281,
+    "high": 1.303,
+    "low": 1.279,
+    "close": 1.296,
+    "volume": 131571.04375,
+    "quoteAssetVolume": 131571.04375,
+    "numberOfTrades": 1077
+  },
+  {
+    "timestamp": 1770847200000,
+    "open": 1.296,
+    "high": 1.298,
+    "low": 1.276,
+    "close": 1.278,
+    "volume": 112083.14547,
+    "quoteAssetVolume": 112083.14547,
+    "numberOfTrades": 811
+  },
+  {
+    "timestamp": 1770850800000,
+    "open": 1.277,
+    "high": 1.283,
+    "low": 1.261,
+    "close": 1.274,
+    "volume": 169147.47919,
+    "quoteAssetVolume": 169147.47919,
+    "numberOfTrades": 1127
+  },
+  {
+    "timestamp": 1770854400000,
+    "open": 1.275,
+    "high": 1.295,
+    "low": 1.275,
+    "close": 1.287,
+    "volume": 146591.5106,
+    "quoteAssetVolume": 146591.5106,
+    "numberOfTrades": 943
+  },
+  {
+    "timestamp": 1770858000000,
+    "open": 1.287,
+    "high": 1.298,
+    "low": 1.283,
+    "close": 1.288,
+    "volume": 173890.94694,
+    "quoteAssetVolume": 173890.94694,
+    "numberOfTrades": 1111
+  },
+  {
+    "timestamp": 1770861600000,
+    "open": 1.288,
+    "high": 1.294,
+    "low": 1.281,
+    "close": 1.285,
+    "volume": 98673.4975,
+    "quoteAssetVolume": 98673.4975,
+    "numberOfTrades": 670
+  },
+  {
+    "timestamp": 1770865200000,
+    "open": 1.286,
+    "high": 1.294,
+    "low": 1.285,
+    "close": 1.293,
+    "volume": 52366.76982,
+    "quoteAssetVolume": 52366.76982,
+    "numberOfTrades": 555
+  },
+  {
+    "timestamp": 1770868800000,
+    "open": 1.292,
+    "high": 1.301,
+    "low": 1.287,
+    "close": 1.292,
+    "volume": 81637.15034,
+    "quoteAssetVolume": 81637.15034,
+    "numberOfTrades": 725
+  },
+  {
+    "timestamp": 1770872400000,
+    "open": 1.293,
+    "high": 1.3,
+    "low": 1.282,
+    "close": 1.297,
+    "volume": 101361.28499,
+    "quoteAssetVolume": 101361.28499,
+    "numberOfTrades": 814
+  },
+  {
+    "timestamp": 1770876000000,
+    "open": 1.297,
+    "high": 1.311,
+    "low": 1.297,
+    "close": 1.304,
+    "volume": 145464.58271,
+    "quoteAssetVolume": 145464.58271,
+    "numberOfTrades": 827
+  },
+  {
+    "timestamp": 1770879600000,
+    "open": 1.305,
+    "high": 1.312,
+    "low": 1.294,
+    "close": 1.31,
+    "volume": 96279.30126,
+    "quoteAssetVolume": 96279.30126,
+    "numberOfTrades": 486
+  },
+  {
+    "timestamp": 1770883200000,
+    "open": 1.31,
+    "high": 1.312,
+    "low": 1.301,
+    "close": 1.31,
+    "volume": 64778.88593,
+    "quoteAssetVolume": 64778.88593,
+    "numberOfTrades": 446
+  },
+  {
+    "timestamp": 1770886800000,
+    "open": 1.31,
+    "high": 1.322,
+    "low": 1.307,
+    "close": 1.319,
+    "volume": 151404.98458,
+    "quoteAssetVolume": 151404.98458,
+    "numberOfTrades": 799
+  },
+  {
+    "timestamp": 1770890400000,
+    "open": 1.32,
+    "high": 1.348,
+    "low": 1.319,
+    "close": 1.348,
+    "volume": 267612.91959,
+    "quoteAssetVolume": 267612.91959,
+    "numberOfTrades": 1418
+  },
+  {
+    "timestamp": 1770894000000,
+    "open": 1.348,
+    "high": 1.349,
+    "low": 1.333,
+    "close": 1.339,
+    "volume": 254339.55417,
+    "quoteAssetVolume": 254339.55417,
+    "numberOfTrades": 1108
+  },
+  {
+    "timestamp": 1770897600000,
+    "open": 1.338,
+    "high": 1.339,
+    "low": 1.314,
+    "close": 1.321,
+    "volume": 196569.93249,
+    "quoteAssetVolume": 196569.93249,
+    "numberOfTrades": 1150
+  },
+  {
+    "timestamp": 1770901200000,
+    "open": 1.32,
+    "high": 1.34,
+    "low": 1.311,
+    "close": 1.339,
+    "volume": 215837.38323,
+    "quoteAssetVolume": 215837.38323,
+    "numberOfTrades": 1281
+  },
+  {
+    "timestamp": 1770904800000,
+    "open": 1.339,
+    "high": 1.34,
+    "low": 1.321,
+    "close": 1.325,
+    "volume": 231569.86739,
+    "quoteAssetVolume": 231569.86739,
+    "numberOfTrades": 1691
+  },
+  {
+    "timestamp": 1770908400000,
+    "open": 1.325,
+    "high": 1.336,
+    "low": 1.306,
+    "close": 1.307,
+    "volume": 215543.90859,
+    "quoteAssetVolume": 215543.90859,
+    "numberOfTrades": 1660
+  },
+  {
+    "timestamp": 1770912000000,
+    "open": 1.308,
+    "high": 1.31,
+    "low": 1.267,
+    "close": 1.275,
+    "volume": 507481.1389,
+    "quoteAssetVolume": 507481.1389,
+    "numberOfTrades": 3473
+  },
+  {
+    "timestamp": 1770915600000,
+    "open": 1.275,
+    "high": 1.288,
+    "low": 1.265,
+    "close": 1.271,
+    "volume": 223841.29841,
+    "quoteAssetVolume": 223841.29841,
+    "numberOfTrades": 2166
+  },
+  {
+    "timestamp": 1770919200000,
+    "open": 1.27,
+    "high": 1.287,
+    "low": 1.265,
+    "close": 1.283,
+    "volume": 191513.38507,
+    "quoteAssetVolume": 191513.38507,
+    "numberOfTrades": 1740
+  },
+  {
+    "timestamp": 1770922800000,
+    "open": 1.283,
+    "high": 1.313,
+    "low": 1.273,
+    "close": 1.295,
+    "volume": 224593.71854,
+    "quoteAssetVolume": 224593.71854,
+    "numberOfTrades": 1270
+  },
+  {
+    "timestamp": 1770926400000,
+    "open": 1.295,
+    "high": 1.3,
+    "low": 1.273,
+    "close": 1.279,
+    "volume": 146977.35824,
+    "quoteAssetVolume": 146977.35824,
+    "numberOfTrades": 1298
+  },
+  {
+    "timestamp": 1770930000000,
+    "open": 1.279,
+    "high": 1.29,
+    "low": 1.278,
+    "close": 1.286,
+    "volume": 104366.56991,
+    "quoteAssetVolume": 104366.56991,
+    "numberOfTrades": 677
+  },
+  {
+    "timestamp": 1770933600000,
+    "open": 1.287,
+    "high": 1.307,
+    "low": 1.278,
+    "close": 1.306,
+    "volume": 93055.25535,
+    "quoteAssetVolume": 93055.25535,
+    "numberOfTrades": 720
+  },
+  {
+    "timestamp": 1770937200000,
+    "open": 1.306,
+    "high": 1.314,
+    "low": 1.302,
+    "close": 1.314,
+    "volume": 121169.93972,
+    "quoteAssetVolume": 121169.93972,
+    "numberOfTrades": 746
+  },
+  {
+    "timestamp": 1770940800000,
+    "open": 1.313,
+    "high": 1.323,
+    "low": 1.295,
+    "close": 1.302,
+    "volume": 118238.40052,
+    "quoteAssetVolume": 118238.40052,
+    "numberOfTrades": 883
+  },
+  {
+    "timestamp": 1770944400000,
+    "open": 1.301,
+    "high": 1.312,
+    "low": 1.299,
+    "close": 1.303,
+    "volume": 75650.85055,
+    "quoteAssetVolume": 75650.85055,
+    "numberOfTrades": 631
+  },
+  {
+    "timestamp": 1770948000000,
+    "open": 1.302,
+    "high": 1.308,
+    "low": 1.297,
+    "close": 1.304,
+    "volume": 58102.77373,
+    "quoteAssetVolume": 58102.77373,
+    "numberOfTrades": 583
+  },
+  {
+    "timestamp": 1770951600000,
+    "open": 1.304,
+    "high": 1.306,
+    "low": 1.29,
+    "close": 1.292,
+    "volume": 80760.081,
+    "quoteAssetVolume": 80760.081,
+    "numberOfTrades": 737
+  },
+  {
+    "timestamp": 1770955200000,
+    "open": 1.292,
+    "high": 1.293,
+    "low": 1.282,
+    "close": 1.285,
+    "volume": 103488.31302,
+    "quoteAssetVolume": 103488.31302,
+    "numberOfTrades": 699
+  },
+  {
+    "timestamp": 1770958800000,
+    "open": 1.285,
+    "high": 1.289,
+    "low": 1.278,
+    "close": 1.279,
+    "volume": 82279.42167,
+    "quoteAssetVolume": 82279.42167,
+    "numberOfTrades": 723
+  },
+  {
+    "timestamp": 1770962400000,
+    "open": 1.278,
+    "high": 1.295,
+    "low": 1.273,
+    "close": 1.294,
+    "volume": 141787.58106,
+    "quoteAssetVolume": 141787.58106,
+    "numberOfTrades": 775
+  },
+  {
+    "timestamp": 1770966000000,
+    "open": 1.293,
+    "high": 1.301,
+    "low": 1.286,
+    "close": 1.292,
+    "volume": 91428.12698,
+    "quoteAssetVolume": 91428.12698,
+    "numberOfTrades": 617
+  },
+  {
+    "timestamp": 1770969600000,
+    "open": 1.291,
+    "high": 1.313,
+    "low": 1.29,
+    "close": 1.306,
+    "volume": 65194.3196,
+    "quoteAssetVolume": 65194.3196,
+    "numberOfTrades": 592
+  },
+  {
+    "timestamp": 1770973200000,
+    "open": 1.306,
+    "high": 1.309,
+    "low": 1.302,
+    "close": 1.305,
+    "volume": 132002.45637,
+    "quoteAssetVolume": 132002.45637,
+    "numberOfTrades": 600
+  },
+  {
+    "timestamp": 1770976800000,
+    "open": 1.304,
+    "high": 1.315,
+    "low": 1.304,
+    "close": 1.312,
+    "volume": 109373.76622,
+    "quoteAssetVolume": 109373.76622,
+    "numberOfTrades": 520
+  },
+  {
+    "timestamp": 1770980400000,
+    "open": 1.311,
+    "high": 1.314,
+    "low": 1.305,
+    "close": 1.311,
+    "volume": 82192.30283,
+    "quoteAssetVolume": 82192.30283,
+    "numberOfTrades": 559
+  },
+  {
+    "timestamp": 1770984000000,
+    "open": 1.309,
+    "high": 1.312,
+    "low": 1.302,
+    "close": 1.307,
+    "volume": 66716.13461,
+    "quoteAssetVolume": 66716.13461,
+    "numberOfTrades": 517
+  },
+  {
+    "timestamp": 1770987600000,
+    "open": 1.308,
+    "high": 1.326,
+    "low": 1.304,
+    "close": 1.322,
+    "volume": 166806.06438,
+    "quoteAssetVolume": 166806.06438,
+    "numberOfTrades": 1047
+  },
+  {
+    "timestamp": 1770991200000,
+    "open": 1.321,
+    "high": 1.345,
+    "low": 1.316,
+    "close": 1.329,
+    "volume": 625499.47684,
+    "quoteAssetVolume": 625499.47684,
+    "numberOfTrades": 2650
+  },
+  {
+    "timestamp": 1770994800000,
+    "open": 1.33,
+    "high": 1.396,
+    "low": 1.329,
+    "close": 1.357,
+    "volume": 879796.54787,
+    "quoteAssetVolume": 879796.54787,
+    "numberOfTrades": 4116
+  },
+  {
+    "timestamp": 1770998400000,
+    "open": 1.356,
+    "high": 1.393,
+    "low": 1.347,
+    "close": 1.374,
+    "volume": 435822.57703,
+    "quoteAssetVolume": 435822.57703,
+    "numberOfTrades": 2587
+  },
+  {
+    "timestamp": 1771002000000,
+    "open": 1.374,
+    "high": 1.384,
+    "low": 1.364,
+    "close": 1.375,
+    "volume": 211997.34434,
+    "quoteAssetVolume": 211997.34434,
+    "numberOfTrades": 1340
+  },
+  {
+    "timestamp": 1771005600000,
+    "open": 1.374,
+    "high": 1.377,
+    "low": 1.365,
+    "close": 1.368,
+    "volume": 179680.63218,
+    "quoteAssetVolume": 179680.63218,
+    "numberOfTrades": 1143
+  },
+  {
+    "timestamp": 1771009200000,
+    "open": 1.369,
+    "high": 1.379,
+    "low": 1.367,
+    "close": 1.373,
+    "volume": 116394.99196,
+    "quoteAssetVolume": 116394.99196,
+    "numberOfTrades": 941
+  },
+  {
+    "timestamp": 1771012800000,
+    "open": 1.374,
+    "high": 1.375,
+    "low": 1.355,
+    "close": 1.374,
+    "volume": 236124.75311,
+    "quoteAssetVolume": 236124.75311,
+    "numberOfTrades": 1454
+  },
+  {
+    "timestamp": 1771016400000,
+    "open": 1.375,
+    "high": 1.383,
+    "low": 1.367,
+    "close": 1.374,
+    "volume": 183737.74092,
+    "quoteAssetVolume": 183737.74092,
+    "numberOfTrades": 1261
+  },
+  {
+    "timestamp": 1771020000000,
+    "open": 1.374,
+    "high": 1.385,
+    "low": 1.368,
+    "close": 1.376,
+    "volume": 156012.2843,
+    "quoteAssetVolume": 156012.2843,
+    "numberOfTrades": 861
+  },
+  {
+    "timestamp": 1771023600000,
+    "open": 1.377,
+    "high": 1.379,
+    "low": 1.366,
+    "close": 1.374,
+    "volume": 84452.35829,
+    "quoteAssetVolume": 84452.35829,
+    "numberOfTrades": 648
+  },
+  {
+    "timestamp": 1771027200000,
+    "open": 1.375,
+    "high": 1.397,
+    "low": 1.37,
+    "close": 1.388,
+    "volume": 145135.12452,
+    "quoteAssetVolume": 145135.12452,
+    "numberOfTrades": 1371
+  },
+  {
+    "timestamp": 1771030800000,
+    "open": 1.387,
+    "high": 1.4,
+    "low": 1.385,
+    "close": 1.393,
+    "volume": 155660.36645,
+    "quoteAssetVolume": 155660.36645,
+    "numberOfTrades": 999
+  },
+  {
+    "timestamp": 1771034400000,
+    "open": 1.393,
+    "high": 1.41,
+    "low": 1.393,
+    "close": 1.401,
+    "volume": 217129.32576,
+    "quoteAssetVolume": 217129.32576,
+    "numberOfTrades": 1208
+  },
+  {
+    "timestamp": 1771038000000,
+    "open": 1.401,
+    "high": 1.413,
+    "low": 1.398,
+    "close": 1.41,
+    "volume": 237791.30586,
+    "quoteAssetVolume": 237791.30586,
+    "numberOfTrades": 1141
+  },
+  {
+    "timestamp": 1771041600000,
+    "open": 1.41,
+    "high": 1.413,
+    "low": 1.393,
+    "close": 1.398,
+    "volume": 190563.34186,
+    "quoteAssetVolume": 190563.34186,
+    "numberOfTrades": 1084
+  },
+  {
+    "timestamp": 1771045200000,
+    "open": 1.397,
+    "high": 1.407,
+    "low": 1.391,
+    "close": 1.391,
+    "volume": 77138.39138,
+    "quoteAssetVolume": 77138.39138,
+    "numberOfTrades": 641
+  },
+  {
+    "timestamp": 1771048800000,
+    "open": 1.391,
+    "high": 1.405,
+    "low": 1.386,
+    "close": 1.403,
+    "volume": 135660.13192,
+    "quoteAssetVolume": 135660.13192,
+    "numberOfTrades": 741
+  },
+  {
+    "timestamp": 1771052400000,
+    "open": 1.403,
+    "high": 1.422,
+    "low": 1.399,
+    "close": 1.418,
+    "volume": 205941.66398,
+    "quoteAssetVolume": 205941.66398,
+    "numberOfTrades": 1196
+  },
+  {
+    "timestamp": 1771056000000,
+    "open": 1.417,
+    "high": 1.46,
+    "low": 1.416,
+    "close": 1.46,
+    "volume": 490245.31586,
+    "quoteAssetVolume": 490245.31586,
+    "numberOfTrades": 2455
+  },
+  {
+    "timestamp": 1771059600000,
+    "open": 1.46,
+    "high": 1.48,
+    "low": 1.457,
+    "close": 1.469,
+    "volume": 834075.47069,
+    "quoteAssetVolume": 834075.47069,
+    "numberOfTrades": 3380
+  },
+  {
+    "timestamp": 1771063200000,
+    "open": 1.469,
+    "high": 1.469,
+    "low": 1.439,
+    "close": 1.446,
+    "volume": 244791.0724,
+    "quoteAssetVolume": 244791.0724,
+    "numberOfTrades": 1550
+  },
+  {
+    "timestamp": 1771066800000,
+    "open": 1.445,
+    "high": 1.473,
+    "low": 1.444,
+    "close": 1.464,
+    "volume": 249504.29718,
+    "quoteAssetVolume": 249504.29718,
+    "numberOfTrades": 1428
+  },
+  {
+    "timestamp": 1771070400000,
+    "open": 1.464,
+    "high": 1.48,
+    "low": 1.458,
+    "close": 1.461,
+    "volume": 548810.95972,
+    "quoteAssetVolume": 548810.95972,
+    "numberOfTrades": 2417
+  },
+  {
+    "timestamp": 1771074000000,
+    "open": 1.462,
+    "high": 1.462,
+    "low": 1.433,
+    "close": 1.442,
+    "volume": 367455.74351,
+    "quoteAssetVolume": 367455.74351,
+    "numberOfTrades": 1944
+  },
+  {
+    "timestamp": 1771077600000,
+    "open": 1.442,
+    "high": 1.467,
+    "low": 1.439,
+    "close": 1.464,
+    "volume": 150809.86559,
+    "quoteAssetVolume": 150809.86559,
+    "numberOfTrades": 1054
+  },
+  {
+    "timestamp": 1771081200000,
+    "open": 1.463,
+    "high": 1.478,
+    "low": 1.459,
+    "close": 1.476,
+    "volume": 352983.63152,
+    "quoteAssetVolume": 352983.63152,
+    "numberOfTrades": 1352
+  },
+  {
+    "timestamp": 1771084800000,
+    "open": 1.476,
+    "high": 1.488,
+    "low": 1.468,
+    "close": 1.486,
+    "volume": 445443.19922,
+    "quoteAssetVolume": 445443.19922,
+    "numberOfTrades": 2294
+  },
+  {
+    "timestamp": 1771088400000,
+    "open": 1.486,
+    "high": 1.509,
+    "low": 1.477,
+    "close": 1.485,
+    "volume": 386013.24577,
+    "quoteAssetVolume": 386013.24577,
+    "numberOfTrades": 2027
+  },
+  {
+    "timestamp": 1771092000000,
+    "open": 1.485,
+    "high": 1.522,
+    "low": 1.483,
+    "close": 1.513,
+    "volume": 396773.69735,
+    "quoteAssetVolume": 396773.69735,
+    "numberOfTrades": 1885
+  },
+  {
+    "timestamp": 1771095600000,
+    "open": 1.513,
+    "high": 1.541,
+    "low": 1.502,
+    "close": 1.534,
+    "volume": 381235.34457,
+    "quoteAssetVolume": 381235.34457,
+    "numberOfTrades": 1969
+  },
+  {
+    "timestamp": 1771099200000,
+    "open": 1.535,
+    "high": 1.545,
+    "low": 1.516,
+    "close": 1.533,
+    "volume": 328967.59569,
+    "quoteAssetVolume": 328967.59569,
+    "numberOfTrades": 1589
+  },
+  {
+    "timestamp": 1771102800000,
+    "open": 1.532,
+    "high": 1.549,
+    "low": 1.522,
+    "close": 1.527,
+    "volume": 481975.20241,
+    "quoteAssetVolume": 481975.20241,
+    "numberOfTrades": 2162
+  },
+  {
+    "timestamp": 1771106400000,
+    "open": 1.526,
+    "high": 1.548,
+    "low": 1.524,
+    "close": 1.524,
+    "volume": 297009.80083,
+    "quoteAssetVolume": 297009.80083,
+    "numberOfTrades": 1248
+  },
+  {
+    "timestamp": 1771110000000,
+    "open": 1.525,
+    "high": 1.527,
+    "low": 1.503,
+    "close": 1.511,
+    "volume": 310052.11594,
+    "quoteAssetVolume": 310052.11594,
+    "numberOfTrades": 1728
+  },
+  {
+    "timestamp": 1771113600000,
+    "open": 1.511,
+    "high": 1.513,
+    "low": 1.494,
+    "close": 1.506,
+    "volume": 237935.6414,
+    "quoteAssetVolume": 237935.6414,
+    "numberOfTrades": 1198
+  },
+  {
+    "timestamp": 1771117200000,
+    "open": 1.505,
+    "high": 1.519,
+    "low": 1.488,
+    "close": 1.502,
+    "volume": 248615.43911,
+    "quoteAssetVolume": 248615.43911,
+    "numberOfTrades": 1521
+  },
+  {
+    "timestamp": 1771120800000,
+    "open": 1.501,
+    "high": 1.509,
+    "low": 1.484,
+    "close": 1.503,
+    "volume": 416464.79798,
+    "quoteAssetVolume": 416464.79798,
+    "numberOfTrades": 1578
+  },
+  {
+    "timestamp": 1771124400000,
+    "open": 1.503,
+    "high": 1.507,
+    "low": 1.467,
+    "close": 1.502,
+    "volume": 592350.61844,
+    "quoteAssetVolume": 592350.61844,
+    "numberOfTrades": 2278
+  },
+  {
+    "timestamp": 1771128000000,
+    "open": 1.501,
+    "high": 1.526,
+    "low": 1.499,
+    "close": 1.505,
+    "volume": 306849.12327,
+    "quoteAssetVolume": 306849.12327,
+    "numberOfTrades": 1858
+  },
+  {
+    "timestamp": 1771131600000,
+    "open": 1.505,
+    "high": 1.514,
+    "low": 1.502,
+    "close": 1.507,
+    "volume": 65856.23824,
+    "quoteAssetVolume": 65856.23824,
+    "numberOfTrades": 656
+  },
+  {
+    "timestamp": 1771135200000,
+    "open": 1.506,
+    "high": 1.51,
+    "low": 1.496,
+    "close": 1.5,
+    "volume": 136768.41854,
+    "quoteAssetVolume": 136768.41854,
+    "numberOfTrades": 792
+  },
+  {
+    "timestamp": 1771138800000,
+    "open": 1.5,
+    "high": 1.515,
+    "low": 1.498,
+    "close": 1.505,
+    "volume": 109182.08111,
+    "quoteAssetVolume": 109182.08111,
+    "numberOfTrades": 812
+  },
+  {
+    "timestamp": 1771142400000,
+    "open": 1.505,
+    "high": 1.511,
+    "low": 1.474,
+    "close": 1.482,
+    "volume": 406174.64427,
+    "quoteAssetVolume": 406174.64427,
+    "numberOfTrades": 2150
+  },
+  {
+    "timestamp": 1771146000000,
+    "open": 1.481,
+    "high": 1.492,
+    "low": 1.475,
+    "close": 1.482,
+    "volume": 134786.87477,
+    "quoteAssetVolume": 134786.87477,
+    "numberOfTrades": 913
+  },
+  {
+    "timestamp": 1771149600000,
+    "open": 1.482,
+    "high": 1.484,
+    "low": 1.462,
+    "close": 1.477,
+    "volume": 260578.06318,
+    "quoteAssetVolume": 260578.06318,
+    "numberOfTrades": 1260
+  },
+  {
+    "timestamp": 1771153200000,
+    "open": 1.476,
+    "high": 1.48,
+    "low": 1.467,
+    "close": 1.468,
+    "volume": 158181.58417,
+    "quoteAssetVolume": 158181.58417,
+    "numberOfTrades": 601
+  },
+  {
+    "timestamp": 1771156800000,
+    "open": 1.468,
+    "high": 1.47,
+    "low": 1.42,
+    "close": 1.421,
+    "volume": 453733.98885,
+    "quoteAssetVolume": 453733.98885,
+    "numberOfTrades": 2143
+  },
+  {
+    "timestamp": 1771160400000,
+    "open": 1.421,
+    "high": 1.441,
+    "low": 1.407,
+    "close": 1.412,
+    "volume": 471715.78172,
+    "quoteAssetVolume": 471715.78172,
+    "numberOfTrades": 2076
+  },
+  {
+    "timestamp": 1771164000000,
+    "open": 1.412,
+    "high": 1.434,
+    "low": 1.41,
+    "close": 1.432,
+    "volume": 217541.40003,
+    "quoteAssetVolume": 217541.40003,
+    "numberOfTrades": 1142
+  },
+  {
+    "timestamp": 1771167600000,
+    "open": 1.432,
+    "high": 1.434,
+    "low": 1.424,
+    "close": 1.429,
+    "volume": 205380.40239,
+    "quoteAssetVolume": 205380.40239,
+    "numberOfTrades": 823
+  },
+  {
+    "timestamp": 1771171200000,
+    "open": 1.429,
+    "high": 1.432,
+    "low": 1.417,
+    "close": 1.426,
+    "volume": 248514.20736,
+    "quoteAssetVolume": 248514.20736,
+    "numberOfTrades": 1067
+  },
+  {
+    "timestamp": 1771174800000,
+    "open": 1.426,
+    "high": 1.428,
+    "low": 1.394,
+    "close": 1.401,
+    "volume": 380174.46557,
+    "quoteAssetVolume": 380174.46557,
+    "numberOfTrades": 1935
+  },
+  {
+    "timestamp": 1771178400000,
+    "open": 1.401,
+    "high": 1.411,
+    "low": 1.39,
+    "close": 1.395,
+    "volume": 289609.6286,
+    "quoteAssetVolume": 289609.6286,
+    "numberOfTrades": 1518
+  },
+  {
+    "timestamp": 1771182000000,
+    "open": 1.394,
+    "high": 1.406,
+    "low": 1.385,
+    "close": 1.397,
+    "volume": 316371.64387,
+    "quoteAssetVolume": 316371.64387,
+    "numberOfTrades": 1543
+  },
+  {
+    "timestamp": 1771185600000,
+    "open": 1.397,
+    "high": 1.413,
+    "low": 1.392,
+    "close": 1.41,
+    "volume": 143867.39796,
+    "quoteAssetVolume": 143867.39796,
+    "numberOfTrades": 991
+  },
+  {
+    "timestamp": 1771189200000,
+    "open": 1.41,
+    "high": 1.427,
+    "low": 1.409,
+    "close": 1.424,
+    "volume": 237271.35216,
+    "quoteAssetVolume": 237271.35216,
+    "numberOfTrades": 1236
+  },
+  {
+    "timestamp": 1771192800000,
+    "open": 1.423,
+    "high": 1.432,
+    "low": 1.419,
+    "close": 1.429,
+    "volume": 100061.43218,
+    "quoteAssetVolume": 100061.43218,
+    "numberOfTrades": 520
+  },
+  {
+    "timestamp": 1771196400000,
+    "open": 1.429,
+    "high": 1.436,
+    "low": 1.412,
+    "close": 1.433,
+    "volume": 159258.12231,
+    "quoteAssetVolume": 159258.12231,
+    "numberOfTrades": 841
+  },
+  {
+    "timestamp": 1771200000000,
+    "open": 1.434,
+    "high": 1.447,
+    "low": 1.432,
+    "close": 1.441,
+    "volume": 76859.91518,
+    "quoteAssetVolume": 76859.91518,
+    "numberOfTrades": 552
+  },
+  {
+    "timestamp": 1771203600000,
+    "open": 1.44,
+    "high": 1.451,
+    "low": 1.433,
+    "close": 1.441,
+    "volume": 62616.84456,
+    "quoteAssetVolume": 62616.84456,
+    "numberOfTrades": 563
+  },
+  {
+    "timestamp": 1771207200000,
+    "open": 1.44,
+    "high": 1.464,
+    "low": 1.44,
+    "close": 1.446,
+    "volume": 133843.44805,
+    "quoteAssetVolume": 133843.44805,
+    "numberOfTrades": 954
+  },
+  {
+    "timestamp": 1771210800000,
+    "open": 1.447,
+    "high": 1.457,
+    "low": 1.445,
+    "close": 1.447,
+    "volume": 169391.97218,
+    "quoteAssetVolume": 169391.97218,
+    "numberOfTrades": 868
+  },
+  {
+    "timestamp": 1771214400000,
+    "open": 1.446,
+    "high": 1.483,
+    "low": 1.445,
+    "close": 1.475,
+    "volume": 247420.58021,
+    "quoteAssetVolume": 247420.58021,
+    "numberOfTrades": 1222
+  },
+  {
+    "timestamp": 1771218000000,
+    "open": 1.475,
+    "high": 1.48,
+    "low": 1.433,
+    "close": 1.439,
+    "volume": 292369.06629,
+    "quoteAssetVolume": 292369.06629,
+    "numberOfTrades": 1487
+  },
+  {
+    "timestamp": 1771221600000,
+    "open": 1.441,
+    "high": 1.454,
+    "low": 1.44,
+    "close": 1.447,
+    "volume": 175109.89649,
+    "quoteAssetVolume": 175109.89649,
+    "numberOfTrades": 938
+  },
+  {
+    "timestamp": 1771225200000,
+    "open": 1.446,
+    "high": 1.446,
+    "low": 1.425,
+    "close": 1.429,
+    "volume": 110608.34447,
+    "quoteAssetVolume": 110608.34447,
+    "numberOfTrades": 907
+  },
+  {
+    "timestamp": 1771228800000,
+    "open": 1.429,
+    "high": 1.433,
+    "low": 1.425,
+    "close": 1.429,
+    "volume": 55168.85202,
+    "quoteAssetVolume": 55168.85202,
+    "numberOfTrades": 517
+  },
+  {
+    "timestamp": 1771232400000,
+    "open": 1.429,
+    "high": 1.455,
+    "low": 1.429,
+    "close": 1.448,
+    "volume": 186403.52985,
+    "quoteAssetVolume": 186403.52985,
+    "numberOfTrades": 1403
+  },
+  {
+    "timestamp": 1771236000000,
+    "open": 1.447,
+    "high": 1.452,
+    "low": 1.438,
+    "close": 1.439,
+    "volume": 116925.77979,
+    "quoteAssetVolume": 116925.77979,
+    "numberOfTrades": 684
+  },
+  {
+    "timestamp": 1771239600000,
+    "open": 1.441,
+    "high": 1.446,
+    "low": 1.415,
+    "close": 1.438,
+    "volume": 243518.66442,
+    "quoteAssetVolume": 243518.66442,
+    "numberOfTrades": 1305
+  },
+  {
+    "timestamp": 1771243200000,
+    "open": 1.438,
+    "high": 1.473,
+    "low": 1.433,
+    "close": 1.472,
+    "volume": 346745.32409,
+    "quoteAssetVolume": 346745.32409,
+    "numberOfTrades": 1873
+  },
+  {
+    "timestamp": 1771246800000,
+    "open": 1.472,
+    "high": 1.497,
+    "low": 1.441,
+    "close": 1.446,
+    "volume": 574737.39851,
+    "quoteAssetVolume": 574737.39851,
+    "numberOfTrades": 2925
+  },
+  {
+    "timestamp": 1771250400000,
+    "open": 1.445,
+    "high": 1.463,
+    "low": 1.436,
+    "close": 1.451,
+    "volume": 233541.12976,
+    "quoteAssetVolume": 233541.12976,
+    "numberOfTrades": 1750
+  },
+  {
+    "timestamp": 1771254000000,
+    "open": 1.45,
+    "high": 1.462,
+    "low": 1.413,
+    "close": 1.424,
+    "volume": 460568.56383,
+    "quoteAssetVolume": 460568.56383,
+    "numberOfTrades": 2758
+  },
+  {
+    "timestamp": 1771257600000,
+    "open": 1.424,
+    "high": 1.444,
+    "low": 1.422,
+    "close": 1.431,
+    "volume": 212337.211,
+    "quoteAssetVolume": 212337.211,
+    "numberOfTrades": 1397
+  },
+  {
+    "timestamp": 1771261200000,
+    "open": 1.43,
+    "high": 1.438,
+    "low": 1.421,
+    "close": 1.428,
+    "volume": 88846.87441,
+    "quoteAssetVolume": 88846.87441,
+    "numberOfTrades": 893
+  },
+  {
+    "timestamp": 1771264800000,
+    "open": 1.429,
+    "high": 1.443,
+    "low": 1.427,
+    "close": 1.428,
+    "volume": 223444.267,
+    "quoteAssetVolume": 223444.267,
+    "numberOfTrades": 971
+  },
+  {
+    "timestamp": 1771268400000,
+    "open": 1.429,
+    "high": 1.443,
+    "low": 1.423,
+    "close": 1.438,
+    "volume": 83343.41256,
+    "quoteAssetVolume": 83343.41256,
+    "numberOfTrades": 701
+  },
+  {
+    "timestamp": 1771272000000,
+    "open": 1.438,
+    "high": 1.454,
+    "low": 1.431,
+    "close": 1.452,
+    "volume": 156803.34786,
+    "quoteAssetVolume": 156803.34786,
+    "numberOfTrades": 820
+  },
+  {
+    "timestamp": 1771275600000,
+    "open": 1.452,
+    "high": 1.465,
+    "low": 1.447,
+    "close": 1.463,
+    "volume": 177563.90541,
+    "quoteAssetVolume": 177563.90541,
+    "numberOfTrades": 801
+  },
+  {
+    "timestamp": 1771279200000,
+    "open": 1.463,
+    "high": 1.465,
+    "low": 1.447,
+    "close": 1.453,
+    "volume": 102698.85752,
+    "quoteAssetVolume": 102698.85752,
+    "numberOfTrades": 525
+  },
+  {
+    "timestamp": 1771282800000,
+    "open": 1.452,
+    "high": 1.457,
+    "low": 1.448,
+    "close": 1.452,
+    "volume": 69276.28482,
+    "quoteAssetVolume": 69276.28482,
+    "numberOfTrades": 450
+  },
+  {
+    "timestamp": 1771286400000,
+    "open": 1.452,
+    "high": 1.461,
+    "low": 1.441,
+    "close": 1.454,
+    "volume": 534039.55169,
+    "quoteAssetVolume": 534039.55169,
+    "numberOfTrades": 2235
+  },
+  {
+    "timestamp": 1771290000000,
+    "open": 1.455,
+    "high": 1.466,
+    "low": 1.453,
+    "close": 1.455,
+    "volume": 81827.81638,
+    "quoteAssetVolume": 81827.81638,
+    "numberOfTrades": 693
+  },
+  {
+    "timestamp": 1771293600000,
+    "open": 1.455,
+    "high": 1.477,
+    "low": 1.445,
+    "close": 1.468,
+    "volume": 126662.83383,
+    "quoteAssetVolume": 126662.83383,
+    "numberOfTrades": 918
+  },
+  {
+    "timestamp": 1771297200000,
+    "open": 1.467,
+    "high": 1.467,
+    "low": 1.456,
+    "close": 1.457,
+    "volume": 68741.05309,
+    "quoteAssetVolume": 68741.05309,
+    "numberOfTrades": 501
+  },
+  {
+    "timestamp": 1771300800000,
+    "open": 1.456,
+    "high": 1.47,
+    "low": 1.453,
+    "close": 1.465,
+    "volume": 54553.61277,
+    "quoteAssetVolume": 54553.61277,
+    "numberOfTrades": 557
+  },
+  {
+    "timestamp": 1771304400000,
+    "open": 1.466,
+    "high": 1.467,
+    "low": 1.439,
+    "close": 1.454,
+    "volume": 102497.53154,
+    "quoteAssetVolume": 102497.53154,
+    "numberOfTrades": 781
+  },
+  {
+    "timestamp": 1771308000000,
+    "open": 1.455,
+    "high": 1.463,
+    "low": 1.455,
+    "close": 1.458,
+    "volume": 60744.68241,
+    "quoteAssetVolume": 60744.68241,
+    "numberOfTrades": 421
+  },
+  {
+    "timestamp": 1771311600000,
+    "open": 1.457,
+    "high": 1.47,
+    "low": 1.451,
+    "close": 1.466,
+    "volume": 90253.13745,
+    "quoteAssetVolume": 90253.13745,
+    "numberOfTrades": 568
+  },
+  {
+    "timestamp": 1771315200000,
+    "open": 1.465,
+    "high": 1.48,
+    "low": 1.464,
+    "close": 1.466,
+    "volume": 474906.65077,
+    "quoteAssetVolume": 474906.65077,
+    "numberOfTrades": 2003
+  },
+  {
+    "timestamp": 1771318800000,
+    "open": 1.464,
+    "high": 1.466,
+    "low": 1.449,
+    "close": 1.457,
+    "volume": 237525.85767,
+    "quoteAssetVolume": 237525.85767,
+    "numberOfTrades": 757
+  },
+  {
+    "timestamp": 1771322400000,
+    "open": 1.456,
+    "high": 1.458,
+    "low": 1.435,
+    "close": 1.44,
+    "volume": 165969.38724,
+    "quoteAssetVolume": 165969.38724,
+    "numberOfTrades": 919
+  },
+  {
+    "timestamp": 1771326000000,
+    "open": 1.44,
+    "high": 1.458,
+    "low": 1.436,
+    "close": 1.447,
+    "volume": 105463.80036,
+    "quoteAssetVolume": 105463.80036,
+    "numberOfTrades": 796
+  },
+  {
+    "timestamp": 1771329600000,
+    "open": 1.446,
+    "high": 1.455,
+    "low": 1.437,
+    "close": 1.439,
+    "volume": 89438.47488,
+    "quoteAssetVolume": 89438.47488,
+    "numberOfTrades": 648
+  },
+  {
+    "timestamp": 1771333200000,
+    "open": 1.44,
+    "high": 1.46,
+    "low": 1.437,
+    "close": 1.452,
+    "volume": 230988.03796,
+    "quoteAssetVolume": 230988.03796,
+    "numberOfTrades": 1089
+  },
+  {
+    "timestamp": 1771336800000,
+    "open": 1.451,
+    "high": 1.468,
+    "low": 1.421,
+    "close": 1.427,
+    "volume": 257552.76736,
+    "quoteAssetVolume": 257552.76736,
+    "numberOfTrades": 2134
+  },
+  {
+    "timestamp": 1771340400000,
+    "open": 1.426,
+    "high": 1.467,
+    "low": 1.424,
+    "close": 1.464,
+    "volume": 482656.82407,
+    "quoteAssetVolume": 482656.82407,
+    "numberOfTrades": 2454
+  },
+  {
+    "timestamp": 1771344000000,
+    "open": 1.464,
+    "high": 1.493,
+    "low": 1.459,
+    "close": 1.467,
+    "volume": 405512.66205,
+    "quoteAssetVolume": 405512.66205,
+    "numberOfTrades": 2481
+  },
+  {
+    "timestamp": 1771347600000,
+    "open": 1.466,
+    "high": 1.466,
+    "low": 1.432,
+    "close": 1.445,
+    "volume": 219022.83087,
+    "quoteAssetVolume": 219022.83087,
+    "numberOfTrades": 1504
+  },
+  {
+    "timestamp": 1771351200000,
+    "open": 1.445,
+    "high": 1.478,
+    "low": 1.441,
+    "close": 1.469,
+    "volume": 183821.78559,
+    "quoteAssetVolume": 183821.78559,
+    "numberOfTrades": 1391
+  },
+  {
+    "timestamp": 1771354800000,
+    "open": 1.469,
+    "high": 1.476,
+    "low": 1.458,
+    "close": 1.46,
+    "volume": 228701.06704,
+    "quoteAssetVolume": 228701.06704,
+    "numberOfTrades": 1026
+  },
+  {
+    "timestamp": 1771358400000,
+    "open": 1.459,
+    "high": 1.462,
+    "low": 1.445,
+    "close": 1.449,
+    "volume": 75881.62474,
+    "quoteAssetVolume": 75881.62474,
+    "numberOfTrades": 673
+  },
+  {
+    "timestamp": 1771362000000,
+    "open": 1.449,
+    "high": 1.456,
+    "low": 1.441,
+    "close": 1.448,
+    "volume": 67585.60281,
+    "quoteAssetVolume": 67585.60281,
+    "numberOfTrades": 505
+  },
+  {
+    "timestamp": 1771365600000,
+    "open": 1.448,
+    "high": 1.455,
+    "low": 1.441,
+    "close": 1.442,
+    "volume": 64711.10997,
+    "quoteAssetVolume": 64711.10997,
+    "numberOfTrades": 410
+  },
+  {
+    "timestamp": 1771369200000,
+    "open": 1.441,
+    "high": 1.452,
+    "low": 1.441,
+    "close": 1.447,
+    "volume": 83055.55477,
+    "quoteAssetVolume": 83055.55477,
+    "numberOfTrades": 653
+  },
+  {
+    "timestamp": 1771372800000,
+    "open": 1.447,
+    "high": 1.458,
+    "low": 1.442,
+    "close": 1.443,
+    "volume": 216199.21442,
+    "quoteAssetVolume": 216199.21442,
+    "numberOfTrades": 961
+  },
+  {
+    "timestamp": 1771376400000,
+    "open": 1.443,
+    "high": 1.447,
+    "low": 1.436,
+    "close": 1.442,
+    "volume": 146571.26175,
+    "quoteAssetVolume": 146571.26175,
+    "numberOfTrades": 917
+  },
+  {
+    "timestamp": 1771380000000,
+    "open": 1.441,
+    "high": 1.454,
+    "low": 1.441,
+    "close": 1.45,
+    "volume": 43940.1178,
+    "quoteAssetVolume": 43940.1178,
+    "numberOfTrades": 359
+  },
+  {
+    "timestamp": 1771383600000,
+    "open": 1.449,
+    "high": 1.465,
+    "low": 1.449,
+    "close": 1.46,
+    "volume": 116362.96721,
+    "quoteAssetVolume": 116362.96721,
+    "numberOfTrades": 473
+  },
+  {
+    "timestamp": 1771387200000,
+    "open": 1.459,
+    "high": 1.465,
+    "low": 1.455,
+    "close": 1.459,
+    "volume": 40738.70333,
+    "quoteAssetVolume": 40738.70333,
+    "numberOfTrades": 284
+  },
+  {
+    "timestamp": 1771390800000,
+    "open": 1.459,
+    "high": 1.461,
+    "low": 1.448,
+    "close": 1.453,
+    "volume": 192107.64746,
+    "quoteAssetVolume": 192107.64746,
+    "numberOfTrades": 785
+  },
+  {
+    "timestamp": 1771394400000,
+    "open": 1.453,
+    "high": 1.458,
+    "low": 1.45,
+    "close": 1.45,
+    "volume": 56462.41586,
+    "quoteAssetVolume": 56462.41586,
+    "numberOfTrades": 416
+  },
+  {
+    "timestamp": 1771398000000,
+    "open": 1.451,
+    "high": 1.464,
+    "low": 1.445,
+    "close": 1.455,
+    "volume": 201659.85626,
+    "quoteAssetVolume": 201659.85626,
+    "numberOfTrades": 631
+  },
+  {
+    "timestamp": 1771401600000,
+    "open": 1.456,
+    "high": 1.471,
+    "low": 1.455,
+    "close": 1.457,
+    "volume": 105067.29166,
+    "quoteAssetVolume": 105067.29166,
+    "numberOfTrades": 600
+  },
+  {
+    "timestamp": 1771405200000,
+    "open": 1.457,
+    "high": 1.467,
+    "low": 1.456,
+    "close": 1.464,
+    "volume": 49778.53309,
+    "quoteAssetVolume": 49778.53309,
+    "numberOfTrades": 352
+  },
+  {
+    "timestamp": 1771408800000,
+    "open": 1.464,
+    "high": 1.481,
+    "low": 1.452,
+    "close": 1.455,
+    "volume": 471199.24567,
+    "quoteAssetVolume": 471199.24567,
+    "numberOfTrades": 1608
+  },
+  {
+    "timestamp": 1771412400000,
+    "open": 1.455,
+    "high": 1.455,
+    "low": 1.434,
+    "close": 1.449,
+    "volume": 195467.982,
+    "quoteAssetVolume": 195467.982,
+    "numberOfTrades": 1167
+  },
+  {
+    "timestamp": 1771416000000,
+    "open": 1.448,
+    "high": 1.455,
+    "low": 1.44,
+    "close": 1.446,
+    "volume": 108494.31699,
+    "quoteAssetVolume": 108494.31699,
+    "numberOfTrades": 676
+  },
+  {
+    "timestamp": 1771419600000,
+    "open": 1.447,
+    "high": 1.449,
+    "low": 1.434,
+    "close": 1.438,
+    "volume": 186872.43205,
+    "quoteAssetVolume": 186872.43205,
+    "numberOfTrades": 936
+  },
+  {
+    "timestamp": 1771423200000,
+    "open": 1.44,
+    "high": 1.45,
+    "low": 1.423,
+    "close": 1.446,
+    "volume": 326456.4421,
+    "quoteAssetVolume": 326456.4421,
+    "numberOfTrades": 1768
+  },
+  {
+    "timestamp": 1771426800000,
+    "open": 1.445,
+    "high": 1.485,
+    "low": 1.445,
+    "close": 1.462,
+    "volume": 283924.444,
+    "quoteAssetVolume": 283924.444,
+    "numberOfTrades": 1501
+  },
+  {
+    "timestamp": 1771430400000,
+    "open": 1.462,
+    "high": 1.463,
+    "low": 1.44,
+    "close": 1.443,
+    "volume": 139257.68638,
+    "quoteAssetVolume": 139257.68638,
+    "numberOfTrades": 1116
+  },
+  {
+    "timestamp": 1771434000000,
+    "open": 1.443,
+    "high": 1.463,
+    "low": 1.443,
+    "close": 1.446,
+    "volume": 138215.87427,
+    "quoteAssetVolume": 138215.87427,
+    "numberOfTrades": 836
+  },
+  {
+    "timestamp": 1771437600000,
+    "open": 1.447,
+    "high": 1.451,
+    "low": 1.418,
+    "close": 1.427,
+    "volume": 390931.08232,
+    "quoteAssetVolume": 390931.08232,
+    "numberOfTrades": 1737
+  },
+  {
+    "timestamp": 1771441200000,
+    "open": 1.426,
+    "high": 1.436,
+    "low": 1.404,
+    "close": 1.414,
+    "volume": 262283.31716,
+    "quoteAssetVolume": 262283.31716,
+    "numberOfTrades": 1600
+  },
+  {
+    "timestamp": 1771444800000,
+    "open": 1.413,
+    "high": 1.427,
+    "low": 1.405,
+    "close": 1.415,
+    "volume": 124311.2503,
+    "quoteAssetVolume": 124311.2503,
+    "numberOfTrades": 880
+  },
+  {
+    "timestamp": 1771448400000,
+    "open": 1.415,
+    "high": 1.421,
+    "low": 1.406,
+    "close": 1.409,
+    "volume": 129508.16158,
+    "quoteAssetVolume": 129508.16158,
+    "numberOfTrades": 797
+  },
+  {
+    "timestamp": 1771452000000,
+    "open": 1.408,
+    "high": 1.416,
+    "low": 1.398,
+    "close": 1.411,
+    "volume": 126240.50903,
+    "quoteAssetVolume": 126240.50903,
+    "numberOfTrades": 598
+  },
+  {
+    "timestamp": 1771455600000,
+    "open": 1.412,
+    "high": 1.422,
+    "low": 1.403,
+    "close": 1.418,
+    "volume": 65293.63689,
+    "quoteAssetVolume": 65293.63689,
+    "numberOfTrades": 571
+  },
+  {
+    "timestamp": 1771459200000,
+    "open": 1.419,
+    "high": 1.422,
+    "low": 1.405,
+    "close": 1.413,
+    "volume": 97408.92053,
+    "quoteAssetVolume": 97408.92053,
+    "numberOfTrades": 604
+  },
+  {
+    "timestamp": 1771462800000,
+    "open": 1.414,
+    "high": 1.449,
+    "low": 1.414,
+    "close": 1.448,
+    "volume": 456001.41293,
+    "quoteAssetVolume": 456001.41293,
+    "numberOfTrades": 1705
+  },
+  {
+    "timestamp": 1771466400000,
+    "open": 1.448,
+    "high": 1.462,
+    "low": 1.446,
+    "close": 1.46,
+    "volume": 390882.98018,
+    "quoteAssetVolume": 390882.98018,
+    "numberOfTrades": 1821
+  },
+  {
+    "timestamp": 1771470000000,
+    "open": 1.459,
+    "high": 1.48,
+    "low": 1.457,
+    "close": 1.466,
+    "volume": 398262.66455,
+    "quoteAssetVolume": 398262.66455,
+    "numberOfTrades": 1817
+  },
+  {
+    "timestamp": 1771473600000,
+    "open": 1.466,
+    "high": 1.469,
+    "low": 1.447,
+    "close": 1.458,
+    "volume": 173380.69865,
+    "quoteAssetVolume": 173380.69865,
+    "numberOfTrades": 1085
+  },
+  {
+    "timestamp": 1771477200000,
+    "open": 1.459,
+    "high": 1.476,
+    "low": 1.457,
+    "close": 1.473,
+    "volume": 143558.90914,
+    "quoteAssetVolume": 143558.90914,
+    "numberOfTrades": 1036
+  },
+  {
+    "timestamp": 1771480800000,
+    "open": 1.473,
+    "high": 1.491,
+    "low": 1.462,
+    "close": 1.465,
+    "volume": 343811.14265,
+    "quoteAssetVolume": 343811.14265,
+    "numberOfTrades": 2244
+  },
+  {
+    "timestamp": 1771484400000,
+    "open": 1.466,
+    "high": 1.492,
+    "low": 1.466,
+    "close": 1.484,
+    "volume": 236832.69306,
+    "quoteAssetVolume": 236832.69306,
+    "numberOfTrades": 1459
+  },
+  {
+    "timestamp": 1771488000000,
+    "open": 1.484,
+    "high": 1.49,
+    "low": 1.418,
+    "close": 1.428,
+    "volume": 805307.27047,
+    "quoteAssetVolume": 805307.27047,
+    "numberOfTrades": 3558
+  },
+  {
+    "timestamp": 1771491600000,
+    "open": 1.428,
+    "high": 1.435,
+    "low": 1.413,
+    "close": 1.416,
+    "volume": 245783.55508,
+    "quoteAssetVolume": 245783.55508,
+    "numberOfTrades": 1135
+  },
+  {
+    "timestamp": 1771495200000,
+    "open": 1.417,
+    "high": 1.424,
+    "low": 1.407,
+    "close": 1.413,
+    "volume": 202704.50437,
+    "quoteAssetVolume": 202704.50437,
+    "numberOfTrades": 953
+  },
+  {
+    "timestamp": 1771498800000,
+    "open": 1.413,
+    "high": 1.422,
+    "low": 1.406,
+    "close": 1.407,
+    "volume": 117490.96411,
+    "quoteAssetVolume": 117490.96411,
+    "numberOfTrades": 767
+  },
+  {
+    "timestamp": 1771502400000,
+    "open": 1.407,
+    "high": 1.411,
+    "low": 1.38,
+    "close": 1.382,
+    "volume": 250459.34902,
+    "quoteAssetVolume": 250459.34902,
+    "numberOfTrades": 1601
+  },
+  {
+    "timestamp": 1771506000000,
+    "open": 1.383,
+    "high": 1.388,
+    "low": 1.357,
+    "close": 1.359,
+    "volume": 592565.48534,
+    "quoteAssetVolume": 592565.48534,
+    "numberOfTrades": 3196
+  },
+  {
+    "timestamp": 1771509600000,
+    "open": 1.359,
+    "high": 1.392,
+    "low": 1.355,
+    "close": 1.387,
+    "volume": 494891.36451,
+    "quoteAssetVolume": 494891.36451,
+    "numberOfTrades": 2550
+  },
+  {
+    "timestamp": 1771513200000,
+    "open": 1.386,
+    "high": 1.397,
+    "low": 1.363,
+    "close": 1.371,
+    "volume": 245844.00714,
+    "quoteAssetVolume": 245844.00714,
+    "numberOfTrades": 1562
+  },
+  {
+    "timestamp": 1771516800000,
+    "open": 1.371,
+    "high": 1.381,
+    "low": 1.357,
+    "close": 1.368,
+    "volume": 215010.77518,
+    "quoteAssetVolume": 215010.77518,
+    "numberOfTrades": 1335
+  },
+  {
+    "timestamp": 1771520400000,
+    "open": 1.367,
+    "high": 1.393,
+    "low": 1.365,
+    "close": 1.376,
+    "volume": 141377.08011,
+    "quoteAssetVolume": 141377.08011,
+    "numberOfTrades": 1041
+  },
+  {
+    "timestamp": 1771524000000,
+    "open": 1.376,
+    "high": 1.407,
+    "low": 1.373,
+    "close": 1.402,
+    "volume": 175438.80347,
+    "quoteAssetVolume": 175438.80347,
+    "numberOfTrades": 1198
+  },
+  {
+    "timestamp": 1771527600000,
+    "open": 1.402,
+    "high": 1.404,
+    "low": 1.387,
+    "close": 1.398,
+    "volume": 121516.65091,
+    "quoteAssetVolume": 121516.65091,
+    "numberOfTrades": 909
+  },
+  {
+    "timestamp": 1771531200000,
+    "open": 1.398,
+    "high": 1.402,
+    "low": 1.386,
+    "close": 1.402,
+    "volume": 89313.50581,
+    "quoteAssetVolume": 89313.50581,
+    "numberOfTrades": 696
+  },
+  {
+    "timestamp": 1771534800000,
+    "open": 1.402,
+    "high": 1.406,
+    "low": 1.39,
+    "close": 1.392,
+    "volume": 54372.02204,
+    "quoteAssetVolume": 54372.02204,
+    "numberOfTrades": 411
+  },
+  {
+    "timestamp": 1771538400000,
+    "open": 1.392,
+    "high": 1.4,
+    "low": 1.39,
+    "close": 1.399,
+    "volume": 105043.46703,
+    "quoteAssetVolume": 105043.46703,
+    "numberOfTrades": 578
+  },
+  {
+    "timestamp": 1771542000000,
+    "open": 1.399,
+    "high": 1.404,
+    "low": 1.394,
+    "close": 1.401,
+    "volume": 86897.95699,
+    "quoteAssetVolume": 86897.95699,
+    "numberOfTrades": 533
+  },
+  {
+    "timestamp": 1771545600000,
+    "open": 1.401,
+    "high": 1.426,
+    "low": 1.398,
+    "close": 1.418,
+    "volume": 195572.94703,
+    "quoteAssetVolume": 195572.94703,
+    "numberOfTrades": 1076
+  },
+  {
+    "timestamp": 1771549200000,
+    "open": 1.419,
+    "high": 1.422,
+    "low": 1.407,
+    "close": 1.42,
+    "volume": 151986.54628,
+    "quoteAssetVolume": 151986.54628,
+    "numberOfTrades": 783
+  },
+  {
+    "timestamp": 1771552800000,
+    "open": 1.42,
+    "high": 1.441,
+    "low": 1.418,
+    "close": 1.425,
+    "volume": 167657.60233,
+    "quoteAssetVolume": 167657.60233,
+    "numberOfTrades": 1074
+  },
+  {
+    "timestamp": 1771556400000,
+    "open": 1.425,
+    "high": 1.442,
+    "low": 1.425,
+    "close": 1.43,
+    "volume": 88269.85795,
+    "quoteAssetVolume": 88269.85795,
+    "numberOfTrades": 784
+  },
+  {
+    "timestamp": 1771560000000,
+    "open": 1.43,
+    "high": 1.436,
+    "low": 1.418,
+    "close": 1.43,
+    "volume": 133592.05496,
+    "quoteAssetVolume": 133592.05496,
+    "numberOfTrades": 1303
+  },
+  {
+    "timestamp": 1771563600000,
+    "open": 1.431,
+    "high": 1.467,
+    "low": 1.428,
+    "close": 1.449,
+    "volume": 291579.8871,
+    "quoteAssetVolume": 291579.8871,
+    "numberOfTrades": 2340
+  },
+  {
+    "timestamp": 1771567200000,
+    "open": 1.45,
+    "high": 1.462,
+    "low": 1.445,
+    "close": 1.459,
+    "volume": 141927.17499,
+    "quoteAssetVolume": 141927.17499,
+    "numberOfTrades": 877
+  },
+  {
+    "timestamp": 1771570800000,
+    "open": 1.459,
+    "high": 1.477,
+    "low": 1.452,
+    "close": 1.475,
+    "volume": 293385.85699,
+    "quoteAssetVolume": 293385.85699,
+    "numberOfTrades": 1738
+  },
+  {
+    "timestamp": 1771574400000,
+    "open": 1.474,
+    "high": 1.5,
+    "low": 1.463,
+    "close": 1.486,
+    "volume": 561708.61937,
+    "quoteAssetVolume": 561708.61937,
+    "numberOfTrades": 3360
+  },
+  {
+    "timestamp": 1771578000000,
+    "open": 1.486,
+    "high": 1.51,
+    "low": 1.466,
+    "close": 1.477,
+    "volume": 597731.86565,
+    "quoteAssetVolume": 597731.86565,
+    "numberOfTrades": 2419
+  },
+  {
+    "timestamp": 1771581600000,
+    "open": 1.477,
+    "high": 1.49,
+    "low": 1.462,
+    "close": 1.463,
+    "volume": 227231.59374,
+    "quoteAssetVolume": 227231.59374,
+    "numberOfTrades": 1235
+  },
+  {
+    "timestamp": 1771585200000,
+    "open": 1.463,
+    "high": 1.467,
+    "low": 1.447,
+    "close": 1.455,
+    "volume": 301978.51637,
+    "quoteAssetVolume": 301978.51637,
+    "numberOfTrades": 1378
+  },
+  {
+    "timestamp": 1771588800000,
+    "open": 1.454,
+    "high": 1.461,
+    "low": 1.448,
+    "close": 1.461,
+    "volume": 299626.74645,
+    "quoteAssetVolume": 299626.74645,
+    "numberOfTrades": 1426
+  },
+  {
+    "timestamp": 1771592400000,
+    "open": 1.46,
+    "high": 1.46,
+    "low": 1.415,
+    "close": 1.427,
+    "volume": 367281.92563,
+    "quoteAssetVolume": 367281.92563,
+    "numberOfTrades": 2489
+  },
+  {
+    "timestamp": 1771596000000,
+    "open": 1.426,
+    "high": 1.474,
+    "low": 1.426,
+    "close": 1.467,
+    "volume": 305514.90252,
+    "quoteAssetVolume": 305514.90252,
+    "numberOfTrades": 2316
+  },
+  {
+    "timestamp": 1771599600000,
+    "open": 1.468,
+    "high": 1.51,
+    "low": 1.468,
+    "close": 1.503,
+    "volume": 861101.73626,
+    "quoteAssetVolume": 861101.73626,
+    "numberOfTrades": 5624
+  },
+  {
+    "timestamp": 1771603200000,
+    "open": 1.503,
+    "high": 1.529,
+    "low": 1.488,
+    "close": 1.515,
+    "volume": 1161108.59804,
+    "quoteAssetVolume": 1161108.59804,
+    "numberOfTrades": 5205
+  },
+  {
+    "timestamp": 1771606800000,
+    "open": 1.516,
+    "high": 1.523,
+    "low": 1.474,
+    "close": 1.521,
+    "volume": 599343.52945,
+    "quoteAssetVolume": 599343.52945,
+    "numberOfTrades": 3490
+  },
+  {
+    "timestamp": 1771610400000,
+    "open": 1.52,
+    "high": 1.527,
+    "low": 1.489,
+    "close": 1.5,
+    "volume": 498240.12906,
+    "quoteAssetVolume": 498240.12906,
+    "numberOfTrades": 2433
+  },
+  {
+    "timestamp": 1771614000000,
+    "open": 1.501,
+    "high": 1.506,
+    "low": 1.479,
+    "close": 1.488,
+    "volume": 302365.28403,
+    "quoteAssetVolume": 302365.28403,
+    "numberOfTrades": 1322
+  },
+  {
+    "timestamp": 1771617600000,
+    "open": 1.487,
+    "high": 1.5,
+    "low": 1.472,
+    "close": 1.497,
+    "volume": 285870.23186,
+    "quoteAssetVolume": 285870.23186,
+    "numberOfTrades": 1383
+  },
+  {
+    "timestamp": 1771621200000,
+    "open": 1.497,
+    "high": 1.502,
+    "low": 1.49,
+    "close": 1.496,
+    "volume": 244361.83131,
+    "quoteAssetVolume": 244361.83131,
+    "numberOfTrades": 1234
+  },
+  {
+    "timestamp": 1771624800000,
+    "open": 1.496,
+    "high": 1.51,
+    "low": 1.489,
+    "close": 1.499,
+    "volume": 257888.8012,
+    "quoteAssetVolume": 257888.8012,
+    "numberOfTrades": 1749
+  },
+  {
+    "timestamp": 1771628400000,
+    "open": 1.498,
+    "high": 1.509,
+    "low": 1.487,
+    "close": 1.506,
+    "volume": 289742.38622,
+    "quoteAssetVolume": 289742.38622,
+    "numberOfTrades": 1193
+  },
+  {
+    "timestamp": 1771632000000,
+    "open": 1.505,
+    "high": 1.546,
+    "low": 1.498,
+    "close": 1.505,
+    "volume": 629601.04421,
+    "quoteAssetVolume": 629601.04421,
+    "numberOfTrades": 3280
+  },
+  {
+    "timestamp": 1771635600000,
+    "open": 1.504,
+    "high": 1.505,
+    "low": 1.488,
+    "close": 1.49,
+    "volume": 165131.97334,
+    "quoteAssetVolume": 165131.97334,
+    "numberOfTrades": 675
+  },
+  {
+    "timestamp": 1771639200000,
+    "open": 1.489,
+    "high": 1.497,
+    "low": 1.48,
+    "close": 1.493,
+    "volume": 117846.41988,
+    "quoteAssetVolume": 117846.41988,
+    "numberOfTrades": 660
+  },
+  {
+    "timestamp": 1771642800000,
+    "open": 1.493,
+    "high": 1.499,
+    "low": 1.483,
+    "close": 1.494,
+    "volume": 398357.93258,
+    "quoteAssetVolume": 398357.93258,
+    "numberOfTrades": 1362
+  },
+  {
+    "timestamp": 1771646400000,
+    "open": 1.494,
+    "high": 1.497,
+    "low": 1.487,
+    "close": 1.494,
+    "volume": 93337.38877,
+    "quoteAssetVolume": 93337.38877,
+    "numberOfTrades": 511
+  },
+  {
+    "timestamp": 1771650000000,
+    "open": 1.494,
+    "high": 1.5,
+    "low": 1.493,
+    "close": 1.499,
+    "volume": 44260.51973,
+    "quoteAssetVolume": 44260.51973,
+    "numberOfTrades": 350
+  },
+  {
+    "timestamp": 1771653600000,
+    "open": 1.5,
+    "high": 1.508,
+    "low": 1.482,
+    "close": 1.488,
+    "volume": 338271.85516,
+    "quoteAssetVolume": 338271.85516,
+    "numberOfTrades": 1412
+  },
+  {
+    "timestamp": 1771657200000,
+    "open": 1.488,
+    "high": 1.489,
+    "low": 1.481,
+    "close": 1.487,
+    "volume": 63178.49198,
+    "quoteAssetVolume": 63178.49198,
+    "numberOfTrades": 418
+  },
+  {
+    "timestamp": 1771660800000,
+    "open": 1.487,
+    "high": 1.498,
+    "low": 1.483,
+    "close": 1.496,
+    "volume": 76643.34812,
+    "quoteAssetVolume": 76643.34812,
+    "numberOfTrades": 468
+  },
+  {
+    "timestamp": 1771664400000,
+    "open": 1.495,
+    "high": 1.509,
+    "low": 1.487,
+    "close": 1.495,
+    "volume": 155127.81504,
+    "quoteAssetVolume": 155127.81504,
+    "numberOfTrades": 818
+  },
+  {
+    "timestamp": 1771668000000,
+    "open": 1.495,
+    "high": 1.498,
+    "low": 1.489,
+    "close": 1.491,
+    "volume": 82219.20781,
+    "quoteAssetVolume": 82219.20781,
+    "numberOfTrades": 428
+  },
+  {
+    "timestamp": 1771671600000,
+    "open": 1.491,
+    "high": 1.5,
+    "low": 1.484,
+    "close": 1.488,
+    "volume": 69125.72659,
+    "quoteAssetVolume": 69125.72659,
+    "numberOfTrades": 433
+  },
+  {
+    "timestamp": 1771675200000,
+    "open": 1.489,
+    "high": 1.492,
+    "low": 1.479,
+    "close": 1.488,
+    "volume": 92451.81799,
+    "quoteAssetVolume": 92451.81799,
+    "numberOfTrades": 637
+  },
+  {
+    "timestamp": 1771678800000,
+    "open": 1.488,
+    "high": 1.499,
+    "low": 1.486,
+    "close": 1.496,
+    "volume": 61792.12763,
+    "quoteAssetVolume": 61792.12763,
+    "numberOfTrades": 555
+  },
+  {
+    "timestamp": 1771682400000,
+    "open": 1.496,
+    "high": 1.507,
+    "low": 1.488,
+    "close": 1.492,
+    "volume": 186750.01058,
+    "quoteAssetVolume": 186750.01058,
+    "numberOfTrades": 994
+  },
+  {
+    "timestamp": 1771686000000,
+    "open": 1.492,
+    "high": 1.496,
+    "low": 1.473,
+    "close": 1.484,
+    "volume": 286905.5519,
+    "quoteAssetVolume": 286905.5519,
+    "numberOfTrades": 1283
+  },
+  {
+    "timestamp": 1771689600000,
+    "open": 1.484,
+    "high": 1.491,
+    "low": 1.477,
+    "close": 1.482,
+    "volume": 175160.30868,
+    "quoteAssetVolume": 175160.30868,
+    "numberOfTrades": 1204
+  },
+  {
+    "timestamp": 1771693200000,
+    "open": 1.482,
+    "high": 1.487,
+    "low": 1.479,
+    "close": 1.484,
+    "volume": 63957.99442,
+    "quoteAssetVolume": 63957.99442,
+    "numberOfTrades": 641
+  },
+  {
+    "timestamp": 1771696800000,
+    "open": 1.485,
+    "high": 1.49,
+    "low": 1.482,
+    "close": 1.486,
+    "volume": 87660.49383,
+    "quoteAssetVolume": 87660.49383,
+    "numberOfTrades": 547
+  },
+  {
+    "timestamp": 1771700400000,
+    "open": 1.486,
+    "high": 1.486,
+    "low": 1.475,
+    "close": 1.479,
+    "volume": 28885.15205,
+    "quoteAssetVolume": 28885.15205,
+    "numberOfTrades": 318
+  },
+  {
+    "timestamp": 1771704000000,
+    "open": 1.478,
+    "high": 1.482,
+    "low": 1.463,
+    "close": 1.466,
+    "volume": 116135.50519,
+    "quoteAssetVolume": 116135.50519,
+    "numberOfTrades": 890
+  },
+  {
+    "timestamp": 1771707600000,
+    "open": 1.466,
+    "high": 1.473,
+    "low": 1.461,
+    "close": 1.469,
+    "volume": 64260.19091,
+    "quoteAssetVolume": 64260.19091,
+    "numberOfTrades": 453
+  },
+  {
+    "timestamp": 1771711200000,
+    "open": 1.469,
+    "high": 1.469,
+    "low": 1.462,
+    "close": 1.463,
+    "volume": 65872.61208,
+    "quoteAssetVolume": 65872.61208,
+    "numberOfTrades": 500
+  },
+  {
+    "timestamp": 1771714800000,
+    "open": 1.463,
+    "high": 1.468,
+    "low": 1.457,
+    "close": 1.461,
+    "volume": 59402.1528,
+    "quoteAssetVolume": 59402.1528,
+    "numberOfTrades": 493
+  },
+  {
+    "timestamp": 1771718400000,
+    "open": 1.46,
+    "high": 1.46,
+    "low": 1.417,
+    "close": 1.432,
+    "volume": 734706.82336,
+    "quoteAssetVolume": 734706.82336,
+    "numberOfTrades": 3230
+  },
+  {
+    "timestamp": 1771722000000,
+    "open": 1.432,
+    "high": 1.443,
+    "low": 1.432,
+    "close": 1.44,
+    "volume": 157522.85949,
+    "quoteAssetVolume": 157522.85949,
+    "numberOfTrades": 967
+  },
+  {
+    "timestamp": 1771725600000,
+    "open": 1.441,
+    "high": 1.447,
+    "low": 1.428,
+    "close": 1.431,
+    "volume": 162603.86616,
+    "quoteAssetVolume": 162603.86616,
+    "numberOfTrades": 1012
+  },
+  {
+    "timestamp": 1771729200000,
+    "open": 1.43,
+    "high": 1.441,
+    "low": 1.426,
+    "close": 1.437,
+    "volume": 86412.30797,
+    "quoteAssetVolume": 86412.30797,
+    "numberOfTrades": 667
+  },
+  {
+    "timestamp": 1771732800000,
+    "open": 1.436,
+    "high": 1.445,
+    "low": 1.435,
+    "close": 1.443,
+    "volume": 88653.25707,
+    "quoteAssetVolume": 88653.25707,
+    "numberOfTrades": 404
+  },
+  {
+    "timestamp": 1771736400000,
+    "open": 1.444,
+    "high": 1.452,
+    "low": 1.433,
+    "close": 1.435,
+    "volume": 124684.88254,
+    "quoteAssetVolume": 124684.88254,
+    "numberOfTrades": 594
+  },
+  {
+    "timestamp": 1771740000000,
+    "open": 1.435,
+    "high": 1.443,
+    "low": 1.432,
+    "close": 1.44,
+    "volume": 70905.82686,
+    "quoteAssetVolume": 70905.82686,
+    "numberOfTrades": 403
+  },
+  {
+    "timestamp": 1771743600000,
+    "open": 1.439,
+    "high": 1.441,
+    "low": 1.433,
+    "close": 1.44,
+    "volume": 73481.19061,
+    "quoteAssetVolume": 73481.19061,
+    "numberOfTrades": 416
+  },
+  {
+    "timestamp": 1771747200000,
+    "open": 1.439,
+    "high": 1.442,
+    "low": 1.427,
+    "close": 1.427,
+    "volume": 52197.87431,
+    "quoteAssetVolume": 52197.87431,
+    "numberOfTrades": 404
+  },
+  {
+    "timestamp": 1771750800000,
+    "open": 1.426,
+    "high": 1.438,
+    "low": 1.422,
+    "close": 1.433,
+    "volume": 91410.52054,
+    "quoteAssetVolume": 91410.52054,
+    "numberOfTrades": 534
+  },
+  {
+    "timestamp": 1771754400000,
+    "open": 1.433,
+    "high": 1.438,
+    "low": 1.431,
+    "close": 1.433,
+    "volume": 35919.87966,
+    "quoteAssetVolume": 35919.87966,
+    "numberOfTrades": 304
+  },
+  {
+    "timestamp": 1771758000000,
+    "open": 1.433,
+    "high": 1.44,
+    "low": 1.431,
+    "close": 1.434,
+    "volume": 48092.90499,
+    "quoteAssetVolume": 48092.90499,
+    "numberOfTrades": 271
+  },
+  {
+    "timestamp": 1771761600000,
+    "open": 1.433,
+    "high": 1.433,
+    "low": 1.406,
+    "close": 1.41,
+    "volume": 184471.17081,
+    "quoteAssetVolume": 184471.17081,
+    "numberOfTrades": 1135
+  },
+  {
+    "timestamp": 1771765200000,
+    "open": 1.41,
+    "high": 1.415,
+    "low": 1.405,
+    "close": 1.411,
+    "volume": 113932.84559,
+    "quoteAssetVolume": 113932.84559,
+    "numberOfTrades": 690
+  },
+  {
+    "timestamp": 1771768800000,
+    "open": 1.412,
+    "high": 1.413,
+    "low": 1.4,
+    "close": 1.405,
+    "volume": 83253.27091,
+    "quoteAssetVolume": 83253.27091,
+    "numberOfTrades": 575
+  },
+  {
+    "timestamp": 1771772400000,
+    "open": 1.404,
+    "high": 1.414,
+    "low": 1.396,
+    "close": 1.409,
+    "volume": 101609.09424,
+    "quoteAssetVolume": 101609.09424,
+    "numberOfTrades": 673
+  },
+  {
+    "timestamp": 1771776000000,
+    "open": 1.409,
+    "high": 1.41,
+    "low": 1.399,
+    "close": 1.404,
+    "volume": 90673.24587,
+    "quoteAssetVolume": 90673.24587,
+    "numberOfTrades": 645
+  },
+  {
+    "timestamp": 1771779600000,
+    "open": 1.404,
+    "high": 1.404,
+    "low": 1.39,
+    "close": 1.399,
+    "volume": 67406.27664,
+    "quoteAssetVolume": 67406.27664,
+    "numberOfTrades": 597
+  },
+  {
+    "timestamp": 1771783200000,
+    "open": 1.399,
+    "high": 1.404,
+    "low": 1.396,
+    "close": 1.398,
+    "volume": 142500.98926,
+    "quoteAssetVolume": 142500.98926,
+    "numberOfTrades": 712
+  },
+  {
+    "timestamp": 1771786800000,
+    "open": 1.398,
+    "high": 1.399,
+    "low": 1.391,
+    "close": 1.395,
+    "volume": 55336.71694,
+    "quoteAssetVolume": 55336.71694,
+    "numberOfTrades": 443
+  },
+  {
+    "timestamp": 1771790400000,
+    "open": 1.395,
+    "high": 1.399,
+    "low": 1.387,
+    "close": 1.389,
+    "volume": 94425.60467,
+    "quoteAssetVolume": 94425.60467,
+    "numberOfTrades": 660
+  },
+  {
+    "timestamp": 1771794000000,
+    "open": 1.39,
+    "high": 1.403,
+    "low": 1.39,
+    "close": 1.401,
+    "volume": 80233.13377,
+    "quoteAssetVolume": 80233.13377,
+    "numberOfTrades": 449
+  },
+  {
+    "timestamp": 1771797600000,
+    "open": 1.4,
+    "high": 1.413,
+    "low": 1.398,
+    "close": 1.411,
+    "volume": 75346.06979,
+    "quoteAssetVolume": 75346.06979,
+    "numberOfTrades": 529
+  },
+  {
+    "timestamp": 1771801200000,
+    "open": 1.41,
+    "high": 1.419,
+    "low": 1.407,
+    "close": 1.417,
+    "volume": 170075.54799,
+    "quoteAssetVolume": 170075.54799,
+    "numberOfTrades": 1305
+  },
+  {
+    "timestamp": 1771804800000,
+    "open": 1.417,
+    "high": 1.422,
+    "low": 1.398,
+    "close": 1.398,
+    "volume": 113623.67284,
+    "quoteAssetVolume": 113623.67284,
+    "numberOfTrades": 867
+  },
+  {
+    "timestamp": 1771808400000,
+    "open": 1.397,
+    "high": 1.397,
+    "low": 1.35,
+    "close": 1.358,
+    "volume": 729560.51045,
+    "quoteAssetVolume": 729560.51045,
+    "numberOfTrades": 5077
+  },
+  {
+    "timestamp": 1771812000000,
+    "open": 1.359,
+    "high": 1.368,
+    "low": 1.355,
+    "close": 1.363,
+    "volume": 176603.43017,
+    "quoteAssetVolume": 176603.43017,
+    "numberOfTrades": 1044
+  },
+  {
+    "timestamp": 1771815600000,
+    "open": 1.364,
+    "high": 1.374,
+    "low": 1.356,
+    "close": 1.364,
+    "volume": 122865.5349,
+    "quoteAssetVolume": 122865.5349,
+    "numberOfTrades": 666
+  },
+  {
+    "timestamp": 1771819200000,
+    "open": 1.364,
+    "high": 1.37,
+    "low": 1.359,
+    "close": 1.359,
+    "volume": 104716.72461,
+    "quoteAssetVolume": 104716.72461,
+    "numberOfTrades": 586
+  },
+  {
+    "timestamp": 1771822800000,
+    "open": 1.359,
+    "high": 1.377,
+    "low": 1.358,
+    "close": 1.37,
+    "volume": 53296.62605,
+    "quoteAssetVolume": 53296.62605,
+    "numberOfTrades": 456
+  },
+  {
+    "timestamp": 1771826400000,
+    "open": 1.371,
+    "high": 1.398,
+    "low": 1.37,
+    "close": 1.393,
+    "volume": 147052.89901,
+    "quoteAssetVolume": 147052.89901,
+    "numberOfTrades": 809
+  },
+  {
+    "timestamp": 1771830000000,
+    "open": 1.392,
+    "high": 1.4,
+    "low": 1.379,
+    "close": 1.383,
+    "volume": 161672.89108,
+    "quoteAssetVolume": 161672.89108,
+    "numberOfTrades": 932
+  },
+  {
+    "timestamp": 1771833600000,
+    "open": 1.383,
+    "high": 1.385,
+    "low": 1.378,
+    "close": 1.384,
+    "volume": 148056.37249,
+    "quoteAssetVolume": 148056.37249,
+    "numberOfTrades": 812
+  },
+  {
+    "timestamp": 1771837200000,
+    "open": 1.384,
+    "high": 1.419,
+    "low": 1.384,
+    "close": 1.418,
+    "volume": 160374.31474,
+    "quoteAssetVolume": 160374.31474,
+    "numberOfTrades": 1161
+  },
+  {
+    "timestamp": 1771840800000,
+    "open": 1.418,
+    "high": 1.42,
+    "low": 1.41,
+    "close": 1.415,
+    "volume": 62993.30536,
+    "quoteAssetVolume": 62993.30536,
+    "numberOfTrades": 542
+  },
+  {
+    "timestamp": 1771844400000,
+    "open": 1.415,
+    "high": 1.421,
+    "low": 1.404,
+    "close": 1.407,
+    "volume": 80549.42866,
+    "quoteAssetVolume": 80549.42866,
+    "numberOfTrades": 548
+  },
+  {
+    "timestamp": 1771848000000,
+    "open": 1.407,
+    "high": 1.431,
+    "low": 1.404,
+    "close": 1.423,
+    "volume": 206886.19967,
+    "quoteAssetVolume": 206886.19967,
+    "numberOfTrades": 947
+  },
+  {
+    "timestamp": 1771851600000,
+    "open": 1.424,
+    "high": 1.429,
+    "low": 1.405,
+    "close": 1.405,
+    "volume": 158453.31429,
+    "quoteAssetVolume": 158453.31429,
+    "numberOfTrades": 953
+  },
+  {
+    "timestamp": 1771855200000,
+    "open": 1.406,
+    "high": 1.412,
+    "low": 1.392,
+    "close": 1.399,
+    "volume": 185698.81955,
+    "quoteAssetVolume": 185698.81955,
+    "numberOfTrades": 1323
+  },
+  {
+    "timestamp": 1771858800000,
+    "open": 1.399,
+    "high": 1.401,
+    "low": 1.376,
+    "close": 1.378,
+    "volume": 273950.94581,
+    "quoteAssetVolume": 273950.94581,
+    "numberOfTrades": 1749
+  },
+  {
+    "timestamp": 1771862400000,
+    "open": 1.378,
+    "high": 1.387,
+    "low": 1.366,
+    "close": 1.371,
+    "volume": 215331.80878,
+    "quoteAssetVolume": 215331.80878,
+    "numberOfTrades": 1367
+  },
+  {
+    "timestamp": 1771866000000,
+    "open": 1.371,
+    "high": 1.378,
+    "low": 1.353,
+    "close": 1.374,
+    "volume": 195088.93264,
+    "quoteAssetVolume": 195088.93264,
+    "numberOfTrades": 1288
+  },
+  {
+    "timestamp": 1771869600000,
+    "open": 1.374,
+    "high": 1.391,
+    "low": 1.367,
+    "close": 1.367,
+    "volume": 90196.59624,
+    "quoteAssetVolume": 90196.59624,
+    "numberOfTrades": 794
+  },
+  {
+    "timestamp": 1771873200000,
+    "open": 1.368,
+    "high": 1.371,
+    "low": 1.358,
+    "close": 1.364,
+    "volume": 93788.4638,
+    "quoteAssetVolume": 93788.4638,
+    "numberOfTrades": 759
+  },
+  {
+    "timestamp": 1771876800000,
+    "open": 1.363,
+    "high": 1.377,
+    "low": 1.358,
+    "close": 1.377,
+    "volume": 133551.35348,
+    "quoteAssetVolume": 133551.35348,
+    "numberOfTrades": 921
+  },
+  {
+    "timestamp": 1771880400000,
+    "open": 1.378,
+    "high": 1.394,
+    "low": 1.377,
+    "close": 1.385,
+    "volume": 113137.08594,
+    "quoteAssetVolume": 113137.08594,
+    "numberOfTrades": 749
+  },
+  {
+    "timestamp": 1771884000000,
+    "open": 1.386,
+    "high": 1.395,
+    "low": 1.384,
+    "close": 1.384,
+    "volume": 57271.39731,
+    "quoteAssetVolume": 57271.39731,
+    "numberOfTrades": 415
+  },
+  {
+    "timestamp": 1771887600000,
+    "open": 1.383,
+    "high": 1.394,
+    "low": 1.377,
+    "close": 1.377,
+    "volume": 71734.26554,
+    "quoteAssetVolume": 71734.26554,
+    "numberOfTrades": 518
+  },
+  {
+    "timestamp": 1771891200000,
+    "open": 1.376,
+    "high": 1.389,
+    "low": 1.375,
+    "close": 1.382,
+    "volume": 93579.8465,
+    "quoteAssetVolume": 93579.8465,
+    "numberOfTrades": 625
+  },
+  {
+    "timestamp": 1771894800000,
+    "open": 1.381,
+    "high": 1.393,
+    "low": 1.347,
+    "close": 1.376,
+    "volume": 322602.71735,
+    "quoteAssetVolume": 322602.71735,
+    "numberOfTrades": 1844
+  },
+  {
+    "timestamp": 1771898400000,
+    "open": 1.375,
+    "high": 1.381,
+    "low": 1.367,
+    "close": 1.369,
+    "volume": 81117.57283,
+    "quoteAssetVolume": 81117.57283,
+    "numberOfTrades": 506
+  },
+  {
+    "timestamp": 1771902000000,
+    "open": 1.368,
+    "high": 1.371,
+    "low": 1.357,
+    "close": 1.366,
+    "volume": 76854.0392,
+    "quoteAssetVolume": 76854.0392,
+    "numberOfTrades": 579
+  },
+  {
+    "timestamp": 1771905600000,
+    "open": 1.366,
+    "high": 1.369,
+    "low": 1.345,
+    "close": 1.353,
+    "volume": 144290.88549,
+    "quoteAssetVolume": 144290.88549,
+    "numberOfTrades": 852
+  },
+  {
+    "timestamp": 1771909200000,
+    "open": 1.353,
+    "high": 1.364,
+    "low": 1.34,
+    "close": 1.349,
+    "volume": 173867.53124,
+    "quoteAssetVolume": 173867.53124,
+    "numberOfTrades": 925
+  },
+  {
+    "timestamp": 1771912800000,
+    "open": 1.349,
+    "high": 1.356,
+    "low": 1.344,
+    "close": 1.348,
+    "volume": 45081.43413,
+    "quoteAssetVolume": 45081.43413,
+    "numberOfTrades": 340
+  },
+  {
+    "timestamp": 1771916400000,
+    "open": 1.349,
+    "high": 1.359,
+    "low": 1.346,
+    "close": 1.349,
+    "volume": 80697.15847,
+    "quoteAssetVolume": 80697.15847,
+    "numberOfTrades": 399
+  },
+  {
+    "timestamp": 1771920000000,
+    "open": 1.349,
+    "high": 1.361,
+    "low": 1.34,
+    "close": 1.355,
+    "volume": 95990.8834,
+    "quoteAssetVolume": 95990.8834,
+    "numberOfTrades": 575
+  },
+  {
+    "timestamp": 1771923600000,
+    "open": 1.355,
+    "high": 1.355,
+    "low": 1.335,
+    "close": 1.345,
+    "volume": 177162.63967,
+    "quoteAssetVolume": 177162.63967,
+    "numberOfTrades": 740
+  },
+  {
+    "timestamp": 1771927200000,
+    "open": 1.345,
+    "high": 1.355,
+    "low": 1.341,
+    "close": 1.352,
+    "volume": 62975.2236,
+    "quoteAssetVolume": 62975.2236,
+    "numberOfTrades": 392
+  },
+  {
+    "timestamp": 1771930800000,
+    "open": 1.353,
+    "high": 1.354,
+    "low": 1.341,
+    "close": 1.348,
+    "volume": 133663.5294,
+    "quoteAssetVolume": 133663.5294,
+    "numberOfTrades": 550
+  },
+  {
+    "timestamp": 1771934400000,
+    "open": 1.348,
+    "high": 1.348,
+    "low": 1.332,
+    "close": 1.339,
+    "volume": 193638.66562,
+    "quoteAssetVolume": 193638.66562,
+    "numberOfTrades": 1091
+  },
+  {
+    "timestamp": 1771938000000,
+    "open": 1.339,
+    "high": 1.348,
+    "low": 1.326,
+    "close": 1.341,
+    "volume": 160212.61727,
+    "quoteAssetVolume": 160212.61727,
+    "numberOfTrades": 1060
+  },
+  {
+    "timestamp": 1771941600000,
+    "open": 1.34,
+    "high": 1.372,
+    "low": 1.331,
+    "close": 1.366,
+    "volume": 278462.65642,
+    "quoteAssetVolume": 278462.65642,
+    "numberOfTrades": 1511
+  },
+  {
+    "timestamp": 1771945200000,
+    "open": 1.367,
+    "high": 1.388,
+    "low": 1.355,
+    "close": 1.378,
+    "volume": 224169.06785,
+    "quoteAssetVolume": 224169.06785,
+    "numberOfTrades": 1143
+  },
+  {
+    "timestamp": 1771948800000,
+    "open": 1.378,
+    "high": 1.41,
+    "low": 1.376,
+    "close": 1.397,
+    "volume": 365728.37878,
+    "quoteAssetVolume": 365728.37878,
+    "numberOfTrades": 1905
+  },
+  {
+    "timestamp": 1771952400000,
+    "open": 1.397,
+    "high": 1.397,
+    "low": 1.383,
+    "close": 1.387,
+    "volume": 239438.0739,
+    "quoteAssetVolume": 239438.0739,
+    "numberOfTrades": 1216
+  },
+  {
+    "timestamp": 1771956000000,
+    "open": 1.386,
+    "high": 1.395,
+    "low": 1.376,
+    "close": 1.389,
+    "volume": 146362.70989,
+    "quoteAssetVolume": 146362.70989,
+    "numberOfTrades": 696
+  },
+  {
+    "timestamp": 1771959600000,
+    "open": 1.388,
+    "high": 1.397,
+    "low": 1.379,
+    "close": 1.384,
+    "volume": 159582.17832,
+    "quoteAssetVolume": 159582.17832,
+    "numberOfTrades": 828
+  },
+  {
+    "timestamp": 1771963200000,
+    "open": 1.384,
+    "high": 1.387,
+    "low": 1.364,
+    "close": 1.366,
+    "volume": 820657.94694,
+    "quoteAssetVolume": 820657.94694,
+    "numberOfTrades": 2847
+  },
+  {
+    "timestamp": 1771966800000,
+    "open": 1.366,
+    "high": 1.366,
+    "low": 1.352,
+    "close": 1.36,
+    "volume": 165838.86851,
+    "quoteAssetVolume": 165838.86851,
+    "numberOfTrades": 1290
+  },
+  {
+    "timestamp": 1771970400000,
+    "open": 1.359,
+    "high": 1.372,
+    "low": 1.358,
+    "close": 1.363,
+    "volume": 167404.0285,
+    "quoteAssetVolume": 167404.0285,
+    "numberOfTrades": 463
+  },
+  {
+    "timestamp": 1771974000000,
+    "open": 1.363,
+    "high": 1.364,
+    "low": 1.353,
+    "close": 1.357,
+    "volume": 65403.89166,
+    "quoteAssetVolume": 65403.89166,
+    "numberOfTrades": 500
+  },
+  {
+    "timestamp": 1771977600000,
+    "open": 1.357,
+    "high": 1.357,
+    "low": 1.343,
+    "close": 1.35,
+    "volume": 143967.45849,
+    "quoteAssetVolume": 143967.45849,
+    "numberOfTrades": 633
+  },
+  {
+    "timestamp": 1771981200000,
+    "open": 1.35,
+    "high": 1.409,
+    "low": 1.35,
+    "close": 1.388,
+    "volume": 501244.14337,
+    "quoteAssetVolume": 501244.14337,
+    "numberOfTrades": 2687
+  },
+  {
+    "timestamp": 1771984800000,
+    "open": 1.387,
+    "high": 1.404,
+    "low": 1.386,
+    "close": 1.392,
+    "volume": 277540.54614,
+    "quoteAssetVolume": 277540.54614,
+    "numberOfTrades": 1459
+  },
+  {
+    "timestamp": 1771988400000,
+    "open": 1.393,
+    "high": 1.393,
+    "low": 1.368,
+    "close": 1.374,
+    "volume": 185401.52165,
+    "quoteAssetVolume": 185401.52165,
+    "numberOfTrades": 1224
+  },
+  {
+    "timestamp": 1771992000000,
+    "open": 1.374,
+    "high": 1.385,
+    "low": 1.364,
+    "close": 1.382,
+    "volume": 156270.1209,
+    "quoteAssetVolume": 156270.1209,
+    "numberOfTrades": 897
+  },
+  {
+    "timestamp": 1771995600000,
+    "open": 1.382,
+    "high": 1.387,
+    "low": 1.36,
+    "close": 1.37,
+    "volume": 152989.94577,
+    "quoteAssetVolume": 152989.94577,
+    "numberOfTrades": 849
+  },
+  {
+    "timestamp": 1771999200000,
+    "open": 1.371,
+    "high": 1.38,
+    "low": 1.366,
+    "close": 1.369,
+    "volume": 61245.15082,
+    "quoteAssetVolume": 61245.15082,
+    "numberOfTrades": 440
+  },
+  {
+    "timestamp": 1772002800000,
+    "open": 1.369,
+    "high": 1.386,
+    "low": 1.369,
+    "close": 1.381,
+    "volume": 109948.5386,
+    "quoteAssetVolume": 109948.5386,
+    "numberOfTrades": 604
+  },
+  {
+    "timestamp": 1772006400000,
+    "open": 1.381,
+    "high": 1.401,
+    "low": 1.377,
+    "close": 1.399,
+    "volume": 165232.26187,
+    "quoteAssetVolume": 165232.26187,
+    "numberOfTrades": 789
+  },
+  {
+    "timestamp": 1772010000000,
+    "open": 1.399,
+    "high": 1.418,
+    "low": 1.395,
+    "close": 1.414,
+    "volume": 329295.7057,
+    "quoteAssetVolume": 329295.7057,
+    "numberOfTrades": 1581
+  },
+  {
+    "timestamp": 1772013600000,
+    "open": 1.413,
+    "high": 1.416,
+    "low": 1.401,
+    "close": 1.405,
+    "volume": 148467.2708,
+    "quoteAssetVolume": 148467.2708,
+    "numberOfTrades": 864
+  },
+  {
+    "timestamp": 1772017200000,
+    "open": 1.405,
+    "high": 1.419,
+    "low": 1.396,
+    "close": 1.419,
+    "volume": 110133.89147,
+    "quoteAssetVolume": 110133.89147,
+    "numberOfTrades": 632
+  },
+  {
+    "timestamp": 1772020800000,
+    "open": 1.418,
+    "high": 1.443,
+    "low": 1.414,
+    "close": 1.441,
+    "volume": 332621.05757,
+    "quoteAssetVolume": 332621.05757,
+    "numberOfTrades": 1414
+  },
+  {
+    "timestamp": 1772024400000,
+    "open": 1.442,
+    "high": 1.456,
+    "low": 1.434,
+    "close": 1.443,
+    "volume": 301939.9787,
+    "quoteAssetVolume": 301939.9787,
+    "numberOfTrades": 1369
+  },
+  {
+    "timestamp": 1772028000000,
+    "open": 1.442,
+    "high": 1.473,
+    "low": 1.438,
+    "close": 1.472,
+    "volume": 353860.21011,
+    "quoteAssetVolume": 353860.21011,
+    "numberOfTrades": 1779
+  },
+  {
+    "timestamp": 1772031600000,
+    "open": 1.473,
+    "high": 1.497,
+    "low": 1.465,
+    "close": 1.479,
+    "volume": 639608.64891,
+    "quoteAssetVolume": 639608.64891,
+    "numberOfTrades": 2334
+  },
+  {
+    "timestamp": 1772035200000,
+    "open": 1.48,
+    "high": 1.51,
+    "low": 1.48,
+    "close": 1.508,
+    "volume": 728151.3217,
+    "quoteAssetVolume": 728151.3217,
+    "numberOfTrades": 2274
+  },
+  {
+    "timestamp": 1772038800000,
+    "open": 1.508,
+    "high": 1.523,
+    "low": 1.499,
+    "close": 1.517,
+    "volume": 440324.57781,
+    "quoteAssetVolume": 440324.57781,
+    "numberOfTrades": 2024
+  },
+  {
+    "timestamp": 1772042400000,
+    "open": 1.517,
+    "high": 1.524,
+    "low": 1.504,
+    "close": 1.518,
+    "volume": 293570.96367,
+    "quoteAssetVolume": 293570.96367,
+    "numberOfTrades": 2030
+  },
+  {
+    "timestamp": 1772046000000,
+    "open": 1.517,
+    "high": 1.518,
+    "low": 1.499,
+    "close": 1.512,
+    "volume": 216204.22504,
+    "quoteAssetVolume": 216204.22504,
+    "numberOfTrades": 2664
+  },
+  {
+    "timestamp": 1772049600000,
+    "open": 1.513,
+    "high": 1.529,
+    "low": 1.504,
+    "close": 1.52,
+    "volume": 291928.41076,
+    "quoteAssetVolume": 291928.41076,
+    "numberOfTrades": 2857
+  },
+  {
+    "timestamp": 1772053200000,
+    "open": 1.52,
+    "high": 1.549,
+    "low": 1.515,
+    "close": 1.541,
+    "volume": 584628.5191,
+    "quoteAssetVolume": 584628.5191,
+    "numberOfTrades": 3994
+  },
+  {
+    "timestamp": 1772056800000,
+    "open": 1.541,
+    "high": 1.552,
+    "low": 1.503,
+    "close": 1.517,
+    "volume": 634517.47091,
+    "quoteAssetVolume": 634517.47091,
+    "numberOfTrades": 3113
+  },
+  {
+    "timestamp": 1772060400000,
+    "open": 1.518,
+    "high": 1.519,
+    "low": 1.47,
+    "close": 1.489,
+    "volume": 460803.90421,
+    "quoteAssetVolume": 460803.90421,
+    "numberOfTrades": 3206
+  },
+  {
+    "timestamp": 1772064000000,
+    "open": 1.488,
+    "high": 1.504,
+    "low": 1.472,
+    "close": 1.481,
+    "volume": 371101.39605,
+    "quoteAssetVolume": 371101.39605,
+    "numberOfTrades": 2380
+  },
+  {
+    "timestamp": 1772067600000,
+    "open": 1.48,
+    "high": 1.494,
+    "low": 1.475,
+    "close": 1.479,
+    "volume": 285123.87667,
+    "quoteAssetVolume": 285123.87667,
+    "numberOfTrades": 2616
+  },
+  {
+    "timestamp": 1772071200000,
+    "open": 1.48,
+    "high": 1.487,
+    "low": 1.466,
+    "close": 1.484,
+    "volume": 285509.96,
+    "quoteAssetVolume": 285509.96,
+    "numberOfTrades": 1233
+  },
+  {
+    "timestamp": 1772074800000,
+    "open": 1.484,
+    "high": 1.49,
+    "low": 1.473,
+    "close": 1.474,
+    "volume": 81040.77749,
+    "quoteAssetVolume": 81040.77749,
+    "numberOfTrades": 606
+  },
+  {
+    "timestamp": 1772078400000,
+    "open": 1.473,
+    "high": 1.485,
+    "low": 1.47,
+    "close": 1.474,
+    "volume": 132107.90479,
+    "quoteAssetVolume": 132107.90479,
+    "numberOfTrades": 946
+  },
+  {
+    "timestamp": 1772082000000,
+    "open": 1.474,
+    "high": 1.474,
+    "low": 1.449,
+    "close": 1.458,
+    "volume": 175013.06567,
+    "quoteAssetVolume": 175013.06567,
+    "numberOfTrades": 803
+  },
+  {
+    "timestamp": 1772085600000,
+    "open": 1.458,
+    "high": 1.469,
+    "low": 1.451,
+    "close": 1.453,
+    "volume": 85846.50201,
+    "quoteAssetVolume": 85846.50201,
+    "numberOfTrades": 583
+  },
+  {
+    "timestamp": 1772089200000,
+    "open": 1.452,
+    "high": 1.466,
+    "low": 1.452,
+    "close": 1.455,
+    "volume": 114085.3765,
+    "quoteAssetVolume": 114085.3765,
+    "numberOfTrades": 693
+  },
+  {
+    "timestamp": 1772092800000,
+    "open": 1.456,
+    "high": 1.479,
+    "low": 1.456,
+    "close": 1.468,
+    "volume": 97952.48692,
+    "quoteAssetVolume": 97952.48692,
+    "numberOfTrades": 991
+  },
+  {
+    "timestamp": 1772096400000,
+    "open": 1.468,
+    "high": 1.49,
+    "low": 1.467,
+    "close": 1.486,
+    "volume": 337595.33816,
+    "quoteAssetVolume": 337595.33816,
+    "numberOfTrades": 2552
+  },
+  {
+    "timestamp": 1772100000000,
+    "open": 1.485,
+    "high": 1.491,
+    "low": 1.468,
+    "close": 1.47,
+    "volume": 340574.9521,
+    "quoteAssetVolume": 340574.9521,
+    "numberOfTrades": 3164
+  },
+  {
+    "timestamp": 1772103600000,
+    "open": 1.471,
+    "high": 1.474,
+    "low": 1.46,
+    "close": 1.464,
+    "volume": 124265.60038,
+    "quoteAssetVolume": 124265.60038,
+    "numberOfTrades": 848
+  },
+  {
+    "timestamp": 1772107200000,
+    "open": 1.465,
+    "high": 1.482,
+    "low": 1.463,
+    "close": 1.479,
+    "volume": 97177.3642,
+    "quoteAssetVolume": 97177.3642,
+    "numberOfTrades": 874
+  },
+  {
+    "timestamp": 1772110800000,
+    "open": 1.479,
+    "high": 1.484,
+    "low": 1.469,
+    "close": 1.474,
+    "volume": 85072.88159,
+    "quoteAssetVolume": 85072.88159,
+    "numberOfTrades": 648
+  },
+  {
+    "timestamp": 1772114400000,
+    "open": 1.473,
+    "high": 1.484,
+    "low": 1.455,
+    "close": 1.47,
+    "volume": 234087.12481,
+    "quoteAssetVolume": 234087.12481,
+    "numberOfTrades": 1628
+  },
+  {
+    "timestamp": 1772118000000,
+    "open": 1.469,
+    "high": 1.47,
+    "low": 1.44,
+    "close": 1.457,
+    "volume": 305694.19343,
+    "quoteAssetVolume": 305694.19343,
+    "numberOfTrades": 1878
+  },
+  {
+    "timestamp": 1772121600000,
+    "open": 1.457,
+    "high": 1.458,
+    "low": 1.401,
+    "close": 1.403,
+    "volume": 606743.26957,
+    "quoteAssetVolume": 606743.26957,
+    "numberOfTrades": 2167
+  },
+  {
+    "timestamp": 1772125200000,
+    "open": 1.402,
+    "high": 1.416,
+    "low": 1.399,
+    "close": 1.406,
+    "volume": 203160.60053,
+    "quoteAssetVolume": 203160.60053,
+    "numberOfTrades": 1010
+  },
+  {
+    "timestamp": 1772128800000,
+    "open": 1.405,
+    "high": 1.43,
+    "low": 1.403,
+    "close": 1.418,
+    "volume": 642057.39926,
+    "quoteAssetVolume": 642057.39926,
+    "numberOfTrades": 2888
+  },
+  {
+    "timestamp": 1772132400000,
+    "open": 1.417,
+    "high": 1.438,
+    "low": 1.416,
+    "close": 1.431,
+    "volume": 380185.67627,
+    "quoteAssetVolume": 380185.67627,
+    "numberOfTrades": 1842
+  },
+  {
+    "timestamp": 1772136000000,
+    "open": 1.43,
+    "high": 1.441,
+    "low": 1.429,
+    "close": 1.431,
+    "volume": 274060.70062,
+    "quoteAssetVolume": 274060.70062,
+    "numberOfTrades": 1710
+  },
+  {
+    "timestamp": 1772139600000,
+    "open": 1.431,
+    "high": 1.436,
+    "low": 1.422,
+    "close": 1.426,
+    "volume": 130001.45862,
+    "quoteAssetVolume": 130001.45862,
+    "numberOfTrades": 1016
+  },
+  {
+    "timestamp": 1772143200000,
+    "open": 1.426,
+    "high": 1.434,
+    "low": 1.424,
+    "close": 1.434,
+    "volume": 89020.74086,
+    "quoteAssetVolume": 89020.74086,
+    "numberOfTrades": 1143
+  },
+  {
+    "timestamp": 1772146800000,
+    "open": 1.433,
+    "high": 1.442,
+    "low": 1.432,
+    "close": 1.437,
+    "volume": 69045.49564,
+    "quoteAssetVolume": 69045.49564,
+    "numberOfTrades": 689
+  },
+  {
+    "timestamp": 1772150400000,
+    "open": 1.438,
+    "high": 1.443,
+    "low": 1.43,
+    "close": 1.439,
+    "volume": 149812.8677,
+    "quoteAssetVolume": 149812.8677,
+    "numberOfTrades": 1475
+  },
+  {
+    "timestamp": 1772154000000,
+    "open": 1.439,
+    "high": 1.445,
+    "low": 1.431,
+    "close": 1.445,
+    "volume": 111082.56395,
+    "quoteAssetVolume": 111082.56395,
+    "numberOfTrades": 982
+  },
+  {
+    "timestamp": 1772157600000,
+    "open": 1.445,
+    "high": 1.457,
+    "low": 1.442,
+    "close": 1.45,
+    "volume": 104603.62295,
+    "quoteAssetVolume": 104603.62295,
+    "numberOfTrades": 699
+  },
+  {
+    "timestamp": 1772161200000,
+    "open": 1.449,
+    "high": 1.466,
+    "low": 1.443,
+    "close": 1.465,
+    "volume": 88824.32627,
+    "quoteAssetVolume": 88824.32627,
+    "numberOfTrades": 721
+  },
+  {
+    "timestamp": 1772164800000,
+    "open": 1.464,
+    "high": 1.49,
+    "low": 1.463,
+    "close": 1.477,
+    "volume": 163088.0024,
+    "quoteAssetVolume": 163088.0024,
+    "numberOfTrades": 1058
+  },
+  {
+    "timestamp": 1772168400000,
+    "open": 1.478,
+    "high": 1.487,
+    "low": 1.471,
+    "close": 1.48,
+    "volume": 128200.92919,
+    "quoteAssetVolume": 128200.92919,
+    "numberOfTrades": 690
+  },
+  {
+    "timestamp": 1772172000000,
+    "open": 1.48,
+    "high": 1.485,
+    "low": 1.469,
+    "close": 1.482,
+    "volume": 82522.79811,
+    "quoteAssetVolume": 82522.79811,
+    "numberOfTrades": 524
+  },
+  {
+    "timestamp": 1772175600000,
+    "open": 1.482,
+    "high": 1.486,
+    "low": 1.47,
+    "close": 1.485,
+    "volume": 102717.03404,
+    "quoteAssetVolume": 102717.03404,
+    "numberOfTrades": 460
+  },
+  {
+    "timestamp": 1772179200000,
+    "open": 1.485,
+    "high": 1.494,
+    "low": 1.483,
+    "close": 1.492,
+    "volume": 122055.35658,
+    "quoteAssetVolume": 122055.35658,
+    "numberOfTrades": 636
+  },
+  {
+    "timestamp": 1772182800000,
+    "open": 1.491,
+    "high": 1.499,
+    "low": 1.475,
+    "close": 1.476,
+    "volume": 199310.08956,
+    "quoteAssetVolume": 199310.08956,
+    "numberOfTrades": 961
+  },
+  {
+    "timestamp": 1772186400000,
+    "open": 1.476,
+    "high": 1.478,
+    "low": 1.446,
+    "close": 1.45,
+    "volume": 326436.74608,
+    "quoteAssetVolume": 326436.74608,
+    "numberOfTrades": 1860
+  },
+  {
+    "timestamp": 1772190000000,
+    "open": 1.45,
+    "high": 1.465,
+    "low": 1.432,
+    "close": 1.441,
+    "volume": 254740.4753,
+    "quoteAssetVolume": 254740.4753,
+    "numberOfTrades": 1471
+  },
+  {
+    "timestamp": 1772193600000,
+    "open": 1.44,
+    "high": 1.448,
+    "low": 1.425,
+    "close": 1.432,
+    "volume": 158239.38445,
+    "quoteAssetVolume": 158239.38445,
+    "numberOfTrades": 991
+  },
+  {
+    "timestamp": 1772197200000,
+    "open": 1.431,
+    "high": 1.44,
+    "low": 1.413,
+    "close": 1.432,
+    "volume": 185524.327,
+    "quoteAssetVolume": 185524.327,
+    "numberOfTrades": 1328
+  },
+  {
+    "timestamp": 1772200800000,
+    "open": 1.432,
+    "high": 1.437,
+    "low": 1.418,
+    "close": 1.42,
+    "volume": 134235.86938,
+    "quoteAssetVolume": 134235.86938,
+    "numberOfTrades": 1016
+  },
+  {
+    "timestamp": 1772204400000,
+    "open": 1.42,
+    "high": 1.434,
+    "low": 1.416,
+    "close": 1.431,
+    "volume": 131327.12774,
+    "quoteAssetVolume": 131327.12774,
+    "numberOfTrades": 830
+  },
+  {
+    "timestamp": 1772208000000,
+    "open": 1.429,
+    "high": 1.433,
+    "low": 1.407,
+    "close": 1.41,
+    "volume": 169214.59915,
+    "quoteAssetVolume": 169214.59915,
+    "numberOfTrades": 1138
+  },
+  {
+    "timestamp": 1772211600000,
+    "open": 1.411,
+    "high": 1.42,
+    "low": 1.398,
+    "close": 1.42,
+    "volume": 178328.16157,
+    "quoteAssetVolume": 178328.16157,
+    "numberOfTrades": 1175
+  },
+  {
+    "timestamp": 1772215200000,
+    "open": 1.42,
+    "high": 1.426,
+    "low": 1.414,
+    "close": 1.416,
+    "volume": 132863.80815,
+    "quoteAssetVolume": 132863.80815,
+    "numberOfTrades": 574
+  },
+  {
+    "timestamp": 1772218800000,
+    "open": 1.415,
+    "high": 1.416,
+    "low": 1.398,
+    "close": 1.405,
+    "volume": 94127.47533,
+    "quoteAssetVolume": 94127.47533,
+    "numberOfTrades": 619
+  },
+  {
+    "timestamp": 1772222400000,
+    "open": 1.404,
+    "high": 1.418,
+    "low": 1.404,
+    "close": 1.411,
+    "volume": 135131.38333,
+    "quoteAssetVolume": 135131.38333,
+    "numberOfTrades": 739
+  },
+  {
+    "timestamp": 1772226000000,
+    "open": 1.411,
+    "high": 1.414,
+    "low": 1.4,
+    "close": 1.405,
+    "volume": 75648.82021,
+    "quoteAssetVolume": 75648.82021,
+    "numberOfTrades": 530
+  },
+  {
+    "timestamp": 1772229600000,
+    "open": 1.406,
+    "high": 1.41,
+    "low": 1.384,
+    "close": 1.406,
+    "volume": 193645.49048,
+    "quoteAssetVolume": 193645.49048,
+    "numberOfTrades": 817
+  },
+  {
+    "timestamp": 1772233200000,
+    "open": 1.406,
+    "high": 1.418,
+    "low": 1.405,
+    "close": 1.415,
+    "volume": 105040.13585,
+    "quoteAssetVolume": 105040.13585,
+    "numberOfTrades": 518
+  },
+  {
+    "timestamp": 1772236800000,
+    "open": 1.414,
+    "high": 1.427,
+    "low": 1.412,
+    "close": 1.423,
+    "volume": 181464.341,
+    "quoteAssetVolume": 181464.341,
+    "numberOfTrades": 817
+  },
+  {
+    "timestamp": 1772240400000,
+    "open": 1.424,
+    "high": 1.426,
+    "low": 1.41,
+    "close": 1.412,
+    "volume": 57278.82302,
+    "quoteAssetVolume": 57278.82302,
+    "numberOfTrades": 352
+  },
+  {
+    "timestamp": 1772244000000,
+    "open": 1.411,
+    "high": 1.418,
+    "low": 1.41,
+    "close": 1.417,
+    "volume": 23502.54581,
+    "quoteAssetVolume": 23502.54581,
+    "numberOfTrades": 201
+  },
+  {
+    "timestamp": 1772247600000,
+    "open": 1.416,
+    "high": 1.422,
+    "low": 1.408,
+    "close": 1.411,
+    "volume": 74967.04409,
+    "quoteAssetVolume": 74967.04409,
+    "numberOfTrades": 436
+  },
+  {
+    "timestamp": 1772251200000,
+    "open": 1.41,
+    "high": 1.411,
+    "low": 1.395,
+    "close": 1.403,
+    "volume": 103058.96849,
+    "quoteAssetVolume": 103058.96849,
+    "numberOfTrades": 479
+  },
+  {
+    "timestamp": 1772254800000,
+    "open": 1.403,
+    "high": 1.407,
+    "low": 1.392,
+    "close": 1.395,
+    "volume": 54616.49948,
+    "quoteAssetVolume": 54616.49948,
+    "numberOfTrades": 369
+  },
+  {
+    "timestamp": 1772258400000,
+    "open": 1.395,
+    "high": 1.397,
+    "low": 1.311,
+    "close": 1.316,
+    "volume": 729615.83483,
+    "quoteAssetVolume": 729615.83483,
+    "numberOfTrades": 4745
+  },
+  {
+    "timestamp": 1772262000000,
+    "open": 1.314,
+    "high": 1.356,
+    "low": 1.304,
+    "close": 1.334,
+    "volume": 340705.07028,
+    "quoteAssetVolume": 340705.07028,
+    "numberOfTrades": 2540
+  },
+  {
+    "timestamp": 1772265600000,
+    "open": 1.334,
+    "high": 1.334,
+    "low": 1.316,
+    "close": 1.318,
+    "volume": 228374.65143,
+    "quoteAssetVolume": 228374.65143,
+    "numberOfTrades": 1168
+  },
+  {
+    "timestamp": 1772269200000,
+    "open": 1.318,
+    "high": 1.326,
+    "low": 1.308,
+    "close": 1.311,
+    "volume": 162568.58261,
+    "quoteAssetVolume": 162568.58261,
+    "numberOfTrades": 1149
+  },
+  {
+    "timestamp": 1772272800000,
+    "open": 1.311,
+    "high": 1.321,
+    "low": 1.299,
+    "close": 1.308,
+    "volume": 237318.88371,
+    "quoteAssetVolume": 237318.88371,
+    "numberOfTrades": 1377
+  },
+  {
+    "timestamp": 1772276400000,
+    "open": 1.308,
+    "high": 1.321,
+    "low": 1.299,
+    "close": 1.301,
+    "volume": 231204.78725,
+    "quoteAssetVolume": 231204.78725,
+    "numberOfTrades": 1141
+  },
+  {
+    "timestamp": 1772280000000,
+    "open": 1.302,
+    "high": 1.311,
+    "low": 1.3,
+    "close": 1.306,
+    "volume": 208601.85973,
+    "quoteAssetVolume": 208601.85973,
+    "numberOfTrades": 704
+  },
+  {
+    "timestamp": 1772283600000,
+    "open": 1.307,
+    "high": 1.346,
+    "low": 1.298,
+    "close": 1.345,
+    "volume": 306968.65869,
+    "quoteAssetVolume": 306968.65869,
+    "numberOfTrades": 2186
+  },
+  {
+    "timestamp": 1772287200000,
+    "open": 1.345,
+    "high": 1.356,
+    "low": 1.321,
+    "close": 1.325,
+    "volume": 429784.13167,
+    "quoteAssetVolume": 429784.13167,
+    "numberOfTrades": 2081
+  },
+  {
+    "timestamp": 1772290800000,
+    "open": 1.325,
+    "high": 1.335,
+    "low": 1.312,
+    "close": 1.325,
+    "volume": 209633.16629,
+    "quoteAssetVolume": 209633.16629,
+    "numberOfTrades": 1095
+  },
+  {
+    "timestamp": 1772294400000,
+    "open": 1.325,
+    "high": 1.334,
+    "low": 1.319,
+    "close": 1.333,
+    "volume": 77583.92336,
+    "quoteAssetVolume": 77583.92336,
+    "numberOfTrades": 553
+  },
+  {
+    "timestamp": 1772298000000,
+    "open": 1.333,
+    "high": 1.339,
+    "low": 1.319,
+    "close": 1.336,
+    "volume": 155533.66289,
+    "quoteAssetVolume": 155533.66289,
+    "numberOfTrades": 828
+  },
+  {
+    "timestamp": 1772301600000,
+    "open": 1.336,
+    "high": 1.37,
+    "low": 1.326,
+    "close": 1.36,
+    "volume": 228470.99726,
+    "quoteAssetVolume": 228470.99726,
+    "numberOfTrades": 1068
+  },
+  {
+    "timestamp": 1772305200000,
+    "open": 1.361,
+    "high": 1.396,
+    "low": 1.35,
+    "close": 1.386,
+    "volume": 254117.84544,
+    "quoteAssetVolume": 254117.84544,
+    "numberOfTrades": 1507
+  },
+  {
+    "timestamp": 1772308800000,
+    "open": 1.385,
+    "high": 1.423,
+    "low": 1.379,
+    "close": 1.417,
+    "volume": 303291.76634,
+    "quoteAssetVolume": 303291.76634,
+    "numberOfTrades": 1547
+  },
+  {
+    "timestamp": 1772312400000,
+    "open": 1.418,
+    "high": 1.418,
+    "low": 1.389,
+    "close": 1.402,
+    "volume": 448880.19975,
+    "quoteAssetVolume": 448880.19975,
+    "numberOfTrades": 1352
+  },
+  {
+    "timestamp": 1772316000000,
+    "open": 1.402,
+    "high": 1.433,
+    "low": 1.402,
+    "close": 1.417,
+    "volume": 269423.08345,
+    "quoteAssetVolume": 269423.08345,
+    "numberOfTrades": 990
+  },
+  {
+    "timestamp": 1772319600000,
+    "open": 1.416,
+    "high": 1.418,
+    "low": 1.397,
+    "close": 1.407,
+    "volume": 172755.79314,
+    "quoteAssetVolume": 172755.79314,
+    "numberOfTrades": 785
+  },
+  {
+    "timestamp": 1772323200000,
+    "open": 1.408,
+    "high": 1.416,
+    "low": 1.396,
+    "close": 1.404,
+    "volume": 287069.49798,
+    "quoteAssetVolume": 287069.49798,
+    "numberOfTrades": 892
+  },
+  {
+    "timestamp": 1772326800000,
+    "open": 1.404,
+    "high": 1.44,
+    "low": 1.383,
+    "close": 1.428,
+    "volume": 655015.22726,
+    "quoteAssetVolume": 655015.22726,
+    "numberOfTrades": 2133
+  },
+  {
+    "timestamp": 1772330400000,
+    "open": 1.429,
+    "high": 1.464,
+    "low": 1.429,
+    "close": 1.447,
+    "volume": 494066.73745,
+    "quoteAssetVolume": 494066.73745,
+    "numberOfTrades": 2476
+  },
+  {
+    "timestamp": 1772334000000,
+    "open": 1.445,
+    "high": 1.453,
+    "low": 1.422,
+    "close": 1.427,
+    "volume": 272743.47282,
+    "quoteAssetVolume": 272743.47282,
+    "numberOfTrades": 1327
+  },
+  {
+    "timestamp": 1772337600000,
+    "open": 1.427,
+    "high": 1.431,
+    "low": 1.411,
+    "close": 1.425,
+    "volume": 140585.40276,
+    "quoteAssetVolume": 140585.40276,
+    "numberOfTrades": 914
+  },
+  {
+    "timestamp": 1772341200000,
+    "open": 1.425,
+    "high": 1.43,
+    "low": 1.418,
+    "close": 1.419,
+    "volume": 90472.54303,
+    "quoteAssetVolume": 90472.54303,
+    "numberOfTrades": 473
+  },
+  {
+    "timestamp": 1772344800000,
+    "open": 1.418,
+    "high": 1.42,
+    "low": 1.39,
+    "close": 1.396,
+    "volume": 300677.79708,
+    "quoteAssetVolume": 300677.79708,
+    "numberOfTrades": 1325
+  },
+  {
+    "timestamp": 1772348400000,
+    "open": 1.397,
+    "high": 1.403,
+    "low": 1.39,
+    "close": 1.4,
+    "volume": 92009.47017,
+    "quoteAssetVolume": 92009.47017,
+    "numberOfTrades": 615
+  },
+  {
+    "timestamp": 1772352000000,
+    "open": 1.401,
+    "high": 1.403,
+    "low": 1.369,
+    "close": 1.375,
+    "volume": 181376.78792,
+    "quoteAssetVolume": 181376.78792,
+    "numberOfTrades": 938
+  },
+  {
+    "timestamp": 1772355600000,
+    "open": 1.375,
+    "high": 1.389,
+    "low": 1.363,
+    "close": 1.364,
+    "volume": 156121.85986,
+    "quoteAssetVolume": 156121.85986,
+    "numberOfTrades": 945
+  },
+  {
+    "timestamp": 1772359200000,
+    "open": 1.366,
+    "high": 1.377,
+    "low": 1.36,
+    "close": 1.367,
+    "volume": 127484.77689,
+    "quoteAssetVolume": 127484.77689,
+    "numberOfTrades": 669
+  },
+  {
+    "timestamp": 1772362800000,
+    "open": 1.367,
+    "high": 1.374,
+    "low": 1.365,
+    "close": 1.372,
+    "volume": 162166.41573,
+    "quoteAssetVolume": 162166.41573,
+    "numberOfTrades": 593
+  },
+  {
+    "timestamp": 1772366400000,
+    "open": 1.371,
+    "high": 1.373,
+    "low": 1.349,
+    "close": 1.352,
+    "volume": 215595.1491,
+    "quoteAssetVolume": 215595.1491,
+    "numberOfTrades": 954
+  },
+  {
+    "timestamp": 1772370000000,
+    "open": 1.353,
+    "high": 1.39,
+    "low": 1.345,
+    "close": 1.382,
+    "volume": 248276.767,
+    "quoteAssetVolume": 248276.767,
+    "numberOfTrades": 1457
+  },
+  {
+    "timestamp": 1772373600000,
+    "open": 1.383,
+    "high": 1.395,
+    "low": 1.368,
+    "close": 1.373,
+    "volume": 260041.78595,
+    "quoteAssetVolume": 260041.78595,
+    "numberOfTrades": 1197
+  },
+  {
+    "timestamp": 1772377200000,
+    "open": 1.373,
+    "high": 1.387,
+    "low": 1.373,
+    "close": 1.377,
+    "volume": 108389.36668,
+    "quoteAssetVolume": 108389.36668,
+    "numberOfTrades": 646
+  },
+  {
+    "timestamp": 1772380800000,
+    "open": 1.377,
+    "high": 1.388,
+    "low": 1.347,
+    "close": 1.357,
+    "volume": 275349.05558,
+    "quoteAssetVolume": 275349.05558,
+    "numberOfTrades": 1236
+  },
+  {
+    "timestamp": 1772384400000,
+    "open": 1.359,
+    "high": 1.359,
+    "low": 1.338,
+    "close": 1.344,
+    "volume": 161988.94864,
+    "quoteAssetVolume": 161988.94864,
+    "numberOfTrades": 1085
+  },
+  {
+    "timestamp": 1772388000000,
+    "open": 1.344,
+    "high": 1.367,
+    "low": 1.344,
+    "close": 1.352,
+    "volume": 121279.87352,
+    "quoteAssetVolume": 121279.87352,
+    "numberOfTrades": 783
+  },
+  {
+    "timestamp": 1772391600000,
+    "open": 1.352,
+    "high": 1.353,
+    "low": 1.333,
+    "close": 1.337,
+    "volume": 112562.49668,
+    "quoteAssetVolume": 112562.49668,
+    "numberOfTrades": 713
+  },
+  {
+    "timestamp": 1772395200000,
+    "open": 1.338,
+    "high": 1.339,
+    "low": 1.311,
+    "close": 1.315,
+    "volume": 213438.08527,
+    "quoteAssetVolume": 213438.08527,
+    "numberOfTrades": 1295
+  },
+  {
+    "timestamp": 1772398800000,
+    "open": 1.315,
+    "high": 1.336,
+    "low": 1.315,
+    "close": 1.33,
+    "volume": 131363.27615,
+    "quoteAssetVolume": 131363.27615,
+    "numberOfTrades": 627
+  },
+  {
+    "timestamp": 1772402400000,
+    "open": 1.329,
+    "high": 1.357,
+    "low": 1.324,
+    "close": 1.33,
+    "volume": 278718.06697,
+    "quoteAssetVolume": 278718.06697,
+    "numberOfTrades": 1365
+  },
+  {
+    "timestamp": 1772406000000,
+    "open": 1.329,
+    "high": 1.352,
+    "low": 1.328,
+    "close": 1.339,
+    "volume": 97837.76756,
+    "quoteAssetVolume": 97837.76756,
+    "numberOfTrades": 653
+  },
+  {
+    "timestamp": 1772409600000,
+    "open": 1.339,
+    "high": 1.37,
+    "low": 1.339,
+    "close": 1.359,
+    "volume": 139419.42494,
+    "quoteAssetVolume": 139419.42494,
+    "numberOfTrades": 887
+  },
+  {
+    "timestamp": 1772413200000,
+    "open": 1.36,
+    "high": 1.387,
+    "low": 1.356,
+    "close": 1.37,
+    "volume": 208947.44206,
+    "quoteAssetVolume": 208947.44206,
+    "numberOfTrades": 970
+  },
+  {
+    "timestamp": 1772416800000,
+    "open": 1.371,
+    "high": 1.372,
+    "low": 1.352,
+    "close": 1.36,
+    "volume": 109058.49835,
+    "quoteAssetVolume": 109058.49835,
+    "numberOfTrades": 686
+  },
+  {
+    "timestamp": 1772420400000,
+    "open": 1.36,
+    "high": 1.385,
+    "low": 1.353,
+    "close": 1.377,
+    "volume": 178045.96447,
+    "quoteAssetVolume": 178045.96447,
+    "numberOfTrades": 933
+  },
+  {
+    "timestamp": 1772424000000,
+    "open": 1.378,
+    "high": 1.385,
+    "low": 1.373,
+    "close": 1.375,
+    "volume": 95347.03447,
+    "quoteAssetVolume": 95347.03447,
+    "numberOfTrades": 641
+  },
+  {
+    "timestamp": 1772427600000,
+    "open": 1.376,
+    "high": 1.38,
+    "low": 1.364,
+    "close": 1.366,
+    "volume": 77200.31867,
+    "quoteAssetVolume": 77200.31867,
+    "numberOfTrades": 625
+  },
+  {
+    "timestamp": 1772431200000,
+    "open": 1.367,
+    "high": 1.367,
+    "low": 1.344,
+    "close": 1.35,
+    "volume": 66676.9244,
+    "quoteAssetVolume": 66676.9244,
+    "numberOfTrades": 642
+  },
+  {
+    "timestamp": 1772434800000,
+    "open": 1.349,
+    "high": 1.352,
+    "low": 1.331,
+    "close": 1.347,
+    "volume": 78491.78392,
+    "quoteAssetVolume": 78491.78392,
+    "numberOfTrades": 686
+  },
+  {
+    "timestamp": 1772438400000,
+    "open": 1.347,
+    "high": 1.352,
+    "low": 1.333,
+    "close": 1.348,
+    "volume": 180729.93695,
+    "quoteAssetVolume": 180729.93695,
+    "numberOfTrades": 966
+  },
+  {
+    "timestamp": 1772442000000,
+    "open": 1.347,
+    "high": 1.359,
+    "low": 1.346,
+    "close": 1.349,
+    "volume": 151695.80727,
+    "quoteAssetVolume": 151695.80727,
+    "numberOfTrades": 913
+  },
+  {
+    "timestamp": 1772445600000,
+    "open": 1.348,
+    "high": 1.354,
+    "low": 1.346,
+    "close": 1.351,
+    "volume": 46472.25049,
+    "quoteAssetVolume": 46472.25049,
+    "numberOfTrades": 354
+  },
+  {
+    "timestamp": 1772449200000,
+    "open": 1.351,
+    "high": 1.359,
+    "low": 1.342,
+    "close": 1.352,
+    "volume": 144978.13272,
+    "quoteAssetVolume": 144978.13272,
+    "numberOfTrades": 805
+  },
+  {
+    "timestamp": 1772452800000,
+    "open": 1.352,
+    "high": 1.353,
+    "low": 1.342,
+    "close": 1.345,
+    "volume": 86185.92033,
+    "quoteAssetVolume": 86185.92033,
+    "numberOfTrades": 584
+  },
+  {
+    "timestamp": 1772456400000,
+    "open": 1.345,
+    "high": 1.35,
+    "low": 1.331,
+    "close": 1.334,
+    "volume": 177510.08458,
+    "quoteAssetVolume": 177510.08458,
+    "numberOfTrades": 1027
+  },
+  {
+    "timestamp": 1772460000000,
+    "open": 1.333,
+    "high": 1.395,
+    "low": 1.328,
+    "close": 1.388,
+    "volume": 509149.55716,
+    "quoteAssetVolume": 509149.55716,
+    "numberOfTrades": 2588
+  },
+  {
+    "timestamp": 1772463600000,
+    "open": 1.388,
+    "high": 1.436,
+    "low": 1.383,
+    "close": 1.419,
+    "volume": 901534.63279,
+    "quoteAssetVolume": 901534.63279,
+    "numberOfTrades": 3928
+  },
+  {
+    "timestamp": 1772467200000,
+    "open": 1.42,
+    "high": 1.44,
+    "low": 1.403,
+    "close": 1.411,
+    "volume": 668578.9869,
+    "quoteAssetVolume": 668578.9869,
+    "numberOfTrades": 3016
+  },
+  {
+    "timestamp": 1772470800000,
+    "open": 1.41,
+    "high": 1.412,
+    "low": 1.36,
+    "close": 1.377,
+    "volume": 718493.19791,
+    "quoteAssetVolume": 718493.19791,
+    "numberOfTrades": 2934
+  },
+  {
+    "timestamp": 1772474400000,
+    "open": 1.378,
+    "high": 1.39,
+    "low": 1.363,
+    "close": 1.38,
+    "volume": 265151.56303,
+    "quoteAssetVolume": 265151.56303,
+    "numberOfTrades": 1643
+  },
+  {
+    "timestamp": 1772478000000,
+    "open": 1.381,
+    "high": 1.383,
+    "low": 1.368,
+    "close": 1.377,
+    "volume": 210932.34812,
+    "quoteAssetVolume": 210932.34812,
+    "numberOfTrades": 1208
+  },
+  {
+    "timestamp": 1772481600000,
+    "open": 1.375,
+    "high": 1.388,
+    "low": 1.363,
+    "close": 1.369,
+    "volume": 202718.51787,
+    "quoteAssetVolume": 202718.51787,
+    "numberOfTrades": 1201
+  },
+  {
+    "timestamp": 1772485200000,
+    "open": 1.368,
+    "high": 1.378,
+    "low": 1.358,
+    "close": 1.371,
+    "volume": 296680.86318,
+    "quoteAssetVolume": 296680.86318,
+    "numberOfTrades": 1323
+  },
+  {
+    "timestamp": 1772488800000,
+    "open": 1.372,
+    "high": 1.39,
+    "low": 1.372,
+    "close": 1.385,
+    "volume": 162545.38939,
+    "quoteAssetVolume": 162545.38939,
+    "numberOfTrades": 724
+  },
+  {
+    "timestamp": 1772492400000,
+    "open": 1.385,
+    "high": 1.387,
+    "low": 1.356,
+    "close": 1.365,
+    "volume": 172202.65598,
+    "quoteAssetVolume": 172202.65598,
+    "numberOfTrades": 1284
+  },
+  {
+    "timestamp": 1772496000000,
+    "open": 1.366,
+    "high": 1.367,
+    "low": 1.343,
+    "close": 1.356,
+    "volume": 291725.7628,
+    "quoteAssetVolume": 291725.7628,
+    "numberOfTrades": 1610
+  },
+  {
+    "timestamp": 1772499600000,
+    "open": 1.356,
+    "high": 1.362,
+    "low": 1.342,
+    "close": 1.345,
+    "volume": 133801.70181,
+    "quoteAssetVolume": 133801.70181,
+    "numberOfTrades": 791
+  },
+  {
+    "timestamp": 1772503200000,
+    "open": 1.345,
+    "high": 1.351,
+    "low": 1.333,
+    "close": 1.347,
+    "volume": 210915.82379,
+    "quoteAssetVolume": 210915.82379,
+    "numberOfTrades": 1097
+  },
+  {
+    "timestamp": 1772506800000,
+    "open": 1.347,
+    "high": 1.352,
+    "low": 1.336,
+    "close": 1.346,
+    "volume": 119618.39303,
+    "quoteAssetVolume": 119618.39303,
+    "numberOfTrades": 767
+  },
+  {
+    "timestamp": 1772510400000,
+    "open": 1.345,
+    "high": 1.346,
+    "low": 1.331,
+    "close": 1.333,
+    "volume": 122471.0331,
+    "quoteAssetVolume": 122471.0331,
+    "numberOfTrades": 759
+  },
+  {
+    "timestamp": 1772514000000,
+    "open": 1.333,
+    "high": 1.353,
+    "low": 1.327,
+    "close": 1.334,
+    "volume": 208890.09391,
+    "quoteAssetVolume": 208890.09391,
+    "numberOfTrades": 1273
+  },
+  {
+    "timestamp": 1772517600000,
+    "open": 1.334,
+    "high": 1.34,
+    "low": 1.33,
+    "close": 1.338,
+    "volume": 127711.09595,
+    "quoteAssetVolume": 127711.09595,
+    "numberOfTrades": 753
+  },
+  {
+    "timestamp": 1772521200000,
+    "open": 1.338,
+    "high": 1.347,
+    "low": 1.334,
+    "close": 1.341,
+    "volume": 110426.79331,
+    "quoteAssetVolume": 110426.79331,
+    "numberOfTrades": 733
+  },
+  {
+    "timestamp": 1772524800000,
+    "open": 1.341,
+    "high": 1.346,
+    "low": 1.319,
+    "close": 1.322,
+    "volume": 182638.28986,
+    "quoteAssetVolume": 182638.28986,
+    "numberOfTrades": 941
+  },
+  {
+    "timestamp": 1772528400000,
+    "open": 1.321,
+    "high": 1.333,
+    "low": 1.316,
+    "close": 1.318,
+    "volume": 216158.1895,
+    "quoteAssetVolume": 216158.1895,
+    "numberOfTrades": 1118
+  },
+  {
+    "timestamp": 1772532000000,
+    "open": 1.317,
+    "high": 1.326,
+    "low": 1.312,
+    "close": 1.321,
+    "volume": 160961.40768,
+    "quoteAssetVolume": 160961.40768,
+    "numberOfTrades": 878
+  },
+  {
+    "timestamp": 1772535600000,
+    "open": 1.321,
+    "high": 1.326,
+    "low": 1.313,
+    "close": 1.325,
+    "volume": 219232.01296,
+    "quoteAssetVolume": 219232.01296,
+    "numberOfTrades": 976
+  },
+  {
+    "timestamp": 1772539200000,
+    "open": 1.325,
+    "high": 1.355,
+    "low": 1.325,
+    "close": 1.331,
+    "volume": 426390.80544,
+    "quoteAssetVolume": 426390.80544,
+    "numberOfTrades": 2065
+  },
+  {
+    "timestamp": 1772542800000,
+    "open": 1.332,
+    "high": 1.332,
+    "low": 1.319,
+    "close": 1.326,
+    "volume": 214752.18162,
+    "quoteAssetVolume": 214752.18162,
+    "numberOfTrades": 838
+  },
+  {
+    "timestamp": 1772546400000,
+    "open": 1.325,
+    "high": 1.342,
+    "low": 1.312,
+    "close": 1.321,
+    "volume": 304107.3011,
+    "quoteAssetVolume": 304107.3011,
+    "numberOfTrades": 1494
+  },
+  {
+    "timestamp": 1772550000000,
+    "open": 1.322,
+    "high": 1.343,
+    "low": 1.312,
+    "close": 1.334,
+    "volume": 256281.07551,
+    "quoteAssetVolume": 256281.07551,
+    "numberOfTrades": 1621
+  },
+  {
+    "timestamp": 1772553600000,
+    "open": 1.334,
+    "high": 1.373,
+    "low": 1.329,
+    "close": 1.35,
+    "volume": 581802.15402,
+    "quoteAssetVolume": 581802.15402,
+    "numberOfTrades": 2425
+  },
+  {
+    "timestamp": 1772557200000,
+    "open": 1.35,
+    "high": 1.353,
+    "low": 1.332,
+    "close": 1.348,
+    "volume": 126911.82828,
+    "quoteAssetVolume": 126911.82828,
+    "numberOfTrades": 842
+  },
+  {
+    "timestamp": 1772560800000,
+    "open": 1.348,
+    "high": 1.361,
+    "low": 1.337,
+    "close": 1.352,
+    "volume": 194702.50079,
+    "quoteAssetVolume": 194702.50079,
+    "numberOfTrades": 1078
+  },
+  {
+    "timestamp": 1772564400000,
+    "open": 1.352,
+    "high": 1.356,
+    "low": 1.337,
+    "close": 1.347,
+    "volume": 292574.49664,
+    "quoteAssetVolume": 292574.49664,
+    "numberOfTrades": 1386
+  },
+  {
+    "timestamp": 1772568000000,
+    "open": 1.347,
+    "high": 1.35,
+    "low": 1.33,
+    "close": 1.335,
+    "volume": 151126.41966,
+    "quoteAssetVolume": 151126.41966,
+    "numberOfTrades": 950
+  },
+  {
+    "timestamp": 1772571600000,
+    "open": 1.336,
+    "high": 1.337,
+    "low": 1.326,
+    "close": 1.334,
+    "volume": 126323.25058,
+    "quoteAssetVolume": 126323.25058,
+    "numberOfTrades": 618
+  },
+  {
+    "timestamp": 1772575200000,
+    "open": 1.334,
+    "high": 1.351,
+    "low": 1.334,
+    "close": 1.343,
+    "volume": 74017.12528,
+    "quoteAssetVolume": 74017.12528,
+    "numberOfTrades": 498
+  },
+  {
+    "timestamp": 1772578800000,
+    "open": 1.345,
+    "high": 1.356,
+    "low": 1.34,
+    "close": 1.341,
+    "volume": 95665.22364,
+    "quoteAssetVolume": 95665.22364,
+    "numberOfTrades": 540
+  },
+  {
+    "timestamp": 1772582400000,
+    "open": 1.341,
+    "high": 1.349,
+    "low": 1.331,
+    "close": 1.344,
+    "volume": 159578.65846,
+    "quoteAssetVolume": 159578.65846,
+    "numberOfTrades": 941
+  },
+  {
+    "timestamp": 1772586000000,
+    "open": 1.345,
+    "high": 1.352,
+    "low": 1.338,
+    "close": 1.343,
+    "volume": 225563.19026,
+    "quoteAssetVolume": 225563.19026,
+    "numberOfTrades": 1045
+  },
+  {
+    "timestamp": 1772589600000,
+    "open": 1.344,
+    "high": 1.348,
+    "low": 1.333,
+    "close": 1.346,
+    "volume": 62417.5067,
+    "quoteAssetVolume": 62417.5067,
+    "numberOfTrades": 473
+  },
+  {
+    "timestamp": 1772593200000,
+    "open": 1.346,
+    "high": 1.346,
+    "low": 1.318,
+    "close": 1.331,
+    "volume": 115469.38536,
+    "quoteAssetVolume": 115469.38536,
+    "numberOfTrades": 817
+  },
+  {
+    "timestamp": 1772596800000,
+    "open": 1.331,
+    "high": 1.332,
+    "low": 1.314,
+    "close": 1.324,
+    "volume": 116229.11855,
+    "quoteAssetVolume": 116229.11855,
+    "numberOfTrades": 674
+  },
+  {
+    "timestamp": 1772600400000,
+    "open": 1.323,
+    "high": 1.338,
+    "low": 1.318,
+    "close": 1.33,
+    "volume": 120786.45951,
+    "quoteAssetVolume": 120786.45951,
+    "numberOfTrades": 844
+  },
+  {
+    "timestamp": 1772604000000,
+    "open": 1.331,
+    "high": 1.337,
+    "low": 1.32,
+    "close": 1.334,
+    "volume": 129947.40534,
+    "quoteAssetVolume": 129947.40534,
+    "numberOfTrades": 669
+  },
+  {
+    "timestamp": 1772607600000,
+    "open": 1.334,
+    "high": 1.364,
+    "low": 1.331,
+    "close": 1.358,
+    "volume": 175708.61481,
+    "quoteAssetVolume": 175708.61481,
+    "numberOfTrades": 993
+  },
+  {
+    "timestamp": 1772611200000,
+    "open": 1.358,
+    "high": 1.42,
+    "low": 1.355,
+    "close": 1.417,
+    "volume": 524577.72887,
+    "quoteAssetVolume": 524577.72887,
+    "numberOfTrades": 2394
+  },
+  {
+    "timestamp": 1772614800000,
+    "open": 1.417,
+    "high": 1.44,
+    "low": 1.408,
+    "close": 1.413,
+    "volume": 985397.86803,
+    "quoteAssetVolume": 985397.86803,
+    "numberOfTrades": 3899
+  },
+  {
+    "timestamp": 1772618400000,
+    "open": 1.413,
+    "high": 1.416,
+    "low": 1.386,
+    "close": 1.392,
+    "volume": 403327.35682,
+    "quoteAssetVolume": 403327.35682,
+    "numberOfTrades": 1682
+  },
+  {
+    "timestamp": 1772622000000,
+    "open": 1.393,
+    "high": 1.405,
+    "low": 1.38,
+    "close": 1.398,
+    "volume": 884143.43301,
+    "quoteAssetVolume": 884143.43301,
+    "numberOfTrades": 2342
+  },
+  {
+    "timestamp": 1772625600000,
+    "open": 1.398,
+    "high": 1.405,
+    "low": 1.377,
+    "close": 1.394,
+    "volume": 406582.24058,
+    "quoteAssetVolume": 406582.24058,
+    "numberOfTrades": 1949
+  },
+  {
+    "timestamp": 1772629200000,
+    "open": 1.394,
+    "high": 1.415,
+    "low": 1.394,
+    "close": 1.408,
+    "volume": 408094.62406,
+    "quoteAssetVolume": 408094.62406,
+    "numberOfTrades": 1884
+  },
+  {
+    "timestamp": 1772632800000,
+    "open": 1.408,
+    "high": 1.443,
+    "low": 1.402,
+    "close": 1.412,
+    "volume": 689984.16915,
+    "quoteAssetVolume": 689984.16915,
+    "numberOfTrades": 3356
+  },
+  {
+    "timestamp": 1772636400000,
+    "open": 1.413,
+    "high": 1.444,
+    "low": 1.412,
+    "close": 1.442,
+    "volume": 480165.01201,
+    "quoteAssetVolume": 480165.01201,
+    "numberOfTrades": 2597
+  },
+  {
+    "timestamp": 1772640000000,
+    "open": 1.442,
+    "high": 1.451,
+    "low": 1.414,
+    "close": 1.432,
+    "volume": 586490.21219,
+    "quoteAssetVolume": 586490.21219,
+    "numberOfTrades": 2120
+  },
+  {
+    "timestamp": 1772643600000,
+    "open": 1.431,
+    "high": 1.444,
+    "low": 1.418,
+    "close": 1.425,
+    "volume": 242354.7693,
+    "quoteAssetVolume": 242354.7693,
+    "numberOfTrades": 1602
+  },
+  {
+    "timestamp": 1772647200000,
+    "open": 1.425,
+    "high": 1.44,
+    "low": 1.418,
+    "close": 1.44,
+    "volume": 188834.19144,
+    "quoteAssetVolume": 188834.19144,
+    "numberOfTrades": 1031
+  },
+  {
+    "timestamp": 1772650800000,
+    "open": 1.44,
+    "high": 1.455,
+    "low": 1.435,
+    "close": 1.449,
+    "volume": 405244.4195,
+    "quoteAssetVolume": 405244.4195,
+    "numberOfTrades": 1927
+  },
+  {
+    "timestamp": 1772654400000,
+    "open": 1.448,
+    "high": 1.45,
+    "low": 1.43,
+    "close": 1.433,
+    "volume": 223913.54152,
+    "quoteAssetVolume": 223913.54152,
+    "numberOfTrades": 1047
+  },
+  {
+    "timestamp": 1772658000000,
+    "open": 1.433,
+    "high": 1.434,
+    "low": 1.421,
+    "close": 1.433,
+    "volume": 151981.20872,
+    "quoteAssetVolume": 151981.20872,
+    "numberOfTrades": 866
+  },
+  {
+    "timestamp": 1772661600000,
+    "open": 1.433,
+    "high": 1.446,
+    "low": 1.411,
+    "close": 1.414,
+    "volume": 187412.685,
+    "quoteAssetVolume": 187412.685,
+    "numberOfTrades": 1179
+  },
+  {
+    "timestamp": 1772665200000,
+    "open": 1.412,
+    "high": 1.417,
+    "low": 1.398,
+    "close": 1.413,
+    "volume": 249657.85863,
+    "quoteAssetVolume": 249657.85863,
+    "numberOfTrades": 1421
+  },
+  {
+    "timestamp": 1772668800000,
+    "open": 1.413,
+    "high": 1.413,
+    "low": 1.395,
+    "close": 1.403,
+    "volume": 499965.23494,
+    "quoteAssetVolume": 499965.23494,
+    "numberOfTrades": 2480
+  },
+  {
+    "timestamp": 1772672400000,
+    "open": 1.402,
+    "high": 1.413,
+    "low": 1.39,
+    "close": 1.394,
+    "volume": 279129.78459,
+    "quoteAssetVolume": 279129.78459,
+    "numberOfTrades": 1410
+  },
+  {
+    "timestamp": 1772676000000,
+    "open": 1.394,
+    "high": 1.41,
+    "low": 1.391,
+    "close": 1.397,
+    "volume": 199918.76622,
+    "quoteAssetVolume": 199918.76622,
+    "numberOfTrades": 1233
+  },
+  {
+    "timestamp": 1772679600000,
+    "open": 1.397,
+    "high": 1.4,
+    "low": 1.39,
+    "close": 1.394,
+    "volume": 134482.52118,
+    "quoteAssetVolume": 134482.52118,
+    "numberOfTrades": 786
+  },
+  {
+    "timestamp": 1772683200000,
+    "open": 1.393,
+    "high": 1.406,
+    "low": 1.392,
+    "close": 1.401,
+    "volume": 239939.89787,
+    "quoteAssetVolume": 239939.89787,
+    "numberOfTrades": 1326
+  },
+  {
+    "timestamp": 1772686800000,
+    "open": 1.401,
+    "high": 1.404,
+    "low": 1.385,
+    "close": 1.39,
+    "volume": 168876.66878,
+    "quoteAssetVolume": 168876.66878,
+    "numberOfTrades": 919
+  },
+  {
+    "timestamp": 1772690400000,
+    "open": 1.391,
+    "high": 1.398,
+    "low": 1.384,
+    "close": 1.398,
+    "volume": 222478.87999,
+    "quoteAssetVolume": 222478.87999,
+    "numberOfTrades": 1485
+  },
+  {
+    "timestamp": 1772694000000,
+    "open": 1.398,
+    "high": 1.401,
+    "low": 1.379,
+    "close": 1.386,
+    "volume": 180243.39745,
+    "quoteAssetVolume": 180243.39745,
+    "numberOfTrades": 1050
+  },
+  {
+    "timestamp": 1772697600000,
+    "open": 1.386,
+    "high": 1.406,
+    "low": 1.384,
+    "close": 1.392,
+    "volume": 226532.90037,
+    "quoteAssetVolume": 226532.90037,
+    "numberOfTrades": 1342
+  },
+  {
+    "timestamp": 1772701200000,
+    "open": 1.391,
+    "high": 1.402,
+    "low": 1.389,
+    "close": 1.4,
+    "volume": 205422.64854,
+    "quoteAssetVolume": 205422.64854,
+    "numberOfTrades": 1732
+  },
+  {
+    "timestamp": 1772704800000,
+    "open": 1.4,
+    "high": 1.419,
+    "low": 1.398,
+    "close": 1.414,
+    "volume": 304022.15011,
+    "quoteAssetVolume": 304022.15011,
+    "numberOfTrades": 1440
+  },
+  {
+    "timestamp": 1772708400000,
+    "open": 1.414,
+    "high": 1.418,
+    "low": 1.398,
+    "close": 1.408,
+    "volume": 232437.07312,
+    "quoteAssetVolume": 232437.07312,
+    "numberOfTrades": 1187
+  },
+  {
+    "timestamp": 1772712000000,
+    "open": 1.407,
+    "high": 1.414,
+    "low": 1.4,
+    "close": 1.409,
+    "volume": 208699.73899,
+    "quoteAssetVolume": 208699.73899,
+    "numberOfTrades": 1569
+  },
+  {
+    "timestamp": 1772715600000,
+    "open": 1.409,
+    "high": 1.411,
+    "low": 1.387,
+    "close": 1.4,
+    "volume": 286057.80655,
+    "quoteAssetVolume": 286057.80655,
+    "numberOfTrades": 1928
+  },
+  {
+    "timestamp": 1772719200000,
+    "open": 1.401,
+    "high": 1.411,
+    "low": 1.391,
+    "close": 1.403,
+    "volume": 583606.1495,
+    "quoteAssetVolume": 583606.1495,
+    "numberOfTrades": 3483
+  },
+  {
+    "timestamp": 1772722800000,
+    "open": 1.403,
+    "high": 1.405,
+    "low": 1.365,
+    "close": 1.369,
+    "volume": 526523.09373,
+    "quoteAssetVolume": 526523.09373,
+    "numberOfTrades": 3421
+  },
+  {
+    "timestamp": 1772726400000,
+    "open": 1.369,
+    "high": 1.369,
+    "low": 1.339,
+    "close": 1.356,
+    "volume": 752624.63926,
+    "quoteAssetVolume": 752624.63926,
+    "numberOfTrades": 4645
+  },
+  {
+    "timestamp": 1772730000000,
+    "open": 1.356,
+    "high": 1.366,
+    "low": 1.335,
+    "close": 1.338,
+    "volume": 347689.59349,
+    "quoteAssetVolume": 347689.59349,
+    "numberOfTrades": 1906
+  },
+  {
+    "timestamp": 1772733600000,
+    "open": 1.338,
+    "high": 1.359,
+    "low": 1.335,
+    "close": 1.358,
+    "volume": 222637.10691,
+    "quoteAssetVolume": 222637.10691,
+    "numberOfTrades": 1539
+  },
+  {
+    "timestamp": 1772737200000,
+    "open": 1.358,
+    "high": 1.384,
+    "low": 1.357,
+    "close": 1.376,
+    "volume": 261953.21294,
+    "quoteAssetVolume": 261953.21294,
+    "numberOfTrades": 1536
+  },
+  {
+    "timestamp": 1772740800000,
+    "open": 1.376,
+    "high": 1.401,
+    "low": 1.371,
+    "close": 1.394,
+    "volume": 302659.8963,
+    "quoteAssetVolume": 302659.8963,
+    "numberOfTrades": 1435
+  },
+  {
+    "timestamp": 1772744400000,
+    "open": 1.394,
+    "high": 1.41,
+    "low": 1.389,
+    "close": 1.395,
+    "volume": 318118.40932,
+    "quoteAssetVolume": 318118.40932,
+    "numberOfTrades": 1302
+  },
+  {
+    "timestamp": 1772748000000,
+    "open": 1.397,
+    "high": 1.401,
+    "low": 1.39,
+    "close": 1.395,
+    "volume": 62380.95171,
+    "quoteAssetVolume": 62380.95171,
+    "numberOfTrades": 333
+  },
+  {
+    "timestamp": 1772751600000,
+    "open": 1.395,
+    "high": 1.404,
+    "low": 1.39,
+    "close": 1.398,
+    "volume": 146181.8108,
+    "quoteAssetVolume": 146181.8108,
+    "numberOfTrades": 660
+  },
+  {
+    "timestamp": 1772755200000,
+    "open": 1.398,
+    "high": 1.402,
+    "low": 1.392,
+    "close": 1.395,
+    "volume": 124963.66389,
+    "quoteAssetVolume": 124963.66389,
+    "numberOfTrades": 716
+  },
+  {
+    "timestamp": 1772758800000,
+    "open": 1.396,
+    "high": 1.418,
+    "low": 1.388,
+    "close": 1.41,
+    "volume": 115774.50007,
+    "quoteAssetVolume": 115774.50007,
+    "numberOfTrades": 943
+  },
+  {
+    "timestamp": 1772762400000,
+    "open": 1.41,
+    "high": 1.417,
+    "low": 1.405,
+    "close": 1.411,
+    "volume": 101574.92935,
+    "quoteAssetVolume": 101574.92935,
+    "numberOfTrades": 730
+  },
+  {
+    "timestamp": 1772766000000,
+    "open": 1.41,
+    "high": 1.421,
+    "low": 1.403,
+    "close": 1.419,
+    "volume": 97284.48893,
+    "quoteAssetVolume": 97284.48893,
+    "numberOfTrades": 535
+  },
+  {
+    "timestamp": 1772769600000,
+    "open": 1.419,
+    "high": 1.421,
+    "low": 1.398,
+    "close": 1.411,
+    "volume": 128933.39331,
+    "quoteAssetVolume": 128933.39331,
+    "numberOfTrades": 1009
+  },
+  {
+    "timestamp": 1772773200000,
+    "open": 1.411,
+    "high": 1.414,
+    "low": 1.393,
+    "close": 1.399,
+    "volume": 121887.7679,
+    "quoteAssetVolume": 121887.7679,
+    "numberOfTrades": 745
+  },
+  {
+    "timestamp": 1772776800000,
+    "open": 1.399,
+    "high": 1.412,
+    "low": 1.399,
+    "close": 1.404,
+    "volume": 65622.43789,
+    "quoteAssetVolume": 65622.43789,
+    "numberOfTrades": 510
+  },
+  {
+    "timestamp": 1772780400000,
+    "open": 1.404,
+    "high": 1.424,
+    "low": 1.402,
+    "close": 1.419,
+    "volume": 219478.75318,
+    "quoteAssetVolume": 219478.75318,
+    "numberOfTrades": 1166
+  },
+  {
+    "timestamp": 1772784000000,
+    "open": 1.418,
+    "high": 1.418,
+    "low": 1.407,
+    "close": 1.411,
+    "volume": 63086.6568,
+    "quoteAssetVolume": 63086.6568,
+    "numberOfTrades": 595
+  },
+  {
+    "timestamp": 1772787600000,
+    "open": 1.411,
+    "high": 1.415,
+    "low": 1.395,
+    "close": 1.408,
+    "volume": 106162.37104,
+    "quoteAssetVolume": 106162.37104,
+    "numberOfTrades": 810
+  },
+  {
+    "timestamp": 1772791200000,
+    "open": 1.408,
+    "high": 1.415,
+    "low": 1.402,
+    "close": 1.404,
+    "volume": 162226.27141,
+    "quoteAssetVolume": 162226.27141,
+    "numberOfTrades": 922
+  },
+  {
+    "timestamp": 1772794800000,
+    "open": 1.403,
+    "high": 1.403,
+    "low": 1.385,
+    "close": 1.389,
+    "volume": 255933.36686,
+    "quoteAssetVolume": 255933.36686,
+    "numberOfTrades": 905
+  },
+  {
+    "timestamp": 1772798400000,
+    "open": 1.389,
+    "high": 1.393,
+    "low": 1.374,
+    "close": 1.387,
+    "volume": 274201.65067,
+    "quoteAssetVolume": 274201.65067,
+    "numberOfTrades": 1230
+  },
+  {
+    "timestamp": 1772802000000,
+    "open": 1.387,
+    "high": 1.397,
+    "low": 1.363,
+    "close": 1.364,
+    "volume": 392279.85532,
+    "quoteAssetVolume": 392279.85532,
+    "numberOfTrades": 2437
+  },
+  {
+    "timestamp": 1772805600000,
+    "open": 1.364,
+    "high": 1.368,
+    "low": 1.33,
+    "close": 1.339,
+    "volume": 755308.15119,
+    "quoteAssetVolume": 755308.15119,
+    "numberOfTrades": 4087
+  },
+  {
+    "timestamp": 1772809200000,
+    "open": 1.339,
+    "high": 1.361,
+    "low": 1.337,
+    "close": 1.347,
+    "volume": 390181.66177,
+    "quoteAssetVolume": 390181.66177,
+    "numberOfTrades": 1571
+  },
+  {
+    "timestamp": 1772812800000,
+    "open": 1.346,
+    "high": 1.358,
+    "low": 1.34,
+    "close": 1.347,
+    "volume": 269630.20148,
+    "quoteAssetVolume": 269630.20148,
+    "numberOfTrades": 1277
+  },
+  {
+    "timestamp": 1772816400000,
+    "open": 1.347,
+    "high": 1.356,
+    "low": 1.337,
+    "close": 1.346,
+    "volume": 128612.27121,
+    "quoteAssetVolume": 128612.27121,
+    "numberOfTrades": 998
+  },
+  {
+    "timestamp": 1772820000000,
+    "open": 1.346,
+    "high": 1.368,
+    "low": 1.344,
+    "close": 1.359,
+    "volume": 147217.05945,
+    "quoteAssetVolume": 147217.05945,
+    "numberOfTrades": 902
+  },
+  {
+    "timestamp": 1772823600000,
+    "open": 1.359,
+    "high": 1.368,
+    "low": 1.354,
+    "close": 1.358,
+    "volume": 83294.02038,
+    "quoteAssetVolume": 83294.02038,
+    "numberOfTrades": 524
+  },
+  {
+    "timestamp": 1772827200000,
+    "open": 1.357,
+    "high": 1.362,
+    "low": 1.353,
+    "close": 1.36,
+    "volume": 111860.58457,
+    "quoteAssetVolume": 111860.58457,
+    "numberOfTrades": 564
+  },
+  {
+    "timestamp": 1772830800000,
+    "open": 1.36,
+    "high": 1.36,
+    "low": 1.351,
+    "close": 1.358,
+    "volume": 41415.94898,
+    "quoteAssetVolume": 41415.94898,
+    "numberOfTrades": 376
+  },
+  {
+    "timestamp": 1772834400000,
+    "open": 1.359,
+    "high": 1.366,
+    "low": 1.356,
+    "close": 1.363,
+    "volume": 87791.20144,
+    "quoteAssetVolume": 87791.20144,
+    "numberOfTrades": 738
+  },
+  {
+    "timestamp": 1772838000000,
+    "open": 1.363,
+    "high": 1.363,
+    "low": 1.35,
+    "close": 1.351,
+    "volume": 96595.06205,
+    "quoteAssetVolume": 96595.06205,
+    "numberOfTrades": 587
+  },
+  {
+    "timestamp": 1772841600000,
+    "open": 1.352,
+    "high": 1.356,
+    "low": 1.344,
+    "close": 1.346,
+    "volume": 184941.97489,
+    "quoteAssetVolume": 184941.97489,
+    "numberOfTrades": 810
+  },
+  {
+    "timestamp": 1772845200000,
+    "open": 1.347,
+    "high": 1.352,
+    "low": 1.343,
+    "close": 1.348,
+    "volume": 33149.91879,
+    "quoteAssetVolume": 33149.91879,
+    "numberOfTrades": 253
+  },
+  {
+    "timestamp": 1772848800000,
+    "open": 1.348,
+    "high": 1.351,
+    "low": 1.343,
+    "close": 1.349,
+    "volume": 33629.11267,
+    "quoteAssetVolume": 33629.11267,
+    "numberOfTrades": 209
+  },
+  {
+    "timestamp": 1772852400000,
+    "open": 1.349,
+    "high": 1.351,
+    "low": 1.341,
+    "close": 1.345,
+    "volume": 80061.39985,
+    "quoteAssetVolume": 80061.39985,
+    "numberOfTrades": 423
+  },
+  {
+    "timestamp": 1772856000000,
+    "open": 1.342,
+    "high": 1.348,
+    "low": 1.336,
+    "close": 1.344,
+    "volume": 80694.07084,
+    "quoteAssetVolume": 80694.07084,
+    "numberOfTrades": 466
+  },
+  {
+    "timestamp": 1772859600000,
+    "open": 1.344,
+    "high": 1.35,
+    "low": 1.342,
+    "close": 1.349,
+    "volume": 35428.79027,
+    "quoteAssetVolume": 35428.79027,
+    "numberOfTrades": 324
+  },
+  {
+    "timestamp": 1772863200000,
+    "open": 1.348,
+    "high": 1.35,
+    "low": 1.337,
+    "close": 1.338,
+    "volume": 52866.60617,
+    "quoteAssetVolume": 52866.60617,
+    "numberOfTrades": 595
+  },
+  {
+    "timestamp": 1772866800000,
+    "open": 1.338,
+    "high": 1.347,
+    "low": 1.333,
+    "close": 1.346,
+    "volume": 101762.33799,
+    "quoteAssetVolume": 101762.33799,
+    "numberOfTrades": 589
+  },
+  {
+    "timestamp": 1772870400000,
+    "open": 1.346,
+    "high": 1.356,
+    "low": 1.343,
+    "close": 1.351,
+    "volume": 65877.24556,
+    "quoteAssetVolume": 65877.24556,
+    "numberOfTrades": 332
+  },
+  {
+    "timestamp": 1772874000000,
+    "open": 1.35,
+    "high": 1.37,
+    "low": 1.348,
+    "close": 1.367,
+    "volume": 199811.18459,
+    "quoteAssetVolume": 199811.18459,
+    "numberOfTrades": 554
+  },
+  {
+    "timestamp": 1772877600000,
+    "open": 1.368,
+    "high": 1.377,
+    "low": 1.367,
+    "close": 1.374,
+    "volume": 113128.88687,
+    "quoteAssetVolume": 113128.88687,
+    "numberOfTrades": 554
+  },
+  {
+    "timestamp": 1772881200000,
+    "open": 1.374,
+    "high": 1.383,
+    "low": 1.365,
+    "close": 1.377,
+    "volume": 148697.01187,
+    "quoteAssetVolume": 148697.01187,
+    "numberOfTrades": 749
+  },
+  {
+    "timestamp": 1772884800000,
+    "open": 1.376,
+    "high": 1.382,
+    "low": 1.37,
+    "close": 1.375,
+    "volume": 139241.03425,
+    "quoteAssetVolume": 139241.03425,
+    "numberOfTrades": 728
+  },
+  {
+    "timestamp": 1772888400000,
+    "open": 1.375,
+    "high": 1.392,
+    "low": 1.373,
+    "close": 1.391,
+    "volume": 382318.97409,
+    "quoteAssetVolume": 382318.97409,
+    "numberOfTrades": 1906
+  },
+  {
+    "timestamp": 1772892000000,
+    "open": 1.392,
+    "high": 1.396,
+    "low": 1.368,
+    "close": 1.388,
+    "volume": 308757.92291,
+    "quoteAssetVolume": 308757.92291,
+    "numberOfTrades": 1933
+  },
+  {
+    "timestamp": 1772895600000,
+    "open": 1.387,
+    "high": 1.403,
+    "low": 1.379,
+    "close": 1.388,
+    "volume": 324275.95284,
+    "quoteAssetVolume": 324275.95284,
+    "numberOfTrades": 1817
+  },
+  {
+    "timestamp": 1772899200000,
+    "open": 1.387,
+    "high": 1.401,
+    "low": 1.384,
+    "close": 1.391,
+    "volume": 264221.34669,
+    "quoteAssetVolume": 264221.34669,
+    "numberOfTrades": 1336
+  },
+  {
+    "timestamp": 1772902800000,
+    "open": 1.39,
+    "high": 1.396,
+    "low": 1.378,
+    "close": 1.381,
+    "volume": 106665.85528,
+    "quoteAssetVolume": 106665.85528,
+    "numberOfTrades": 664
+  },
+  {
+    "timestamp": 1772906400000,
+    "open": 1.379,
+    "high": 1.38,
+    "low": 1.366,
+    "close": 1.366,
+    "volume": 130127.07033,
+    "quoteAssetVolume": 130127.07033,
+    "numberOfTrades": 624
+  },
+  {
+    "timestamp": 1772910000000,
+    "open": 1.366,
+    "high": 1.371,
+    "low": 1.358,
+    "close": 1.365,
+    "volume": 131467.34401,
+    "quoteAssetVolume": 131467.34401,
+    "numberOfTrades": 936
+  },
+  {
+    "timestamp": 1772913600000,
+    "open": 1.366,
+    "high": 1.37,
+    "low": 1.359,
+    "close": 1.362,
+    "volume": 82961.47306,
+    "quoteAssetVolume": 82961.47306,
+    "numberOfTrades": 734
+  },
+  {
+    "timestamp": 1772917200000,
+    "open": 1.362,
+    "high": 1.369,
+    "low": 1.357,
+    "close": 1.363,
+    "volume": 105268.82709,
+    "quoteAssetVolume": 105268.82709,
+    "numberOfTrades": 673
+  },
+  {
+    "timestamp": 1772920800000,
+    "open": 1.363,
+    "high": 1.368,
+    "low": 1.358,
+    "close": 1.362,
+    "volume": 186493.03725,
+    "quoteAssetVolume": 186493.03725,
+    "numberOfTrades": 906
+  },
+  {
+    "timestamp": 1772924400000,
+    "open": 1.363,
+    "high": 1.364,
+    "low": 1.357,
+    "close": 1.36,
+    "volume": 95770.31566,
+    "quoteAssetVolume": 95770.31566,
+    "numberOfTrades": 411
+  },
+  {
+    "timestamp": 1772928000000,
+    "open": 1.361,
+    "high": 1.391,
+    "low": 1.358,
+    "close": 1.361,
+    "volume": 688069.76744,
+    "quoteAssetVolume": 688069.76744,
+    "numberOfTrades": 2987
+  },
+  {
+    "timestamp": 1772931600000,
+    "open": 1.361,
+    "high": 1.367,
+    "low": 1.35,
+    "close": 1.36,
+    "volume": 78771.05654,
+    "quoteAssetVolume": 78771.05654,
+    "numberOfTrades": 509
+  },
+  {
+    "timestamp": 1772935200000,
+    "open": 1.36,
+    "high": 1.364,
+    "low": 1.343,
+    "close": 1.345,
+    "volume": 116420.03199,
+    "quoteAssetVolume": 116420.03199,
+    "numberOfTrades": 718
+  },
+  {
+    "timestamp": 1772938800000,
+    "open": 1.344,
+    "high": 1.354,
+    "low": 1.343,
+    "close": 1.351,
+    "volume": 96914.70726,
+    "quoteAssetVolume": 96914.70726,
+    "numberOfTrades": 705
+  },
+  {
+    "timestamp": 1772942400000,
+    "open": 1.351,
+    "high": 1.36,
+    "low": 1.35,
+    "close": 1.358,
+    "volume": 86278.42118,
+    "quoteAssetVolume": 86278.42118,
+    "numberOfTrades": 556
+  },
+  {
+    "timestamp": 1772946000000,
+    "open": 1.358,
+    "high": 1.372,
+    "low": 1.357,
+    "close": 1.369,
+    "volume": 126039.83485,
+    "quoteAssetVolume": 126039.83485,
+    "numberOfTrades": 673
+  },
+  {
+    "timestamp": 1772949600000,
+    "open": 1.369,
+    "high": 1.382,
+    "low": 1.364,
+    "close": 1.382,
+    "volume": 173304.0463,
+    "quoteAssetVolume": 173304.0463,
+    "numberOfTrades": 804
+  },
+  {
+    "timestamp": 1772953200000,
+    "open": 1.38,
+    "high": 1.398,
+    "low": 1.379,
+    "close": 1.384,
+    "volume": 263097.15302,
+    "quoteAssetVolume": 263097.15302,
+    "numberOfTrades": 1329
+  },
+  {
+    "timestamp": 1772956800000,
+    "open": 1.383,
+    "high": 1.388,
+    "low": 1.367,
+    "close": 1.381,
+    "volume": 164632.12462,
+    "quoteAssetVolume": 164632.12462,
+    "numberOfTrades": 786
+  },
+  {
+    "timestamp": 1772960400000,
+    "open": 1.38,
+    "high": 1.387,
+    "low": 1.372,
+    "close": 1.372,
+    "volume": 161835.18109,
+    "quoteAssetVolume": 161835.18109,
+    "numberOfTrades": 917
+  },
+  {
+    "timestamp": 1772964000000,
+    "open": 1.373,
+    "high": 1.393,
+    "low": 1.373,
+    "close": 1.389,
+    "volume": 152943.39264,
+    "quoteAssetVolume": 152943.39264,
+    "numberOfTrades": 792
+  },
+  {
+    "timestamp": 1772967600000,
+    "open": 1.388,
+    "high": 1.388,
+    "low": 1.366,
+    "close": 1.373,
+    "volume": 189292.78708,
+    "quoteAssetVolume": 189292.78708,
+    "numberOfTrades": 891
+  },
+  {
+    "timestamp": 1772971200000,
+    "open": 1.372,
+    "high": 1.387,
+    "low": 1.36,
+    "close": 1.369,
+    "volume": 126915.09436,
+    "quoteAssetVolume": 126915.09436,
+    "numberOfTrades": 828
+  },
+  {
+    "timestamp": 1772974800000,
+    "open": 1.37,
+    "high": 1.371,
+    "low": 1.351,
+    "close": 1.36,
+    "volume": 133290.0442,
+    "quoteAssetVolume": 133290.0442,
+    "numberOfTrades": 842
+  },
+  {
+    "timestamp": 1772978400000,
+    "open": 1.359,
+    "high": 1.37,
+    "low": 1.358,
+    "close": 1.363,
+    "volume": 120607.03845,
+    "quoteAssetVolume": 120607.03845,
+    "numberOfTrades": 820
+  },
+  {
+    "timestamp": 1772982000000,
+    "open": 1.362,
+    "high": 1.363,
+    "low": 1.348,
+    "close": 1.355,
+    "volume": 116143.23255,
+    "quoteAssetVolume": 116143.23255,
+    "numberOfTrades": 700
+  },
+  {
+    "timestamp": 1772985600000,
+    "open": 1.355,
+    "high": 1.357,
+    "low": 1.346,
+    "close": 1.352,
+    "volume": 114430.33969,
+    "quoteAssetVolume": 114430.33969,
+    "numberOfTrades": 654
+  },
+  {
+    "timestamp": 1772989200000,
+    "open": 1.353,
+    "high": 1.372,
+    "low": 1.352,
+    "close": 1.366,
+    "volume": 73619.44325,
+    "quoteAssetVolume": 73619.44325,
+    "numberOfTrades": 539
+  },
+  {
+    "timestamp": 1772992800000,
+    "open": 1.367,
+    "high": 1.375,
+    "low": 1.361,
+    "close": 1.374,
+    "volume": 58534.97484,
+    "quoteAssetVolume": 58534.97484,
+    "numberOfTrades": 509
+  },
+  {
+    "timestamp": 1772996400000,
+    "open": 1.373,
+    "high": 1.397,
+    "low": 1.369,
+    "close": 1.388,
+    "volume": 177353.49362,
+    "quoteAssetVolume": 177353.49362,
+    "numberOfTrades": 996
+  },
+  {
+    "timestamp": 1773000000000,
+    "open": 1.388,
+    "high": 1.397,
+    "low": 1.383,
+    "close": 1.387,
+    "volume": 158432.19872,
+    "quoteAssetVolume": 158432.19872,
+    "numberOfTrades": 1023
+  },
+  {
+    "timestamp": 1773003600000,
+    "open": 1.387,
+    "high": 1.389,
+    "low": 1.375,
+    "close": 1.383,
+    "volume": 227475.38328,
+    "quoteAssetVolume": 227475.38328,
+    "numberOfTrades": 1210
+  },
+  {
+    "timestamp": 1773007200000,
+    "open": 1.382,
+    "high": 1.382,
+    "low": 1.351,
+    "close": 1.369,
+    "volume": 325034.20117,
+    "quoteAssetVolume": 325034.20117,
+    "numberOfTrades": 1952
+  },
+  {
+    "timestamp": 1773010800000,
+    "open": 1.37,
+    "high": 1.375,
+    "low": 1.349,
+    "close": 1.352,
+    "volume": 423924.61494,
+    "quoteAssetVolume": 423924.61494,
+    "numberOfTrades": 1769
+  },
+  {
+    "timestamp": 1773014400000,
+    "open": 1.352,
+    "high": 1.38,
+    "low": 1.349,
+    "close": 1.367,
+    "volume": 202830.26441,
+    "quoteAssetVolume": 202830.26441,
+    "numberOfTrades": 1336
+  },
+  {
+    "timestamp": 1773018000000,
+    "open": 1.366,
+    "high": 1.375,
+    "low": 1.358,
+    "close": 1.359,
+    "volume": 163121.40624,
+    "quoteAssetVolume": 163121.40624,
+    "numberOfTrades": 1232
+  },
+  {
+    "timestamp": 1773021600000,
+    "open": 1.358,
+    "high": 1.378,
+    "low": 1.354,
+    "close": 1.372,
+    "volume": 144920.05053,
+    "quoteAssetVolume": 144920.05053,
+    "numberOfTrades": 1071
+  },
+  {
+    "timestamp": 1773025200000,
+    "open": 1.371,
+    "high": 1.395,
+    "low": 1.369,
+    "close": 1.374,
+    "volume": 299602.44473,
+    "quoteAssetVolume": 299602.44473,
+    "numberOfTrades": 1688
+  },
+  {
+    "timestamp": 1773028800000,
+    "open": 1.374,
+    "high": 1.387,
+    "low": 1.372,
+    "close": 1.376,
+    "volume": 105892.71833,
+    "quoteAssetVolume": 105892.71833,
+    "numberOfTrades": 633
+  },
+  {
+    "timestamp": 1773032400000,
+    "open": 1.376,
+    "high": 1.397,
+    "low": 1.371,
+    "close": 1.394,
+    "volume": 181734.36665,
+    "quoteAssetVolume": 181734.36665,
+    "numberOfTrades": 801
+  },
+  {
+    "timestamp": 1773036000000,
+    "open": 1.395,
+    "high": 1.395,
+    "low": 1.37,
+    "close": 1.371,
+    "volume": 110811.0142,
+    "quoteAssetVolume": 110811.0142,
+    "numberOfTrades": 612
+  },
+  {
+    "timestamp": 1773039600000,
+    "open": 1.37,
+    "high": 1.379,
+    "low": 1.358,
+    "close": 1.379,
+    "volume": 119268.23026,
+    "quoteAssetVolume": 119268.23026,
+    "numberOfTrades": 685
+  },
+  {
+    "timestamp": 1773043200000,
+    "open": 1.38,
+    "high": 1.393,
+    "low": 1.377,
+    "close": 1.381,
+    "volume": 169610.92171,
+    "quoteAssetVolume": 169610.92171,
+    "numberOfTrades": 953
+  },
+  {
+    "timestamp": 1773046800000,
+    "open": 1.381,
+    "high": 1.4,
+    "low": 1.377,
+    "close": 1.388,
+    "volume": 328636.16318,
+    "quoteAssetVolume": 328636.16318,
+    "numberOfTrades": 1000
+  },
+  {
+    "timestamp": 1773050400000,
+    "open": 1.388,
+    "high": 1.389,
+    "low": 1.376,
+    "close": 1.378,
+    "volume": 153485.19861,
+    "quoteAssetVolume": 153485.19861,
+    "numberOfTrades": 625
+  },
+  {
+    "timestamp": 1773054000000,
+    "open": 1.378,
+    "high": 1.38,
+    "low": 1.367,
+    "close": 1.377,
+    "volume": 172198.05506,
+    "quoteAssetVolume": 172198.05506,
+    "numberOfTrades": 793
+  },
+  {
+    "timestamp": 1773057600000,
+    "open": 1.378,
+    "high": 1.394,
+    "low": 1.378,
+    "close": 1.39,
+    "volume": 243105.13907,
+    "quoteAssetVolume": 243105.13907,
+    "numberOfTrades": 1314
+  },
+  {
+    "timestamp": 1773061200000,
+    "open": 1.389,
+    "high": 1.415,
+    "low": 1.387,
+    "close": 1.403,
+    "volume": 386046.35665,
+    "quoteAssetVolume": 386046.35665,
+    "numberOfTrades": 2965
+  },
+  {
+    "timestamp": 1773064800000,
+    "open": 1.402,
+    "high": 1.411,
+    "low": 1.393,
+    "close": 1.398,
+    "volume": 289625.11773,
+    "quoteAssetVolume": 289625.11773,
+    "numberOfTrades": 1826
+  },
+  {
+    "timestamp": 1773068400000,
+    "open": 1.399,
+    "high": 1.401,
+    "low": 1.385,
+    "close": 1.39,
+    "volume": 323425.27794,
+    "quoteAssetVolume": 323425.27794,
+    "numberOfTrades": 1646
+  },
+  {
+    "timestamp": 1773072000000,
+    "open": 1.391,
+    "high": 1.398,
+    "low": 1.382,
+    "close": 1.383,
+    "volume": 189547.10984,
+    "quoteAssetVolume": 189547.10984,
+    "numberOfTrades": 1034
+  },
+  {
+    "timestamp": 1773075600000,
+    "open": 1.384,
+    "high": 1.388,
+    "low": 1.371,
+    "close": 1.381,
+    "volume": 215563.74902,
+    "quoteAssetVolume": 215563.74902,
+    "numberOfTrades": 1286
+  },
+  {
+    "timestamp": 1773079200000,
+    "open": 1.38,
+    "high": 1.392,
+    "low": 1.378,
+    "close": 1.387,
+    "volume": 84625.23138,
+    "quoteAssetVolume": 84625.23138,
+    "numberOfTrades": 515
+  },
+  {
+    "timestamp": 1773082800000,
+    "open": 1.387,
+    "high": 1.42,
+    "low": 1.38,
+    "close": 1.4,
+    "volume": 229903.58295,
+    "quoteAssetVolume": 229903.58295,
+    "numberOfTrades": 1461
+  },
+  {
+    "timestamp": 1773086400000,
+    "open": 1.4,
+    "high": 1.403,
+    "low": 1.388,
+    "close": 1.398,
+    "volume": 199414.44271,
+    "quoteAssetVolume": 199414.44271,
+    "numberOfTrades": 868
+  },
+  {
+    "timestamp": 1773090000000,
+    "open": 1.397,
+    "high": 1.407,
+    "low": 1.396,
+    "close": 1.405,
+    "volume": 102159.36326,
+    "quoteAssetVolume": 102159.36326,
+    "numberOfTrades": 439
+  },
+  {
+    "timestamp": 1773093600000,
+    "open": 1.405,
+    "high": 1.407,
+    "low": 1.389,
+    "close": 1.393,
+    "volume": 174254.27543,
+    "quoteAssetVolume": 174254.27543,
+    "numberOfTrades": 749
+  },
+  {
+    "timestamp": 1773097200000,
+    "open": 1.392,
+    "high": 1.4,
+    "low": 1.39,
+    "close": 1.394,
+    "volume": 98431.95258,
+    "quoteAssetVolume": 98431.95258,
+    "numberOfTrades": 547
+  },
+  {
+    "timestamp": 1773100800000,
+    "open": 1.394,
+    "high": 1.413,
+    "low": 1.392,
+    "close": 1.407,
+    "volume": 126326.4096,
+    "quoteAssetVolume": 126326.4096,
+    "numberOfTrades": 558
+  },
+  {
+    "timestamp": 1773104400000,
+    "open": 1.407,
+    "high": 1.42,
+    "low": 1.404,
+    "close": 1.417,
+    "volume": 139957.74087,
+    "quoteAssetVolume": 139957.74087,
+    "numberOfTrades": 627
+  },
+  {
+    "timestamp": 1773108000000,
+    "open": 1.417,
+    "high": 1.442,
+    "low": 1.412,
+    "close": 1.439,
+    "volume": 419784.71731,
+    "quoteAssetVolume": 419784.71731,
+    "numberOfTrades": 2019
+  },
+  {
+    "timestamp": 1773111600000,
+    "open": 1.439,
+    "high": 1.45,
+    "low": 1.423,
+    "close": 1.428,
+    "volume": 300713.38389,
+    "quoteAssetVolume": 300713.38389,
+    "numberOfTrades": 1274
+  },
+  {
+    "timestamp": 1773115200000,
+    "open": 1.429,
+    "high": 1.456,
+    "low": 1.429,
+    "close": 1.451,
+    "volume": 338542.1379,
+    "quoteAssetVolume": 338542.1379,
+    "numberOfTrades": 1036
+  },
+  {
+    "timestamp": 1773118800000,
+    "open": 1.451,
+    "high": 1.457,
+    "low": 1.441,
+    "close": 1.449,
+    "volume": 225555.91769,
+    "quoteAssetVolume": 225555.91769,
+    "numberOfTrades": 875
+  },
+  {
+    "timestamp": 1773122400000,
+    "open": 1.448,
+    "high": 1.45,
+    "low": 1.433,
+    "close": 1.437,
+    "volume": 123113.46129,
+    "quoteAssetVolume": 123113.46129,
+    "numberOfTrades": 697
+  },
+  {
+    "timestamp": 1773126000000,
+    "open": 1.437,
+    "high": 1.45,
+    "low": 1.434,
+    "close": 1.445,
+    "volume": 176522.87282,
+    "quoteAssetVolume": 176522.87282,
+    "numberOfTrades": 761
+  },
+  {
+    "timestamp": 1773129600000,
+    "open": 1.446,
+    "high": 1.475,
+    "low": 1.446,
+    "close": 1.47,
+    "volume": 793088.49506,
+    "quoteAssetVolume": 793088.49506,
+    "numberOfTrades": 2393
+  },
+  {
+    "timestamp": 1773133200000,
+    "open": 1.471,
+    "high": 1.499,
+    "low": 1.47,
+    "close": 1.497,
+    "volume": 405194.142,
+    "quoteAssetVolume": 405194.142,
+    "numberOfTrades": 1529
+  },
+  {
+    "timestamp": 1773136800000,
+    "open": 1.498,
+    "high": 1.502,
+    "low": 1.485,
+    "close": 1.495,
+    "volume": 301121.18563,
+    "quoteAssetVolume": 301121.18563,
+    "numberOfTrades": 1359
+  },
+  {
+    "timestamp": 1773140400000,
+    "open": 1.495,
+    "high": 1.496,
+    "low": 1.482,
+    "close": 1.485,
+    "volume": 261693.19467,
+    "quoteAssetVolume": 261693.19467,
+    "numberOfTrades": 1126
+  },
+  {
+    "timestamp": 1773144000000,
+    "open": 1.485,
+    "high": 1.491,
+    "low": 1.475,
+    "close": 1.49,
+    "volume": 516726.74761,
+    "quoteAssetVolume": 516726.74761,
+    "numberOfTrades": 1512
+  },
+  {
+    "timestamp": 1773147600000,
+    "open": 1.49,
+    "high": 1.513,
+    "low": 1.472,
+    "close": 1.485,
+    "volume": 623349.35702,
+    "quoteAssetVolume": 623349.35702,
+    "numberOfTrades": 2457
+  },
+  {
+    "timestamp": 1773151200000,
+    "open": 1.485,
+    "high": 1.545,
+    "low": 1.46,
+    "close": 1.539,
+    "volume": 1049365.35714,
+    "quoteAssetVolume": 1049365.35714,
+    "numberOfTrades": 4500
+  },
+  {
+    "timestamp": 1773154800000,
+    "open": 1.539,
+    "high": 1.541,
+    "low": 1.5,
+    "close": 1.516,
+    "volume": 710020.27354,
+    "quoteAssetVolume": 710020.27354,
+    "numberOfTrades": 2829
+  },
+  {
+    "timestamp": 1773158400000,
+    "open": 1.516,
+    "high": 1.592,
+    "low": 1.516,
+    "close": 1.553,
+    "volume": 1992528.23376,
+    "quoteAssetVolume": 1992528.23376,
+    "numberOfTrades": 9234
+  },
+  {
+    "timestamp": 1773162000000,
+    "open": 1.552,
+    "high": 1.596,
+    "low": 1.527,
+    "close": 1.533,
+    "volume": 1409962.62409,
+    "quoteAssetVolume": 1409962.62409,
+    "numberOfTrades": 5745
+  },
+  {
+    "timestamp": 1773165600000,
+    "open": 1.534,
+    "high": 1.538,
+    "low": 1.499,
+    "close": 1.505,
+    "volume": 583883.81262,
+    "quoteAssetVolume": 583883.81262,
+    "numberOfTrades": 3830
+  },
+  {
+    "timestamp": 1773169200000,
+    "open": 1.504,
+    "high": 1.51,
+    "low": 1.481,
+    "close": 1.493,
+    "volume": 477696.22595,
+    "quoteAssetVolume": 477696.22595,
+    "numberOfTrades": 2917
+  },
+  {
+    "timestamp": 1773172800000,
+    "open": 1.492,
+    "high": 1.505,
+    "low": 1.492,
+    "close": 1.502,
+    "volume": 165050.09951,
+    "quoteAssetVolume": 165050.09951,
+    "numberOfTrades": 945
+  },
+  {
+    "timestamp": 1773176400000,
+    "open": 1.502,
+    "high": 1.508,
+    "low": 1.467,
+    "close": 1.478,
+    "volume": 261412.71276,
+    "quoteAssetVolume": 261412.71276,
+    "numberOfTrades": 1299
+  },
+  {
+    "timestamp": 1773180000000,
+    "open": 1.477,
+    "high": 1.484,
+    "low": 1.463,
+    "close": 1.466,
+    "volume": 299694.57626,
+    "quoteAssetVolume": 299694.57626,
+    "numberOfTrades": 1291
+  },
+  {
+    "timestamp": 1773183600000,
+    "open": 1.466,
+    "high": 1.473,
+    "low": 1.461,
+    "close": 1.473,
+    "volume": 159414.66271,
+    "quoteAssetVolume": 159414.66271,
+    "numberOfTrades": 798
+  },
+  {
+    "timestamp": 1773187200000,
+    "open": 1.472,
+    "high": 1.482,
+    "low": 1.462,
+    "close": 1.473,
+    "volume": 256985.17805,
+    "quoteAssetVolume": 256985.17805,
+    "numberOfTrades": 1569
+  },
+  {
+    "timestamp": 1773190800000,
+    "open": 1.472,
+    "high": 1.48,
+    "low": 1.462,
+    "close": 1.475,
+    "volume": 214768.24189,
+    "quoteAssetVolume": 214768.24189,
+    "numberOfTrades": 1235
+  },
+  {
+    "timestamp": 1773194400000,
+    "open": 1.475,
+    "high": 1.477,
+    "low": 1.456,
+    "close": 1.469,
+    "volume": 213960.59173,
+    "quoteAssetVolume": 213960.59173,
+    "numberOfTrades": 1131
+  },
+  {
+    "timestamp": 1773198000000,
+    "open": 1.468,
+    "high": 1.474,
+    "low": 1.46,
+    "close": 1.464,
+    "volume": 141841.682,
+    "quoteAssetVolume": 141841.682,
+    "numberOfTrades": 565
+  },
+  {
+    "timestamp": 1773201600000,
+    "open": 1.463,
+    "high": 1.485,
+    "low": 1.462,
+    "close": 1.484,
+    "volume": 155945.73874,
+    "quoteAssetVolume": 155945.73874,
+    "numberOfTrades": 702
+  },
+  {
+    "timestamp": 1773205200000,
+    "open": 1.485,
+    "high": 1.486,
+    "low": 1.459,
+    "close": 1.464,
+    "volume": 189535.32849,
+    "quoteAssetVolume": 189535.32849,
+    "numberOfTrades": 874
+  },
+  {
+    "timestamp": 1773208800000,
+    "open": 1.464,
+    "high": 1.489,
+    "low": 1.464,
+    "close": 1.485,
+    "volume": 261139.4083,
+    "quoteAssetVolume": 261139.4083,
+    "numberOfTrades": 1200
+  },
+  {
+    "timestamp": 1773212400000,
+    "open": 1.485,
+    "high": 1.495,
+    "low": 1.47,
+    "close": 1.484,
+    "volume": 236944.62448,
+    "quoteAssetVolume": 236944.62448,
+    "numberOfTrades": 923
+  },
+  {
+    "timestamp": 1773216000000,
+    "open": 1.485,
+    "high": 1.492,
+    "low": 1.473,
+    "close": 1.482,
+    "volume": 207827.52816,
+    "quoteAssetVolume": 207827.52816,
+    "numberOfTrades": 996
+  },
+  {
+    "timestamp": 1773219600000,
+    "open": 1.482,
+    "high": 1.488,
+    "low": 1.474,
+    "close": 1.479,
+    "volume": 164249.47331,
+    "quoteAssetVolume": 164249.47331,
+    "numberOfTrades": 689
+  },
+  {
+    "timestamp": 1773223200000,
+    "open": 1.479,
+    "high": 1.5,
+    "low": 1.478,
+    "close": 1.495,
+    "volume": 161218.76356,
+    "quoteAssetVolume": 161218.76356,
+    "numberOfTrades": 851
+  },
+  {
+    "timestamp": 1773226800000,
+    "open": 1.494,
+    "high": 1.506,
+    "low": 1.491,
+    "close": 1.503,
+    "volume": 186668.43825,
+    "quoteAssetVolume": 186668.43825,
+    "numberOfTrades": 1107
+  },
+  {
+    "timestamp": 1773230400000,
+    "open": 1.503,
+    "high": 1.529,
+    "low": 1.494,
+    "close": 1.522,
+    "volume": 843106.17536,
+    "quoteAssetVolume": 843106.17536,
+    "numberOfTrades": 4507
+  },
+  {
+    "timestamp": 1773234000000,
+    "open": 1.521,
+    "high": 1.582,
+    "low": 1.519,
+    "close": 1.536,
+    "volume": 1244397.63907,
+    "quoteAssetVolume": 1244397.63907,
+    "numberOfTrades": 5096
+  },
+  {
+    "timestamp": 1773237600000,
+    "open": 1.538,
+    "high": 1.561,
+    "low": 1.534,
+    "close": 1.536,
+    "volume": 466222.91722,
+    "quoteAssetVolume": 466222.91722,
+    "numberOfTrades": 2180
+  },
+  {
+    "timestamp": 1773241200000,
+    "open": 1.537,
+    "high": 1.539,
+    "low": 1.501,
+    "close": 1.516,
+    "volume": 441628.65167,
+    "quoteAssetVolume": 441628.65167,
+    "numberOfTrades": 2278
+  },
+  {
+    "timestamp": 1773244800000,
+    "open": 1.517,
+    "high": 1.532,
+    "low": 1.511,
+    "close": 1.531,
+    "volume": 275761.49269,
+    "quoteAssetVolume": 275761.49269,
+    "numberOfTrades": 1476
+  },
+  {
+    "timestamp": 1773248400000,
+    "open": 1.532,
+    "high": 1.554,
+    "low": 1.525,
+    "close": 1.538,
+    "volume": 217955.94213,
+    "quoteAssetVolume": 217955.94213,
+    "numberOfTrades": 1361
+  },
+  {
+    "timestamp": 1773252000000,
+    "open": 1.54,
+    "high": 1.558,
+    "low": 1.535,
+    "close": 1.552,
+    "volume": 190285.44607,
+    "quoteAssetVolume": 190285.44607,
+    "numberOfTrades": 889
+  },
+  {
+    "timestamp": 1773255600000,
+    "open": 1.553,
+    "high": 1.556,
+    "low": 1.539,
+    "close": 1.547,
+    "volume": 157305.86366,
+    "quoteAssetVolume": 157305.86366,
+    "numberOfTrades": 831
+  },
+  {
+    "timestamp": 1773259200000,
+    "open": 1.546,
+    "high": 1.546,
+    "low": 1.531,
+    "close": 1.536,
+    "volume": 161711.37199,
+    "quoteAssetVolume": 161711.37199,
+    "numberOfTrades": 639
+  },
+  {
+    "timestamp": 1773262800000,
+    "open": 1.537,
+    "high": 1.541,
+    "low": 1.526,
+    "close": 1.54,
+    "volume": 143038.13966,
+    "quoteAssetVolume": 143038.13966,
+    "numberOfTrades": 732
+  },
+  {
+    "timestamp": 1773266400000,
+    "open": 1.538,
+    "high": 1.542,
+    "low": 1.521,
+    "close": 1.535,
+    "volume": 188736.96979,
+    "quoteAssetVolume": 188736.96979,
+    "numberOfTrades": 1072
+  },
+  {
+    "timestamp": 1773270000000,
+    "open": 1.535,
+    "high": 1.545,
+    "low": 1.526,
+    "close": 1.527,
+    "volume": 311706.68533,
+    "quoteAssetVolume": 311706.68533,
+    "numberOfTrades": 1395
+  },
+  {
+    "timestamp": 1773273600000,
+    "open": 1.528,
+    "high": 1.535,
+    "low": 1.519,
+    "close": 1.534,
+    "volume": 245112.72834,
+    "quoteAssetVolume": 245112.72834,
+    "numberOfTrades": 1489
+  },
+  {
+    "timestamp": 1773277200000,
+    "open": 1.533,
+    "high": 1.533,
+    "low": 1.509,
+    "close": 1.515,
+    "volume": 233099.21507,
+    "quoteAssetVolume": 233099.21507,
+    "numberOfTrades": 813
+  },
+  {
+    "timestamp": 1773280800000,
+    "open": 1.514,
+    "high": 1.518,
+    "low": 1.489,
+    "close": 1.493,
+    "volume": 403287.6944,
+    "quoteAssetVolume": 403287.6944,
+    "numberOfTrades": 1197
+  },
+  {
+    "timestamp": 1773284400000,
+    "open": 1.493,
+    "high": 1.513,
+    "low": 1.491,
+    "close": 1.502,
+    "volume": 233559.29007,
+    "quoteAssetVolume": 233559.29007,
+    "numberOfTrades": 874
+  },
+  {
+    "timestamp": 1773288000000,
+    "open": 1.501,
+    "high": 1.514,
+    "low": 1.501,
+    "close": 1.514,
+    "volume": 125796.83475,
+    "quoteAssetVolume": 125796.83475,
+    "numberOfTrades": 654
+  },
+  {
+    "timestamp": 1773291600000,
+    "open": 1.514,
+    "high": 1.526,
+    "low": 1.507,
+    "close": 1.526,
+    "volume": 154518.25943,
+    "quoteAssetVolume": 154518.25943,
+    "numberOfTrades": 874
+  },
+  {
+    "timestamp": 1773295200000,
+    "open": 1.526,
+    "high": 1.535,
+    "low": 1.512,
+    "close": 1.533,
+    "volume": 175937.09847,
+    "quoteAssetVolume": 175937.09847,
+    "numberOfTrades": 885
+  },
+  {
+    "timestamp": 1773298800000,
+    "open": 1.533,
+    "high": 1.561,
+    "low": 1.524,
+    "close": 1.556,
+    "volume": 497474.75477,
+    "quoteAssetVolume": 497474.75477,
+    "numberOfTrades": 1693
+  },
+  {
+    "timestamp": 1773302400000,
+    "open": 1.556,
+    "high": 1.568,
+    "low": 1.55,
+    "close": 1.566,
+    "volume": 241675.28631,
+    "quoteAssetVolume": 241675.28631,
+    "numberOfTrades": 1065
+  },
+  {
+    "timestamp": 1773306000000,
+    "open": 1.565,
+    "high": 1.578,
+    "low": 1.561,
+    "close": 1.566,
+    "volume": 332293.07315,
+    "quoteAssetVolume": 332293.07315,
+    "numberOfTrades": 1298
+  },
+  {
+    "timestamp": 1773309600000,
+    "open": 1.566,
+    "high": 1.608,
+    "low": 1.556,
+    "close": 1.605,
+    "volume": 610861.95427,
+    "quoteAssetVolume": 610861.95427,
+    "numberOfTrades": 2455
+  },
+  {
+    "timestamp": 1773313200000,
+    "open": 1.604,
+    "high": 1.614,
+    "low": 1.589,
+    "close": 1.598,
+    "volume": 573831.72244,
+    "quoteAssetVolume": 573831.72244,
+    "numberOfTrades": 2448
+  },
+  {
+    "timestamp": 1773316800000,
+    "open": 1.598,
+    "high": 1.613,
+    "low": 1.588,
+    "close": 1.598,
+    "volume": 436959.65488,
+    "quoteAssetVolume": 436959.65488,
+    "numberOfTrades": 2217
+  }
+]

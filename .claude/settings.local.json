@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls /Users/fahmimuhamad/Documents/trading-bot/.env* 2>/dev/null && cat /Users/fahmimuhamad/Documents/trading-bot/package.json | grep -E '\"scripts\"' -A 20)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(LOG_LEVEL=debug npx ts-node src/backtest/run-backtest.ts --symbol RENDER --days 30 2>&1 | grep -E \"direction|LONG|SHORT|Win Rate|Total Trades|signal\" | head -40)",
+      "Bash(LOG_LEVEL=info npx ts-node src/backtest/run-backtest.ts --symbol RENDER --days 30 2>&1 | grep -E \"Win Rate|Total Trades|Total P&L|LONG|SHORT|Profit Factor\")",
+      "Bash(find /Users/fahmimuhamad/Documents/trading-bot/src -type f -name \"*.ts\" 2>/dev/null | sort)",
+      "Bash(find /Users/fahmimuhamad/Documents/trading-bot -maxdepth 2 -type f \\\\\\( -name \".env*\" -o -name \"*.md\" \\\\\\) 2>/dev/null | grep -v node_modules)",
+      "Bash(for seed:*)",
+      "Bash(wait && sleep 120)"
+    ]
+  }
+}
