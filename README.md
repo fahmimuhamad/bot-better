@@ -10,6 +10,7 @@ Automated crypto futures trading bot using an EMA Trend Pullback strategy with A
 - **SHORT**: price bounces into EMA20 with EMA20 < EMA50 < EMA200 (downtrend)
 - **ADX gate**: requires confirmed trend strength
 - **Falling knife filter**: blocks LONG entries when price is >10% below 7-day high
+- **2-stage TP & SL**: SL is set as a limit order; TP1 takes 50% size and moves SL to breakeven, TP2 closes the remaining 50%
 - Confirmation from RSI, StochRSI, MACD, DI spread, ATR
 
 ## Auto Regime Switching
@@ -85,6 +86,7 @@ DAILY_LOSS_LIMIT=5        # Stop trading if down 5% in a day
 ```env
 MIN_CONFIDENCE=75         # Minimum signal score to trade
 ENTRY_MODE=aggressive     # aggressive | conservative
+ALIGN_DIRECTION_WITH_24H=true  # Optional: avoid counter-trend trades vs 24h move
 ```
 
 ### Take Profit / Stop Loss
