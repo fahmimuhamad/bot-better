@@ -111,17 +111,18 @@ export class DailyReportScheduler {
     startBalance: number,
     tickers: Map<string, BinanceTickerData>,
     botStartTime: number
-  ): void {
+  ): boolean {
     const todayWIB = wibDateString();
     const hourWIB  = wibHour();
 
-    if (hourWIB !== 7) return;
-    if (this.lastReportDate === todayWIB) return;
+    if (hourWIB !== 7) return false;
+    if (this.lastReportDate === todayWIB) return false;
 
     this.lastReportDate = todayWIB;
 
     const msg = buildDailyReportMessage(currentBalance, startBalance, tickers, botStartTime);
     logger.info('Sending daily Telegram report');
     send(msg).catch(err => logger.warn(`Daily report send failed: ${err}`));
+    return true;
   }
 }

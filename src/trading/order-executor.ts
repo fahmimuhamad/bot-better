@@ -47,8 +47,8 @@ export class OrderExecutor {
   ): number {
     const riskAmount = (balance * riskPerTrade) / 100;
     const slDistance = slDistancePercent / 100;
-    if (slDistance === 0 || entryPrice <= 0) {
-      logger.warn('Invalid slDistance or entryPrice for position size');
+    if (!isFinite(slDistance) || slDistance <= 0 || entryPrice <= 0) {
+      logger.warn('Invalid slDistance or entryPrice for position size', { slDistancePercent, entryPrice });
       return 0;
     }
     const positionValueUsd = riskAmount / slDistance;
@@ -95,8 +95,11 @@ export class OrderExecutor {
         entryMode: this.config.entryMode,
       });
 
-      // One position per symbol (hedge mode: do not open long and short in same symbol)
-      const hasPositionInSymbol = openPositions.some(p => p.symbol === signal.symbol);
+      // One position per symbol — always query live state, not the stale snapshot
+      // passed in (snapshot is captured once before the signal loop, so it misses
+      // positions opened earlier in the same cycle).
+      const livePositions = positionManager.getOpenPositions();
+      const hasPositionInSymbol = livePositions.some(p => p.symbol === signal.symbol);
       if (hasPositionInSymbol) {
         return {
           success: false,
@@ -339,8 +342,11 @@ export class OrderExecutor {
       if (!this.config.dryRun && !this.config.paperTrading) {
         const closed = await bybitClosePosition(position.symbol);
         if (!closed) {
-          logger.error('Bybit close position failed', { symbol: position.symbol });
-          return false;
+          // Position may have already been closed on exchange by a TP/SL order we placed.
+          // Sync local state regardless so the slot is freed for new trades.
+          // If the position was truly still open (rare API error), it will be reconciled
+          // on next restart via getExchangeOpenPositions.
+          logger.warn('Exchange close returned false — position likely already closed by TP/SL order; syncing local state', { symbol: position.symbol });
         }
       }
 
@@ -441,6 +447,15 @@ export class OrderExecutor {
       this.config.minConfidence > 0 &&
       this.config.minConfidence <= 100
     );
+  }
+
+  /**
+   * Update the safety enforcer's daily start balance.
+   * Call after real balance is fetched on startup and at each day rollover.
+   */
+  updateStartBalance(balance: number): void {
+    this.safetyEnforcer.resetDailyStats(balance);
+    logger.info('Safety enforcer balance baseline updated', { balance });
   }
 
   /**

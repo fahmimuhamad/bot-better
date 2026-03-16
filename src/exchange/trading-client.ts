@@ -198,6 +198,15 @@ export async function cancelOrder(symbol: string, orderId: string): Promise<bool
   return bybit.cancelOrder(toBybitSymbol(symbol), orderId);
 }
 
+export async function getSymbolOpenOrders(symbol: string): Promise<Array<{
+  orderId: string; side: string; orderType: string; qty: string;
+  price: string; triggerPrice: string; orderStatus: string; reduceOnly: boolean;
+}>> {
+  const bybit = getBybitClient();
+  if (!bybit) return [];
+  return bybit.getOpenOrders(toBybitSymbol(symbol));
+}
+
 export async function setPositionStopLoss(symbol: string, stopLossPrice: number, positionIdx: number): Promise<boolean> {
   const bybit = getBybitClient();
   if (!bybit) return false;
@@ -235,6 +244,21 @@ export async function setLeverage(symbol: string, leverage: number): Promise<boo
   } catch {
     return false;
   }
+}
+
+export async function getExchangeOpenPositions(): Promise<{ symbol: string; side: 'LONG' | 'SHORT'; quantity: number; entryPrice: number; leverage: number; stopLoss: number; takeProfit: number }[]> {
+  const bybit = getBybitClient();
+  if (!bybit) return [];
+  const raw = await bybit.getOpenPositions();
+  return raw.map(p => ({
+    symbol:      p.symbol.replace(/USDT$/, '').replace(/^1000/, ''),
+    side:        p.side === 'Buy' ? 'LONG' : 'SHORT',
+    quantity:    p.size,
+    entryPrice:  p.entryPrice,
+    leverage:    parseFloat(p.leverage) || 1,
+    stopLoss:    p.stopLoss,
+    takeProfit:  p.takeProfit,
+  }));
 }
 
 export async function closePositionBySymbol(symbol: string): Promise<boolean> {

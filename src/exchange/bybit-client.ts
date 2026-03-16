@@ -39,11 +39,13 @@ export class BybitClient {
   private baseUrl: string;
   private client: AxiosInstance;
   private testnet: boolean;
+  private readonly hedgeMode: boolean;
 
   constructor(apiKey: string, apiSecret: string, testnet: boolean = true) {
     this.apiKey = apiKey;
     this.apiSecret = apiSecret;
     this.testnet = testnet;
+    this.hedgeMode = process.env.BYBIT_POSITION_MODE !== 'one-way';
     this.baseUrl = testnet
       ? 'https://api-testnet.bybit.com'
       : 'https://api.bybit.com';
@@ -97,10 +99,12 @@ export class BybitClient {
         if (k && v !== undefined) params[k] = decodeURIComponent(v);
       }
     }
-    const queryString = Object.keys(params)
-      .sort()
-      .map(k => `${k}=${params[k]}`)
-      .join('&');
+    const sortedKeys = Object.keys(params).sort();
+    const queryString = sortedKeys.map(k => `${k}=${params[k]}`).join('&');
+    // Build sorted params object so axios serializes in the same order we signed
+    const sortedParams: Record<string, string> = {};
+    for (const k of sortedKeys) sortedParams[k] = params[k];
+
     const timestamp = Date.now().toString();
     const signature = this.getSignature(timestamp, method, pathOnly, queryString, method === 'POST' ? body : undefined);
 
@@ -116,7 +120,7 @@ export class BybitClient {
       const response = await this.client({
         method,
         url: pathOnly,
-        params: method === 'GET' && queryString ? params : undefined,
+        params: method === 'GET' && queryString ? sortedParams : undefined,
         data: method === 'POST' ? body : undefined,
         headers,
       });
@@ -151,7 +155,9 @@ export class BybitClient {
       for (const wallet of walletList) {
         const coinBalance = wallet.coin.find((c: any) => c.coin === coin);
         if (coinBalance) {
-          return parseFloat(coinBalance.walletBalance);
+          // totalEquity = walletBalance + all unrealized PnL (the true account value)
+          const equity = parseFloat(wallet.totalEquity || coinBalance.equity || coinBalance.walletBalance);
+          return isNaN(equity) ? parseFloat(coinBalance.walletBalance) : equity;
         }
       }
 
@@ -215,7 +221,7 @@ export class BybitClient {
     symbol: string,
     side: 'Buy' | 'Sell',
     quantity: number,
-    leverage: number = 5
+    leverage: number = 15
   ): Promise<BybitOrder | null> {
     try {
       // Set leverage first (ignore "leverage not modified")
@@ -231,7 +237,7 @@ export class BybitClient {
         : Math.floor(quantity * 100000) / 100000;
 
       // positionIdx: 0 = one-way, 1 = hedge long, 2 = hedge short. Set BYBIT_POSITION_MODE=one-way in .env if needed.
-      const hedgeMode = process.env.BYBIT_POSITION_MODE !== 'one-way';
+      const hedgeMode = this.hedgeMode;
       const positionIdx = hedgeMode ? (side === 'Buy' ? 1 : 2) : 0;
       const body = {
         category: 'linear',
@@ -273,12 +279,12 @@ export class BybitClient {
     side: 'Buy' | 'Sell',
     quantity: number,
     price: number,
-    leverage: number = 5
+    leverage: number = 15
   ): Promise<BybitOrder | null> {
     try {
       await this.setLeverage(symbol, leverage);
 
-      const hedgeMode = process.env.BYBIT_POSITION_MODE !== 'one-way';
+      const hedgeMode = this.hedgeMode;
       const positionIdx = hedgeMode ? (side === 'Buy' ? 1 : 2) : 0;
       const body = {
         category: 'linear',
@@ -314,7 +320,9 @@ export class BybitClient {
   }
 
   /**
-   * Close position (market order in opposite direction)
+   * Close position (reduce-only market order in opposite direction).
+   * positionIdx is derived from the existing position side (not the close-order side)
+   * so hedge-mode orders target the correct position slot.
    */
   async closePosition(symbol: string): Promise<boolean> {
     try {
@@ -326,8 +334,22 @@ export class BybitClient {
 
       const position = positions[0];
       const closeSide = position.side === 'Buy' ? 'Sell' : 'Buy';
+      const hedgeMode = this.hedgeMode;
+      // positionIdx must reference the existing position, not the close-order direction
+      const positionIdx = hedgeMode ? (position.side === 'Buy' ? 1 : 2) : 0;
 
-      const result = await this.placeMarketOrder(symbol, closeSide, position.size);
+      const body = {
+        category: 'linear',
+        symbol,
+        side: closeSide,
+        orderType: 'Market',
+        qty: position.size.toString(),
+        timeInForce: 'IOC',
+        reduceOnly: true,
+        positionIdx,
+      };
+
+      const result = await this.request('POST', '/v5/order/create', body);
 
       if (result) {
         logger.info(`Position closed: ${symbol} ${position.side} ${position.size}`);
@@ -450,16 +472,25 @@ export class BybitClient {
 
   /**
    * Get order status by orderId (e.g. to detect if TP1 limit order is Filled).
+   * Checks active orders first; if not found (already filled/cancelled), falls back to order history.
    */
   async getOrderStatus(symbol: string, orderId: string): Promise<string | null> {
     try {
       const result = await this.request('GET', `/v5/order/realtime?category=linear&symbol=${symbol}&orderId=${orderId}`);
       const list = result?.list;
-      if (!list || list.length === 0) return null;
-      return list[0].orderStatus ?? null;
+      if (list && list.length > 0) return list[0].orderStatus ?? null;
+    } catch {
+      // fall through to history check
+    }
+    // Order not in active list — check history (covers Filled / Cancelled)
+    try {
+      const hist = await this.request('GET', `/v5/order/history?category=linear&symbol=${symbol}&orderId=${orderId}&limit=1`);
+      const list = hist?.list;
+      if (list && list.length > 0) return list[0].orderStatus ?? null;
     } catch {
       return null;
     }
+    return null;
   }
 
   /**
@@ -528,6 +559,38 @@ export class BybitClient {
       }
       logger.warn(`Failed to set leverage: ${msg}`);
       return false;
+    }
+  }
+
+  /**
+   * List all active orders for a symbol (open orders).
+   * Returns orderId, side, orderType, qty, price, triggerPrice, orderStatus for each active order.
+   */
+  async getOpenOrders(symbol: string): Promise<Array<{
+    orderId: string;
+    side: string;
+    orderType: string;
+    qty: string;
+    price: string;
+    triggerPrice: string;
+    orderStatus: string;
+    reduceOnly: boolean;
+  }>> {
+    try {
+      const result = await this.request('GET', `/v5/order/realtime?category=linear&symbol=${symbol}&limit=50`);
+      return (result?.list || []).map((o: any) => ({
+        orderId: o.orderId,
+        side: o.side,
+        orderType: o.orderType,
+        qty: o.qty,
+        price: o.price,
+        triggerPrice: o.triggerPrice ?? o.stopOrderPrice ?? '0',
+        orderStatus: o.orderStatus,
+        reduceOnly: o.reduceOnly === true || o.reduceOnly === 'true',
+      }));
+    } catch (error: any) {
+      logger.error(`Failed to get open orders: ${error.message}`);
+      return [];
     }
   }
 

@@ -3,13 +3,71 @@
  * Tracks open positions, detects TP/SL hits, manages trailing stops
  */
 
+import fs from 'fs';
+import path from 'path';
 import logger, { tradeLogger } from '../utils/logger';
 import { Position, Trade, TradeSignal, BotConfig } from '../types';
+
+const STATE_FILE = path.join(process.cwd(), 'data', 'bot-state.json');
 
 export class PositionManager {
   private positions: Map<string, Position> = new Map();
   private trades: Trade[] = [];
   private nextTradeId = 1;
+  // Re-entry cooldown — persisted to disk so restarts don't reset it
+  private lastExitTime: Map<string, number> = new Map();
+
+  // ─── State persistence ───────────────────────────────────────────────────
+
+  saveState(): void {
+    try {
+      const openPositions = Array.from(this.positions.values()).filter(p => p.status === 'OPEN');
+      const state = {
+        positions: openPositions,
+        nextTradeId: this.nextTradeId,
+        lastExitTime: Object.fromEntries(this.lastExitTime),
+        savedAt: Date.now(),
+      };
+      const dir = path.dirname(STATE_FILE);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+    } catch (e) {
+      logger.error(`Failed to save bot state: ${e}`);
+    }
+  }
+
+  loadState(): void {
+    try {
+      if (!fs.existsSync(STATE_FILE)) return;
+      const raw = fs.readFileSync(STATE_FILE, 'utf-8');
+      const state = JSON.parse(raw);
+      for (const p of (state.positions || [])) {
+        if (p.status === 'OPEN' && p.quantity > 0 && p.entryPrice > 0) {
+          this.positions.set(p.id, p);
+        }
+      }
+      if (state.nextTradeId) this.nextTradeId = state.nextTradeId;
+      for (const [sym, ts] of Object.entries(state.lastExitTime || {})) {
+        this.lastExitTime.set(sym, ts as number);
+      }
+      logger.info(`State loaded from disk: ${this.positions.size} open positions, ${this.lastExitTime.size} exit cooldowns`);
+    } catch (e) {
+      logger.warn(`Could not load state file (starting fresh): ${e}`);
+    }
+  }
+
+  // ─── Re-entry cooldown ───────────────────────────────────────────────────
+
+  recordExit(symbol: string): void {
+    this.lastExitTime.set(symbol, Date.now());
+    this.saveState();
+  }
+
+  getLastExitTime(symbol: string): number | undefined {
+    return this.lastExitTime.get(symbol);
+  }
+
+  // ─── Position lifecycle ───────────────────────────────────────────────────
 
   /**
    * Open a new position. Optionally pass slOrderId and tp1OrderId from exchange for TP1-hit flow (cancel SL, set SL to entry).
@@ -39,6 +97,7 @@ export class PositionManager {
       };
 
       this.positions.set(position.id, position);
+      this.saveState();
 
       // Log the trade
       const trade: Trade = {
@@ -94,11 +153,14 @@ export class PositionManager {
     }
 
     const pnl = this.calculatePnL(position.side, position.entryPrice, exitPrice, position.quantity);
-    const pnlPercent = (pnl / (position.entryPrice * position.quantity)) * 100;
+    // pnlPercent = return on margin (notional / leverage = margin used)
+    const margin = (position.entryPrice * position.quantity) / (position.leverage || 1);
+    const pnlPercent = margin > 0 ? (pnl / margin) * 100 : 0;
 
     position.status = 'CLOSED';
     position.pnl = pnl;
     position.pnlPercent = pnlPercent;
+    this.saveState();
 
     // Update corresponding trade
     const trade = this.trades.find(t => t.id === `TRD_${positionId}`);
@@ -121,14 +183,17 @@ export class PositionManager {
       exitPrice,
       pnl: pnl.toFixed(2),
       pnlPercent: pnlPercent.toFixed(2),
-      duration: (position.openTime - Date.now()) / 1000 / 60, // minutes
+      duration: (Date.now() - position.openTime) / 1000 / 60, // minutes
     });
   }
 
   /** Mark that we have moved SL to entry on the exchange (after TP1 hit). */
   markSlMovedToEntry(positionId: string): void {
     const position = this.positions.get(positionId);
-    if (position) position.slMovedToEntry = true;
+    if (position) {
+      position.slMovedToEntry = true;
+      this.saveState();
+    }
   }
 
   /** Mark TP1 as hit (e.g. when TP1 order is Filled on exchange). Updates quantity to 50% and stopLoss to entry. */
@@ -138,6 +203,7 @@ export class PositionManager {
     position.tp1Hit = true;
     position.quantity = position.quantity * 0.5;
     position.stopLoss = position.entryPrice;
+    this.saveState();
   }
 
   /**
@@ -155,9 +221,9 @@ export class PositionManager {
 
     const pnl = this.calculatePnL(position.side, position.entryPrice, currentPrice, position.quantity);
 
-    // Check if TP1 hit
+    // Check if TP1 hit (skip if tp1 = 0 — not set, e.g. restored position with no TP on exchange)
     let tp1HitNow = false;
-    if (!position.tp1Hit) {
+    if (!position.tp1Hit && position.tp1 > 0) {
       const tp1Hit = position.side === 'LONG' ? currentPrice >= position.tp1 : currentPrice <= position.tp1;
       if (tp1Hit) {
         position.tp1Hit = true;
@@ -170,6 +236,7 @@ export class PositionManager {
           if (config.trailingStop) {
             position.trailingStopPrice = currentPrice;
           }
+          this.saveState();
           // Caller should close 50% on exchange and update SL to entry; no full close here
           return { tp1Hit: true, shouldClose: null };
         }
@@ -177,6 +244,7 @@ export class PositionManager {
         // Enable trailing stop after TP1 hit (if configured)
         if (config.trailingStop) {
           position.trailingStopPrice = currentPrice;
+          this.saveState();
         }
 
         // Close at TP1 if configured (full close)
@@ -186,16 +254,20 @@ export class PositionManager {
       }
     }
 
-    // Check if TP2 hit
-    const tp2Hit = position.side === 'LONG' ? currentPrice >= position.tp2 : currentPrice <= position.tp2;
-    if (tp2Hit) {
-      return { tp1Hit: position.tp1Hit, shouldClose: 'TP2' };
+    // Check if TP2 hit (skip if tp2 = 0 — not set)
+    if (position.tp2 > 0) {
+      const tp2Hit = position.side === 'LONG' ? currentPrice >= position.tp2 : currentPrice <= position.tp2;
+      if (tp2Hit) {
+        return { tp1Hit: position.tp1Hit, shouldClose: 'TP2' };
+      }
     }
 
-    // Check if SL hit
-    const slHit = position.side === 'LONG' ? currentPrice <= position.stopLoss : currentPrice >= position.stopLoss;
-    if (slHit) {
-      return { tp1Hit: position.tp1Hit, shouldClose: 'SL' };
+    // Check if SL hit (skip if stopLoss = 0 — not set, e.g. restored position with no SL on exchange)
+    if (position.stopLoss > 0) {
+      const slHit = position.side === 'LONG' ? currentPrice <= position.stopLoss : currentPrice >= position.stopLoss;
+      if (slHit) {
+        return { tp1Hit: position.tp1Hit, shouldClose: 'SL' };
+      }
     }
 
     // Check trailing stop (if enabled and TP1 hit)
@@ -238,6 +310,46 @@ export class PositionManager {
   }
 
   /**
+   * Restore a position from exchange data after a bot restart.
+   * Skipped if the position is already in local state (loaded from disk).
+   */
+  restorePositionFromExchange(p: {
+    symbol: string; side: 'LONG' | 'SHORT'; quantity: number;
+    entryPrice: number; leverage: number; stopLoss: number; takeProfit: number;
+  }): void {
+    if (p.quantity <= 0 || p.entryPrice <= 0) {
+      logger.warn(`Skipping restore of ${p.symbol} ${p.side}: invalid quantity=${p.quantity} or entryPrice=${p.entryPrice}`);
+      return;
+    }
+    // Skip if already loaded from disk state (prevents duplicate)
+    const alreadyInState = Array.from(this.positions.values()).some(
+      pos => pos.symbol === p.symbol && pos.side === p.side && pos.status === 'OPEN'
+    );
+    if (alreadyInState) {
+      logger.info(`${p.symbol} ${p.side} already in local state (loaded from disk) — skipping exchange restore`);
+      return;
+    }
+    const id = `RESTORED_${p.symbol}_${p.side}`;
+    if (this.positions.has(id)) return;
+    this.positions.set(id, {
+      id,
+      symbol:     p.symbol,
+      side:       p.side,
+      entryPrice: p.entryPrice,
+      quantity:   p.quantity,
+      leverage:   p.leverage,
+      openTime:   Date.now(),
+      stopLoss:   p.stopLoss,
+      tp1:        p.takeProfit,
+      tp2:        p.takeProfit,
+      tp1Hit:     false,
+      status:     'OPEN',
+    });
+    logger.info(`Restored pre-existing position from exchange: ${p.symbol} ${p.side} @ ${p.entryPrice}`);
+    this.saveState();
+  }
+
+  /**
    * Get all open positions
    */
   getOpenPositions(): Position[] {
@@ -262,8 +374,8 @@ export class PositionManager {
    * Get closed trades (for daily stats)
    */
   getClosedTrades(startTime?: number): Trade[] {
-    return this.trades.filter(t => 
-      t.status === 'CLOSED' && 
+    return this.trades.filter(t =>
+      t.status === 'CLOSED' &&
       (!startTime || t.closeTime! >= startTime)
     );
   }

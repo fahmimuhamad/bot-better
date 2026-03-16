@@ -384,10 +384,10 @@ export class SignalGenerator {
     direction: 'LONG' | 'SHORT',
     entry: number
   ): { stopLoss: number; tp1: number; tp2: number } {
-    const slAtrMult = parseFloat(process.env.SL_ATR_MULTIPLIER || '1.0');
+    const slAtrMult = parseFloat(process.env.SL_ATR_MULTIPLIER || '1.5');
     const slMinPct  = parseFloat(process.env.SL_ATR_MIN_PCT    || '1.5') / 100;
-    const tp1RMult  = parseFloat(process.env.TP1_R_MULT        || '2.0');
-    const tp2RMult  = parseFloat(process.env.TP2_R_MULT        || '3.5');
+    const tp1RMult  = parseFloat(process.env.TP1_R_MULT        || '2.5');
+    const tp2RMult  = parseFloat(process.env.TP2_R_MULT        || '4.0');
 
     const atr    = this.calculateATR(ohlcvData);
     const atrPct = atr ? atr / entry : slMinPct;

@@ -18,11 +18,12 @@ import positionManager from '../trading/position-manager';
 import { buildDailyReportMessage } from './daily-report';
 import { BinanceTickerData } from '../types';
 
-type BalanceGetter  = () => number;
-type TickersGetter  = () => Map<string, BinanceTickerData>;
-type BotStartGetter = () => number;
-type BotStopper     = () => void;
-type BotStarter     = () => Promise<void>;
+type BalanceGetter      = () => number;
+type RegimeGetter       = () => string;
+type TickersGetter      = () => Map<string, BinanceTickerData>;
+type BotStartGetter     = () => number;
+type BotStopper         = () => void;
+type BotStarter         = () => Promise<void>;
 
 async function send(text: string): Promise<void> {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
@@ -42,6 +43,8 @@ async function send(text: string): Promise<void> {
 async function handleCommand(
   text: string,
   getBalance: BalanceGetter,
+  getStartBalance: BalanceGetter,
+  getRegime: RegimeGetter,
   getTickers: TickersGetter,
   getBotStart: BotStartGetter,
   stopBot: BotStopper,
@@ -58,17 +61,29 @@ async function handleCommand(
       const balance  = getBalance();
       const uptimeH  = ((Date.now() - getBotStart()) / 3600000).toFixed(1);
       const mode     = process.env.ENABLE_DRY_RUN === 'true' ? 'DRY RUN' : 'LIVE';
+      const regime   = getRegime().toUpperCase();
 
+      const tickers  = getTickers();
+      let totalUPnl  = 0;
       const posLines = openPos.length > 0
-        ? openPos.map(p => `  • ${p.symbol} ${p.side} @ $${p.entryPrice.toFixed(4)}`).join('\n')
+        ? openPos.map(p => {
+            const price = parseFloat(tickers.get(p.symbol)?.lastPrice ?? String(p.entryPrice));
+            const upnl  = p.side === 'LONG'
+              ? (price - p.entryPrice) * p.quantity
+              : (p.entryPrice - price) * p.quantity;
+            totalUPnl += upnl;
+            const sign = upnl >= 0 ? '+' : '-';
+            return `  • ${p.symbol} ${p.side} @ $${p.entryPrice.toFixed(4)}  uPnL ${sign}$${Math.abs(upnl).toFixed(2)}`;
+          }).join('\n')
         : '  None';
 
+      const equity = balance + totalUPnl;
       await send([
         `⚙️ *Bot Status*`,
         ``,
         `Mode: ${mode}`,
-        `Regime: auto (BTC daily EMA200)`,
-        `Balance: $${balance.toFixed(2)}`,
+        `Regime: ${regime} (BTC daily EMA200)`,
+        `Wallet: $${balance.toFixed(2)}  |  Equity: $${equity.toFixed(2)}`,
         `Uptime: ${uptimeH}h  |  Trades today: ${stats.totalTrades}`,
         `Win rate: ${stats.winRate.toFixed(1)}%  |  PnL: $${stats.totalPnL.toFixed(2)}`,
         ``,
@@ -81,7 +96,7 @@ async function handleCommand(
     case '/report': {
       const msg = buildDailyReportMessage(
         getBalance(),
-        getBalance(),
+        getStartBalance(),
         getTickers(),
         getBotStart()
       );
@@ -135,29 +150,35 @@ async function handleCommand(
 }
 
 export class TelegramCommandHandler {
-  private offset        = 0;
-  private running       = false;
-  private getBalance:   BalanceGetter;
-  private getTickers:   TickersGetter;
-  private getBotStart:  BotStartGetter;
-  private stopBot:      BotStopper;
-  private startBot:     BotStarter;
-  private isBotRunning: () => boolean;
+  private offset           = 0;
+  private running          = false;
+  private getBalance:      BalanceGetter;
+  private getStartBalance: BalanceGetter;
+  private getRegime:       RegimeGetter;
+  private getTickers:      TickersGetter;
+  private getBotStart:     BotStartGetter;
+  private stopBot:         BotStopper;
+  private startBot:        BotStarter;
+  private isBotRunning:    () => boolean;
 
   constructor(
     getBalance: BalanceGetter,
+    getStartBalance: BalanceGetter,
+    getRegime: RegimeGetter,
     getTickers: TickersGetter,
     getBotStart: BotStartGetter,
     stopBot: BotStopper,
     startBot: BotStarter,
     isBotRunning: () => boolean
   ) {
-    this.getBalance   = getBalance;
-    this.getTickers   = getTickers;
-    this.getBotStart  = getBotStart;
-    this.stopBot      = stopBot;
-    this.startBot     = startBot;
-    this.isBotRunning = isBotRunning;
+    this.getBalance      = getBalance;
+    this.getStartBalance = getStartBalance;
+    this.getRegime       = getRegime;
+    this.getTickers      = getTickers;
+    this.getBotStart     = getBotStart;
+    this.stopBot         = stopBot;
+    this.startBot        = startBot;
+    this.isBotRunning    = isBotRunning;
   }
 
   start(): void {
@@ -201,7 +222,7 @@ export class TelegramCommandHandler {
           if (!msg.text.startsWith('/')) continue;
 
           logger.info(`Telegram command received: ${msg.text}`);
-          await handleCommand(msg.text, this.getBalance, this.getTickers, this.getBotStart, this.stopBot, this.startBot, this.isBotRunning);
+          await handleCommand(msg.text, this.getBalance, this.getStartBalance, this.getRegime, this.getTickers, this.getBotStart, this.stopBot, this.startBot, this.isBotRunning);
         }
       } catch (error: any) {
         if (this.running) {

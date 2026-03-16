@@ -96,10 +96,10 @@ export class SafetyRulesEnforcer {
     correlationThreshold: number = 0.7
   ): SafetyCheckResult {
     // Map of coin correlations (simplified - would need real data in production)
+    // NOTE: BTC/ETH/BNB intentionally NOT marked as correlated — the regime-backtest
+    // allows all three simultaneously and they occupy separate position slots.
+    // Blocking them would diverge live behaviour from backtested results.
     const correlations: { [key: string]: string[] } = {
-      'BTC': ['ETH', 'BNB'],
-      'ETH': ['BTC', 'BNB'],
-      'BNB': ['BTC', 'ETH'],
       'SOL': ['ETH'],
       'ADA': [],
       'XRP': [],

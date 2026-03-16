@@ -141,6 +141,45 @@ export interface BotConfig {
   paperTrading: boolean;
 }
 
+// ─── Bull Strategy Types ───────────────────────────────────────────────────
+
+/** Raw market data from Binance Futures public API (OI, orderbook, L/S ratio) */
+export interface FuturesMarketData {
+  symbol: string;
+  openInterest: number;
+  oiHistory: { timestamp: number; sumOpenInterest: number }[];
+  orderbook: {
+    totalBidQty: number;   // USDT-weighted sum of top bids
+    totalAskQty: number;
+    imbalanceRatio: number; // bidQty / askQty
+  };
+  longShortRatio: number;  // >1 = more long accounts; <1 = more short accounts
+}
+
+/** Output of PumpScanner — accumulation scoring for one coin */
+export interface PumpScanResult {
+  symbol: string;
+  score: number;   // 0-100
+  flagged: boolean; // score >= 70
+  signals: {
+    volatilityCompression: boolean; // 12-candle 4h range < 5%
+    volumeSpike: boolean;           // current vol > 2× declining avg
+    oiAccumulation: boolean;        // OI rising while price flat (< 2% move)
+    orderbookImbalance: boolean;    // bid >= 2× ask in USDT
+    longShortImproving: boolean;    // L/S ratio > 1.1
+  };
+}
+
+/** Output of LiquidationAnalyzer — synthetic liquidation clusters */
+export interface LiquidationMap {
+  symbol: string;
+  currentPrice: number;
+  shortLiqClusters: { price: number; strength: number }[]; // above price = TP magnets
+  longLiqClusters:  { price: number; strength: number }[]; // below price = SL buffer
+  nearestShortLiq: number | null; // closest short-liq cluster above price
+  nearestLongLiq:  number | null; // closest long-liq cluster below price
+}
+
 export interface DailyStats {
   date: string;
   trades: number;

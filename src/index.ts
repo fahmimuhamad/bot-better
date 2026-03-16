@@ -6,29 +6,47 @@ import 'dotenv/config';
 import logger from './utils/logger';
 import { DataFetcher } from './data/fetcher';
 import { SignalGenerator } from './signals/generator';
+import { BullSignalGenerator } from './signals/bull-signal-generator';
+import { FuturesDataFetcher } from './data/futures-fetcher';
+import { PumpScanner } from './signals/pump-scanner';
+import { LiquidationAnalyzer } from './signals/liquidation-analyzer';
 import OrderExecutor from './trading/order-executor';
 import positionManager from './trading/position-manager';
-import { BotConfig, Position, BinanceTickerData } from './types';
+import { BotConfig, TradeSignal, BinanceTickerData } from './types';
 import { OHLCV } from './backtest/data-loader';
-import { getOrderStatus, getTradingBalance } from './exchange/trading-client';
+import { getOrderStatus, getTradingBalance, getExchangeOpenPositions } from './exchange/trading-client';
+const RECONCILE_EVERY_N_CYCLES = 10; // check exchange vs local every ~20 min
 import { sendTelegramMessage } from './utils/telegram';
-import { RegimeMonitor, detectRegime, resampleCandles } from './utils/regime-detector';
+import { detectRegime, resampleCandles } from './utils/regime-detector';
 import { DailyReportScheduler } from './utils/daily-report';
 import { TelegramCommandHandler } from './utils/telegram-commands';
 
 // Curated coin lists — optimized per timeframe
+// Bull 4H: verified profitable in 2024-01-01→2026-03-13 regime backtest
+// v5 list: +11264% ROI vs v2 +2156% (17 coins, last updated 2026-03-16)
 const CURATED_COINS_4H = [
-  'BTC','ETH','BNB','ADA','DOGE','AVAX',
-  'ARB','OP','SHIB','SUI','FLOW','HBAR','TON',
-  'ZIL','ALICE','CVC','GLM','PEOPLE','OG',
-  'QUICK','OXT','DENT','AGLD','GTC',
+  // Core — 40%+ WR
+  'BTC','ETH','BNB','ADA','DOGE',
+  // Borderline — 35-36% WR, keep for diversification
+  'ARB','HBAR',
+  // Added batch 1: TRX(44.4%WR), MANA(40.9%), RAY(47.1%), BLUR(52.9%), JST(36%)
+  'TRX','MANA','RAY','BLUR','JST',
+  // Added batch 2: PSG(46.9%WR), AUDIO(58.8%), ATM(33.3%), ZEC(43.5%), SANTOS(40.7%)
+  'PSG','AUDIO','ATM','ZEC','SANTOS',
+  // Added batch 3: PAXG(41.7%WR, 36 trades) — tokenized gold, uncorrelated with crypto trends
+  'PAXG',
 ];
+// Bear 1H: verified profitable in 2024-01-01→2026-03-16 regime backtest (bear-only)
+// v2 list: +1865% ROI vs v1 +565% (36 coins, last updated 2026-03-16)
+// Removed: ETH(12%WR -$30), ARB(14%WR -$27), ALICE(33%WR -$34), GLM(33%WR -$10), GTC(33%WR -$13)
+// Added: HFT(71%WR), SUSHI(75%WR), UTK(67%WR), AUCTION(60%WR), CELR(50%WR), ACH(30%WR)
 const CURATED_COINS_1H = [
-  'BTC','ETH','BNB','ADA','DOGE','AVAX',
-  'ARB','OP','SHIB','SUI','FLOW','HBAR','TON',
-  'SAND','CHZ','ZIL','ALICE','ID','CVC','GLM','SXP',
+  'BTC','BNB','ADA','DOGE','AVAX',
+  'OP','SHIB','SUI','FLOW','HBAR','TON',
+  'SAND','CHZ','ZIL','ID','CVC','SXP',
   'PEOPLE','STG','DODO','OG','PORTO',
-  'QUICK','DENT','IOTX','COTI','FLUX','GTC','MEME','DF','GNS',
+  'QUICK','DENT','IOTX','COTI','FLUX','MEME','DF','GNS',
+  'CELR','SUSHI','ACH','HFT','UTK','AUCTION',
 ];
 
 // SCAN_COINS env override (comma-separated); if set, used regardless of regime
@@ -36,24 +54,27 @@ const SCAN_COINS_OVERRIDE = process.env.SCAN_COINS?.trim()
   ? process.env.SCAN_COINS.split(',').map(s => s.trim().toUpperCase()).filter(Boolean)
   : null;
 
+// Separate lower risk for bull trades (default 2.0% vs bear 3.5%)
+const BULL_RISK_PCT = parseFloat(process.env.BULL_RISK_PCT || '2.0');
+
 /**
  * Parse configuration from environment
  */
 function loadConfig(): BotConfig {
   return {
-    riskPerTrade: parseFloat(process.env.RISK_PER_TRADE || '2'),
-    leverage: parseFloat(process.env.LEVERAGE || '5'),
+    riskPerTrade: parseFloat(process.env.RISK_PER_TRADE || '3.5'),
+    leverage: parseFloat(process.env.LEVERAGE || '15'),
     entryMode: (process.env.ENTRY_MODE as 'aggressive' | 'conservative') || 'aggressive',
-    minConfidence: parseFloat(process.env.MIN_CONFIDENCE || '80'),
-    maxOpenTrades: parseFloat(process.env.MAX_OPEN_TRADES || '10'),
+    minConfidence: parseFloat(process.env.MIN_CONFIDENCE || '65'),
+    maxOpenTrades: parseFloat(process.env.MAX_OPEN_TRADES || '5'),
     closeAtTp1: process.env.CLOSE_AT_TP1 === 'true',
     takeHalfAtTp1MoveSlToEntry: process.env.TAKE_50_AT_TP1_MOVE_SL === 'true',
     trailingStop: process.env.TRAILING_STOP !== 'false',
     quoteCurrency: process.env.QUOTE_CURRENCY || 'USDT',
-    dailyLossLimit: parseFloat(process.env.DAILY_LOSS_LIMIT || '3'),
-    slDistancePct: parseFloat(process.env.SL_ATR_MIN_PCT || process.env.SL_DISTANCE_PCT || '2'),
+    dailyLossLimit: parseFloat(process.env.DAILY_LOSS_LIMIT || '5'),
+    slDistancePct: parseFloat(process.env.SL_ATR_MIN_PCT || process.env.SL_DISTANCE_PCT || '1.5'),
     tp1Percent: parseFloat(process.env.TP1_PERCENT || '2'),
-    tp2Percent: parseFloat(process.env.TP2_PERCENT || '4'),
+    tp2Percent: parseFloat(process.env.TP2_PERCENT || '5'),
     refreshCycle: parseFloat(process.env.REFRESH_CYCLE || '120000'),
     useTestnet: (process.env.EXCHANGE || 'binance').toLowerCase() === 'bybit'
       ? process.env.BYBIT_TESTNET === 'true'
@@ -70,18 +91,23 @@ class TradingBot {
   private config: BotConfig;
   private dataFetcher: DataFetcher;
   private signalGenerator: SignalGenerator;
+  private bullSignalGenerator = new BullSignalGenerator();
+  private futuresDataFetcher  = new FuturesDataFetcher();
+  private pumpScanner         = new PumpScanner();
+  private liqAnalyzer         = new LiquidationAnalyzer();
   private orderExecutor: OrderExecutor;
   private isRunning = false;
   private cycleCount = 0;
   private startBalance = 0;
   private currentRegime: 'bull' | 'bear' = 'bear';
-  private regimeMonitor    = new RegimeMonitor();
   private dailyReport      = new DailyReportScheduler();
   private botStartTime     = Date.now();
   private lastBalance      = 0;
   private lastTickers      = new Map<string, BinanceTickerData>();
   private commandHandler   = new TelegramCommandHandler(
     () => this.lastBalance || this.startBalance,
+    () => this.startBalance,
+    () => this.currentRegime,
     () => this.lastTickers,
     () => this.botStartTime,
     () => this.stop(),
@@ -121,18 +147,35 @@ class TradingBot {
         }
       }
 
-      // Set starting balance from trading exchange (Bybit or Binance per EXCHANGE)
+      // Load persisted state (positions, order IDs, tp1Hit, re-entry cooldowns)
+      positionManager.loadState();
+
+      // Fetch balance and open positions in parallel
       if (!this.config.dryRun && !this.config.paperTrading) {
-        const { getTradingBalance } = await import('./exchange/trading-client');
-        try {
-          this.startBalance = await getTradingBalance();
-        } catch (e) {
-          logger.warn('Could not fetch start balance, using default', { error: String(e) });
+        const [balance, exchangePositions] = await Promise.allSettled([
+          getTradingBalance(),
+          getExchangeOpenPositions(),
+        ]);
+        if (balance.status === 'fulfilled') {
+          this.startBalance = balance.value;
+        } else {
+          logger.warn('Could not fetch start balance, using default', { error: String(balance.reason) });
+        }
+        if (exchangePositions.status === 'fulfilled' && exchangePositions.value.length > 0) {
+          logger.info(`Restoring ${exchangePositions.value.length} open position(s) from exchange`);
+          for (const p of exchangePositions.value) {
+            positionManager.restorePositionFromExchange(p);
+          }
+        } else if (exchangePositions.status === 'rejected') {
+          logger.warn(`Could not restore positions from exchange: ${exchangePositions.reason}`);
         }
       }
       if (this.startBalance <= 0) {
         this.startBalance = 150; // Fallback default
       }
+
+      // Initialize safety enforcer with real balance so daily loss limit works
+      this.orderExecutor.updateStartBalance(this.startBalance);
 
       logger.info('✅ Bot initialized successfully', {
         startBalance: this.startBalance,
@@ -199,16 +242,43 @@ class TradingBot {
       );
       logger.debug(`OHLCV loaded for ${ohlcvMap.size} symbols`);
 
-      // Step 2: Generate signals with HTF candles (resample signal TF × 4 for trend filter)
-      const signals = coins
-        .map(c => {
-          const ticker = tickers.get(c.symbol);
-          const ohlcv = ohlcvMap.get(c.symbol);
-          if (!ticker || !ohlcv) return null;
-          const htfCandles = resampleCandles(ohlcv as OHLCV[], 4);
-          return this.signalGenerator.generateSignal(c, ticker, fundingRates.get(c.symbol), ohlcv as OHLCV[], htfCandles);
-        })
-        .filter((s): s is NonNullable<typeof s> => s !== null);
+      // Step 2: Generate signals — regime-specific pipeline
+      let signals: TradeSignal[];
+
+      if (this.currentRegime === 'bear') {
+        // ── BEAR: EMA pullback strategy (unchanged) ──────────────────────────
+        signals = coins
+          .map(c => {
+            const ticker = tickers.get(c.symbol);
+            const ohlcv  = ohlcvMap.get(c.symbol);
+            if (!ticker || !ohlcv) return null;
+            const htfCandles = resampleCandles(ohlcv as OHLCV[], 4);
+            return this.signalGenerator.generateSignal(c, ticker, fundingRates.get(c.symbol), ohlcv as OHLCV[], htfCandles);
+          })
+          .filter((s): s is TradeSignal => s !== null);
+
+      } else {
+        // ── BULL: Pump scan + liquidation analysis + EMA pullback sweep ──────
+        const futuresMap = await this.futuresDataFetcher.fetchFuturesData(activeCoinList);
+        this.futuresDataFetcher.logFetchSummary(futuresMap, activeCoinList.length);
+
+        signals = (
+          await Promise.all(
+            coins.map(async (c) => {
+              const ticker  = tickers.get(c.symbol);
+              const ohlcv   = ohlcvMap.get(c.symbol);
+              if (!ticker || !ohlcv) return null;
+              const futures = futuresMap.get(c.symbol) ?? null;
+              const pump    = this.pumpScanner.scan(ohlcv as OHLCV[], futures);
+              const liqMap  = this.liqAnalyzer.analyze(c.symbol, ohlcv as OHLCV[], c.price);
+              return this.bullSignalGenerator.generateSignal(
+                c, ticker, ohlcv as OHLCV[], pump, liqMap, fundingRates.get(c.symbol)
+              );
+            })
+          )
+        ).filter((s): s is TradeSignal => s !== null);
+      }
+
       const filteredSignals = signals.filter(s => s.confidence >= this.config.minConfidence);
 
       logger.info(`Signals generated`, {
@@ -239,14 +309,53 @@ class TradingBot {
       this.lastBalance = currentBalance;
       logger.info('Balance for position sizing', { currentBalance: currentBalance.toFixed(2), riskPerTrade: this.config.riskPerTrade + '%' });
 
+      // Step 3c: Exchange reconciliation — every N cycles, close local positions not found on exchange
+      // Catches SL/TP2 fills that happened between cycles (price spiked and recovered)
+      if (this.cycleCount % RECONCILE_EVERY_N_CYCLES === 0 && !this.config.dryRun && !this.config.paperTrading) {
+        try {
+          const exchangePositions = await getExchangeOpenPositions();
+          const exchangeSymbols = new Set(exchangePositions.map(ep => ep.symbol));
+          for (const pos of positionManager.getOpenPositions()) {
+            if (!exchangeSymbols.has(pos.symbol)) {
+              const currentPrice = parseFloat(tickers.get(pos.symbol)?.lastPrice ?? '0') || pos.entryPrice;
+              logger.warn(`Reconciliation: ${pos.symbol} not on exchange — closing locally (TP/SL likely filled)`);
+              positionManager.closePosition(pos.id, currentPrice, 'MANUAL');
+              positionManager.recordExit(pos.symbol);
+            }
+          }
+        } catch (e) {
+          logger.warn(`Reconciliation failed: ${e}`);
+        }
+      }
+
       // Step 4: Execute new trades (position size calculated from current balance + RISK_PER_TRADE from .env)
-      if (filteredSignals.length > 0 && openPositions.length < this.config.maxOpenTrades && currentBalance > 0) {
-        for (const signal of filteredSignals.slice(0, this.config.maxOpenTrades - openPositions.length)) {
+      const REENTRY_COOLDOWN_MS = 12 * 60 * 60 * 1000; // 12h — matches backtest REENTRY_COOLDOWN=12
+      const readySignals = filteredSignals.filter(s => {
+        const lastExit = positionManager.getLastExitTime(s.symbol);
+        if (lastExit && Date.now() - lastExit < REENTRY_COOLDOWN_MS) {
+          logger.debug(`${s.symbol} in re-entry cooldown (${Math.round((Date.now() - lastExit) / 60000)}m elapsed, 720m required)`);
+          return false;
+        }
+        return true;
+      });
+
+      if (readySignals.length > 0 && openPositions.length < this.config.maxOpenTrades && currentBalance > 0) {
+        for (const signal of readySignals.slice(0, this.config.maxOpenTrades - openPositions.length)) {
+          // Re-fetch live positions before each signal so maxOpenTrades cap is accurate
+          const livePositions = positionManager.getOpenPositions();
+          if (livePositions.length >= this.config.maxOpenTrades) break;
+
+          // Use lower risk for bull trades
+          const prevRisk = this.config.riskPerTrade;
+          if (this.currentRegime === 'bull') this.config.riskPerTrade = BULL_RISK_PCT;
+
           const result = await this.orderExecutor.executeSignal(
             signal,
             currentBalance,
-            openPositions
+            livePositions
           );
+
+          this.config.riskPerTrade = prevRisk;
 
           if (result.success) {
             logger.info(`✅ Trade executed`, {
@@ -269,6 +378,10 @@ class TradingBot {
         if (!ticker) continue;
 
         const currentPrice = parseFloat(ticker.lastPrice);
+        if (!isFinite(currentPrice) || currentPrice <= 0) {
+          logger.warn(`Invalid ticker price for ${position.symbol}: ${ticker.lastPrice} — skipping position update`);
+          continue;
+        }
         const { tp1Hit, shouldClose } = positionManager.updatePosition(position.id, currentPrice, this.config);
 
         if (shouldClose) {
@@ -281,12 +394,15 @@ class TradingBot {
 
           const reason = shouldClose as 'TP1' | 'TP2' | 'SL' | 'TRAILING_STOP' | 'MANUAL';
           await this.orderExecutor.closePosition(position.id, currentPrice, reason);
+          positionManager.recordExit(position.symbol);
         } else {
           // Detect TP1 hit by order status (in case price check missed it)
           if (position.tp1OrderId && !position.tp1Hit) {
             const status = await getOrderStatus(position.symbol, position.tp1OrderId);
             if (status === 'Filled') {
               positionManager.markTp1Hit(position.id);
+            } else if (status === null) {
+              logger.warn(`TP1 order status unavailable for ${position.symbol} orderId=${position.tp1OrderId} — will retry next cycle`);
             }
           }
           if (position.tp1Hit && position.slOrderId && !position.slMovedToEntry) {
@@ -296,11 +412,13 @@ class TradingBot {
         }
       }
 
-      // Step 6: Regime check — alert via Telegram if market regime mismatches .env TIMEFRAME
-      await this.regimeMonitor.checkAndAlert(sendTelegramMessage);
-
-      // Step 6b: Daily report — send to Telegram at 7am WIB
-      this.dailyReport.tick(sendTelegramMessage, currentBalance, this.startBalance, tickers, this.botStartTime);
+      // Step 6: Daily report — send to Telegram at 7am WIB; also reset safety enforcer balance
+      const dayRolled = this.dailyReport.tick(sendTelegramMessage, currentBalance, this.startBalance, tickers, this.botStartTime);
+      if (dayRolled) {
+        this.startBalance = currentBalance;
+        this.orderExecutor.updateStartBalance(currentBalance);
+        logger.info('Day rolled over — safety enforcer balance reset', { newStartBalance: currentBalance });
+      }
 
       // Step 7: Log statistics
       const stats = positionManager.getDailyStats();

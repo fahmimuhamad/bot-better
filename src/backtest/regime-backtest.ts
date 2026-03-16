@@ -25,22 +25,36 @@ dotenv.config();
 
 import { DataLoader, OHLCV } from './data-loader';
 import { SignalGenerator } from '../signals/generator';
+import { BullSignalGenerator } from '../signals/bull-signal-generator';
 import { CoinMarketData, BinanceTickerData } from '../types';
 
 // ─── Coin lists ───────────────────────────────────────────────────────────────
 
 const CURATED_COINS_4H = [
-  'BTC','ETH','BNB','ADA','DOGE','AVAX',
-  'ARB','OP','SHIB','SUI','FLOW','HBAR','TON',
-  'ZIL','ALICE','CVC','GLM','PEOPLE','OG',
-  'QUICK','OXT','DENT','AGLD','GTC',
+  // Verified 40%+ WR in 2024 bull backtest — high-quality 4H pullback coins
+  'BTC','ETH','BNB','ADA','DOGE',
+  // Borderline positive (35-36% WR) — keep for diversification
+  'ARB','HBAR',
+  // Added 2026-03-16: validated in full-period bull regime backtest
+  // TRX(44.4% WR), MANA(40.9%), RAY(47.1%), BLUR(52.9%), JST(36%)
+  'TRX','MANA','RAY','BLUR','JST',
+  // Removed: OP(20%), SUI(25.8%), FLOW(27.8%), SHIB(28%), AVAX(30.2%)
+  // Added 2026-03-16 batch 2: PSG(46.9%WR), AUDIO(58.8%), ATM(33.3%), ZEC(43.5%), SANTOS(40.7%)
+  'PSG','AUDIO','ATM','ZEC','SANTOS',
+  // Rejected (net drag despite positive P&L): LAZIO, AGLD, ALPINE, BIFI, WIN, FLOKI
+  // Added 2026-03-16 batch 3: PAXG(41.7%WR, 36 trades) — tokenized gold, uncorrelated trends
+  'PAXG',
+  // Rejected batch 11: ALCX(20%WR), ARPA(16.7%), MTL(8.3%), AUCTION(14.3%), ACE(14.3%),
+  //   DEGO(16.7%), MAV(27.3%), OXT(33.3% breakeven), DEXE(32%), HIGH/WAN(9 trades — unreliable)
 ];
 const CURATED_COINS_1H = [
-  'BTC','ETH','BNB','ADA','DOGE','AVAX',
-  'ARB','OP','SHIB','SUI','FLOW','HBAR','TON',
-  'SAND','CHZ','ZIL','ALICE','ID','CVC','GLM','SXP',
+  'BTC','BNB','ADA','DOGE','AVAX',
+  'OP','SHIB','SUI','FLOW','HBAR','TON',
+  'SAND','CHZ','ZIL','ID','CVC','SXP',
   'PEOPLE','STG','DODO','OG','PORTO',
-  'QUICK','DENT','IOTX','COTI','FLUX','GTC','MEME','DF','GNS',
+  'QUICK','DENT','IOTX','COTI','FLUX','MEME','DF','GNS',
+  // Added 2026-03-16: validated via isolation testing
+  'CELR','SUSHI','ACH','HFT','UTK','AUCTION',
 ];
 const ALL_COINS = Array.from(new Set([...CURATED_COINS_4H, ...CURATED_COINS_1H]));
 
@@ -53,6 +67,10 @@ interface Args {
   confidence: number;
   maxOpenTrades: number;
   reportPath?: string;
+  bearOnly: boolean;
+  bull1h: boolean; // use 1H candles for bull strategy instead of 4H
+  bull1d: boolean; // use daily candles for bull strategy
+  bull2h: boolean; // use 2H candles for bull strategy
 }
 
 function parseArgs(): Args {
@@ -62,6 +80,10 @@ function parseArgs(): Args {
     balance:       163,
     confidence:    parseInt(process.env.MIN_CONFIDENCE || '65'),
     maxOpenTrades: parseInt(process.env.MAX_OPEN_TRADES || '5'),
+    bearOnly:      false,
+    bull1h:        false,
+    bull1d:        false,
+    bull2h:        false,
   };
   for (let i = 2; i < process.argv.length; i++) {
     const k = process.argv[i], v = process.argv[i + 1];
@@ -71,6 +93,10 @@ function parseArgs(): Args {
     if (k === '--confidence'  && v) { args.confidence    = parseInt(v);   i++; }
     if (k === '--max-trades'  && v) { args.maxOpenTrades = parseInt(v);   i++; }
     if (k === '--report'      && v) { args.reportPath    = v;             i++; }
+    if (k === '--bear-only')       { args.bearOnly       = true;                }
+    if (k === '--bull-1h')         { args.bull1h         = true;                }
+    if (k === '--bull-1d')         { args.bull1d         = true;                }
+    if (k === '--bull-2h')         { args.bull2h         = true;                }
   }
   return args;
 }
@@ -213,10 +239,12 @@ function getRegimeAt(ts: number, regimeMap: Map<number, 'BULL' | 'BEAR'>): 'BULL
 
 const CANDLES_WARMUP  = 220;   // min 1h candles before generating signals
 const CANDLES_LOOKBACK = 250;  // candles window for signal generator
+const D1_MS            = 24 * 60 * 60 * 1000; // 1 day in ms
 const REENTRY_COOLDOWN = 12;   // 1h candles cooldown after exit
 const SLIPPAGE_PCT     = 0.001;
 const FEE_PCT          = 0.001;
 const RISK_PCT         = parseFloat(process.env.RISK_PER_TRADE || '3.5');
+const BULL_RISK_PCT    = parseFloat(process.env.BULL_RISK_PCT || '2.0'); // lower risk for 4H bull trades
 const CLOSE_AT_TP1     = process.env.CLOSE_AT_TP1 === 'true';
 const H4_MS            = 4 * 60 * 60 * 1000; // 4 hours in ms
 
@@ -227,7 +255,8 @@ async function runRegimeBacktest(
   btcDaily: OHLCV[],
   args: Args,
 ): Promise<{ trades: PTrade[]; finalBalance: number; startBalance: number }> {
-  const sg = new SignalGenerator();
+  const sg     = new SignalGenerator();
+  const bullSg = new BullSignalGenerator();
   const regimeMap = buildRegimeMap(btcDaily);
 
   let balance = args.balance;
@@ -321,17 +350,20 @@ async function runRegimeBacktest(
     }
 
     // ── Step 2: check new entries ────────────────────────────────────────────
-    if (openPositions.size >= args.maxOpenTrades || balance <= 0) continue;
+    const regimeMaxTrades = args.maxOpenTrades;
+    if (openPositions.size >= regimeMaxTrades || balance <= 0) continue;
 
-    // In BULL regime, only fire entries at 4h boundaries
-    const isBullEntryCandle = regime === 'BULL' && (ts % H4_MS === 0);
+    // Bull: daily boundary (--bull-1d), every 1H (--bull-1h), or 4H boundary (default)
+    const H2_MS = 2 * 60 * 60 * 1000;
+    const bullBoundary = args.bull1d ? (ts % D1_MS === 0) : args.bull2h ? (ts % H2_MS === 0) : args.bull1h ? true : (ts % H4_MS === 0);
+    const isBullEntryCandle = !args.bearOnly && regime === 'BULL' && bullBoundary;
     const isBearEntryCandle = regime === 'BEAR';
     if (!isBullEntryCandle && !isBearEntryCandle) continue;
 
     const activeCoinList = regime === 'BULL' ? CURATED_COINS_4H : CURATED_COINS_1H;
 
     for (const sym of activeCoinList) {
-      if (openPositions.size >= args.maxOpenTrades) break;
+      if (openPositions.size >= regimeMaxTrades) break;
       if (Array.from(openPositions.values()).some(p => p.symbol === sym)) continue;
 
       const idx = tsIndex.get(sym)?.get(ts);
@@ -346,36 +378,52 @@ async function runRegimeBacktest(
 
       const klines1h = allKlines1h.get(sym)!;
 
-      // For BULL: build 4h resampled candles for signal generation
-      // For BEAR: use 1h candles directly
       let signalCandles: OHLCV[];
       let htfCandles: OHLCV[];
 
-      if (regime === 'BULL') {
+      if (regime === 'BULL' && args.bull2h) {
+        const raw2h = resampleCandles(klines1h.slice(0, idx + 1), 2);
+        if (raw2h.length < 55) continue;
+        signalCandles = raw2h.slice(Math.max(0, raw2h.length - CANDLES_LOOKBACK));
+        htfCandles = resampleCandles(raw2h, 2);
+      } else if (regime === 'BULL' && args.bull1d) {
+        // Daily mode: resample 1H → 24H candles
+        const raw1d = resampleCandles(klines1h.slice(0, idx + 1), 24);
+        if (raw1d.length < 55) continue;
+        signalCandles = raw1d.slice(Math.max(0, raw1d.length - CANDLES_LOOKBACK));
+        htfCandles = raw1d; // no higher TF available; use same
+      } else if (regime === 'BULL' && !args.bull1h) {
+        // 4H mode (default): resample 1H → 4H candles
         const raw4h = resampleCandles(klines1h.slice(0, idx + 1), 4);
-        if (raw4h.length < 55) continue; // need at least 55 4h candles for warmup
+        if (raw4h.length < 55) continue;
         signalCandles = raw4h.slice(Math.max(0, raw4h.length - CANDLES_LOOKBACK));
-        // HTF for bull: 4h→16h (ratio 4) to get trend direction
         htfCandles = resampleCandles(raw4h, 4);
       } else {
+        // 1H mode (bear or bull-1h)
         signalCandles = klines1h.slice(Math.max(0, idx - CANDLES_LOOKBACK + 1), idx + 1);
-        // HTF for bear: 1h→4h
         htfCandles = resampleCandles(klines1h.slice(0, idx + 1), 4);
       }
 
       const { coin, ticker } = buildCoinMarketData(sym, klines1h, idx);
-      const signal = sg.generateSignal(coin, ticker, undefined, signalCandles, htfCandles);
+      // Route to regime-specific generator — pump/liq data not available historically, pass null
+      const signal = regime === 'BULL'
+        ? bullSg.generateSignal(coin, ticker, signalCandles, null, null)
+        : sg.generateSignal(coin, ticker, undefined, signalCandles, htfCandles);
       if (!signal || signal.confidence < args.confidence) continue;
 
       const entryPrice = signal.entryPrice * (signal.direction === 'LONG' ? 1 + SLIPPAGE_PCT : 1 - SLIPPAGE_PCT);
-      const qty = calcPositionSize(balance, entryPrice, signal.stopLoss, RISK_PCT);
+      const riskForTrade = regime === 'BULL' ? BULL_RISK_PCT : RISK_PCT;
+      const qty = calcPositionSize(balance, entryPrice, signal.stopLoss, riskForTrade);
       if (qty <= 0 || entryPrice * qty < 1) continue;
+
+      const tp1 = signal.tp1;
+      const tp2 = signal.tp2;
 
       const posId = `POS_${tradeCount}_${sym}`;
       const pos: any = {
         id: posId, symbol: sym, side: signal.direction,
         entryPrice, quantity: qty,
-        stopLoss: signal.stopLoss, tp1: signal.tp1, tp2: signal.tp2,
+        stopLoss: signal.stopLoss, tp1, tp2,
         tp1Hit: false, openTime: ts,
         regimeAtEntry: regime,
       };
@@ -460,8 +508,8 @@ function buildReport(
     `**Period:** ${args.startDate} → ${args.endDate}`,
     `**Generated:** ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' })} WIB`,
     `**Regime detection:** BTC daily EMA200 (BULL = close > EMA200)`,
-    `**Bull mode:** CURATED_COINS_4H (${CURATED_COINS_4H.length} coins) · 4h candles`,
-    `**Bear mode:** CURATED_COINS_1H (${CURATED_COINS_1H.length} coins) · 1h candles`,
+    `**Bull mode:** CURATED_COINS_4H (${CURATED_COINS_4H.length} coins) · ${args.bull1d ? '1d' : args.bull2h ? '2h' : args.bull1h ? '1h' : '4h'} candles · EMA Pullback + Liquidity Sweep (v2)`,
+    `**Bear mode:** CURATED_COINS_1H (${CURATED_COINS_1H.length} coins) · 1h candles · EMA Pullback (v3, unchanged)`,
     ``,
     `---`,
     ``,
@@ -528,7 +576,7 @@ async function main() {
   console.log(`  Starting balance: $${args.balance}`);
   console.log(`  Max open trades:  ${args.maxOpenTrades}`);
   console.log(`  Confidence:       ${args.confidence}%`);
-  console.log(`  Risk per trade:   ${RISK_PCT}%`);
+  console.log(`  Risk per trade:   ${RISK_PCT}% (bear) / ${BULL_RISK_PCT}% (bull)`);
   console.log(`  Close at TP1:     ${CLOSE_AT_TP1}`);
   console.log(`  Regime:           BTC daily EMA200`);
   console.log(`  Bull coins:       ${CURATED_COINS_4H.length} (4h signals)`);
