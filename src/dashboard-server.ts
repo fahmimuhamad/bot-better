@@ -8,7 +8,7 @@ import 'dotenv/config';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
-import { getTradingBalance, getExchangeOpenPositions } from './exchange/trading-client';
+import { getTradingBalance, getExchangeOpenPositions, getTotalFeesSince } from './exchange/trading-client';
 
 const PORT = parseInt(process.env.DASHBOARD_PORT || '3840', 10);
 const STATUS_FILE = path.join(process.cwd(), 'data', 'dashboard-status.json');
@@ -32,6 +32,7 @@ async function getStatus(): Promise<{
   startedAt: number | null;
   totalPnL: number | null;
   totalWithdrawn: number;
+  totalFees: number;
   streak: { count: number; type: 'W' | 'L' | null };
   lastScanTime: number | null;
   totalRoiPct: number | null;
@@ -158,6 +159,12 @@ async function getStatus(): Promise<{
     // ignore
   }
 
+  // Fetch total fees from exchange since bot started
+  let totalFees = 0;
+  try {
+    totalFees = await getTotalFeesSince(startedAt ?? undefined);
+  } catch (_) {}
+
   // Streak: walk closed trades from most recent backwards
   let streak: { count: number; type: 'W' | 'L' | null } = { count: 0, type: null };
   try {
@@ -198,6 +205,7 @@ async function getStatus(): Promise<{
     startedAt,
     totalPnL,
     totalWithdrawn,
+    totalFees,
     totalRoiPct,
     totalTrades,
     streak,

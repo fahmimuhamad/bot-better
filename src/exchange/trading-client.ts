@@ -285,6 +285,12 @@ export async function getLastClosedPosition(symbol: string): Promise<{ avgExitPr
   return bybit.getLastClosedPosition(toBybitSymbol(symbol));
 }
 
+export async function getTotalFeesSince(since?: number): Promise<number> {
+  const bybit = getBybitClient();
+  if (!bybit) return 0;
+  return bybit.getTotalFeesSince(since);
+}
+
 export async function getConfirmedWithdrawals(since?: number): Promise<Array<{ withdrawId: string; amount: number; createTime: number; coin: string }>> {
   const bybit = getBybitClient();
   if (!bybit) return [];

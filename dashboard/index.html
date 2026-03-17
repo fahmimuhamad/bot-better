@@ -112,8 +112,8 @@
     /* Account section: 2 equal cards, slightly larger values */
     .account-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
     .account-grid .card .value { font-size: 1.35rem; }
-    /* Since start: 4 cols then wraps to next row */
-    .since-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 0; row-gap: 10px; }
+    /* Since start: 3 cols × 3 rows */
+    .since-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 0; row-gap: 10px; }
     @media (max-width: 600px) {
       .account-grid { grid-template-columns: 1fr 1fr; }
       .since-grid { grid-template-columns: repeat(2, 1fr); }
@@ -433,6 +433,10 @@
         <div class="card">
           <div class="label">Withdrawn</div>
           <div class="value" id="totalWithdrawn">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Fees paid</div>
+          <div class="value" id="totalFees">—</div>
         </div>
         <div class="card">
           <div class="label">Net gain</div>
@@ -818,10 +822,14 @@
       wrEl.textContent = closedTrades > 0 ? fmt(closedWins / closedTrades * 100) + '%' : '—';
       wrEl.className = 'value';
 
-      // Cashflow: withdrawn + net gain (realized PnL + withdrawn)
+      // Cashflow
       const withdrawn = data.totalWithdrawn || 0;
       document.getElementById('totalWithdrawn').textContent = withdrawn > 0 ? '$' + fmt(withdrawn) : '—';
-      const netGain = (data.totalPnL || 0) + withdrawn;
+      const fees = data.totalFees || 0;
+      const feesEl = document.getElementById('totalFees');
+      feesEl.textContent = fees > 0 ? '-$' + fmt(fees) : '—';
+      feesEl.className = 'value' + (fees > 0 ? ' negative' : '');
+      const netGain = (data.totalPnL || 0) + withdrawn - fees;
       const netGainEl = document.getElementById('netGain');
       netGainEl.textContent = data.totalPnL != null ? (netGain >= 0 ? '+' : '') + '$' + fmt(netGain) : '—';
       netGainEl.className = 'value' + (netGain > 0 ? ' positive' : netGain < 0 ? ' negative' : '');

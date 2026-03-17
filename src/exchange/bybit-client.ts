@@ -662,6 +662,32 @@ export class BybitClient {
     }
   }
 
+  /**
+   * Sum all trading fees + funding fees since a given timestamp.
+   * Uses /v5/execution/list which includes both Trade and Funding execTypes.
+   */
+  async getTotalFeesSince(since?: number): Promise<number> {
+    try {
+      let total = 0;
+      let cursor = '';
+      const params: Record<string, string> = { category: 'linear', limit: '100' };
+      if (since) params.startTime = since.toString();
+      for (let i = 0; i < 5; i++) {
+        if (cursor) params.cursor = cursor;
+        const result = await this.request('GET', '/v5/execution/list', undefined, params);
+        const list = result?.list || [];
+        for (const e of list) {
+          total += Math.abs(parseFloat(e.execFee) || 0);
+        }
+        cursor = result?.nextPageCursor || '';
+        if (!cursor || list.length === 0) break;
+      }
+      return total;
+    } catch {
+      return 0;
+    }
+  }
+
   /** Round quantity to step and clamp to min/max for Bybit. */
   roundQuantityToLotSize(
     quantity: number,
