@@ -114,6 +114,40 @@
     .account-grid .card .value { font-size: 1.35rem; }
     /* Since start: 3 cols × 3 rows */
     .since-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 0; row-gap: 10px; }
+    .since-grid .card[draggable] { cursor: grab; user-select: none; transition: opacity 0.15s, transform 0.15s; }
+    .since-grid .card[draggable]:active { cursor: grabbing; }
+    .since-grid .card.dragging { opacity: 0.35; transform: scale(0.97); }
+    .since-grid .card.drag-over { box-shadow: 0 0 0 2px var(--green); }
+    .since-grid .card.hidden-card { display: none; }
+    /* Customize button */
+    .customize-wrap { position: relative; }
+    .customize-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--border); border: 1px solid transparent; color: var(--muted);
+      font: inherit; font-size: 11px; font-weight: 600;
+      padding: 5px 9px; border-radius: 7px; cursor: pointer; white-space: nowrap;
+    }
+    .customize-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+    /* Customize dropdown */
+    .customize-panel {
+      display: none; position: absolute; right: 0; top: calc(100% + 6px);
+      background: #1c1c1f; border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 4px; min-width: 180px; z-index: 100;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .customize-panel.open { display: block; }
+    .customize-panel .panel-title {
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0 12px 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px;
+    }
+    .cp-row {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 12px; cursor: pointer; border-radius: 6px; margin: 0 4px;
+    }
+    .cp-row:hover { background: rgba(255,255,255,0.04); }
+    .cp-row input[type=checkbox] { accent-color: var(--green); width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; }
+    .cp-row label { font-size: 12px; color: var(--text); cursor: pointer; flex: 1; }
     @media (max-width: 600px) {
       .account-grid { grid-template-columns: 1fr 1fr; }
       .since-grid { grid-template-columns: repeat(2, 1fr); }
@@ -404,41 +438,49 @@
 
     <!-- 2. Since start: lifetime performance -->
     <div class="ia-section">
-      <h2 class="block-title">Since start <span class="sub" id="dateStart"></span></h2>
-      <div class="since-grid">
-        <div class="card">
+      <div class="ia-header" style="margin-bottom:10px">
+        <h2 class="block-title" style="margin:0">Since start <span class="sub" id="dateStart"></span></h2>
+        <div class="customize-wrap">
+          <button type="button" class="customize-btn" id="customizeBtn">⊞ Customize</button>
+          <div class="customize-panel" id="customizePanel">
+            <div class="panel-title">Show / hide · drag to reorder</div>
+          </div>
+        </div>
+      </div>
+      <div class="since-grid" id="sinceGrid">
+        <div class="card" data-card="startBalance" draggable="true">
           <div class="label">Start balance</div>
           <div class="value" id="startBalance">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="totalPnl" draggable="true">
           <div class="label">Total PnL</div>
           <div class="value" id="totalPnl">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="totalRoi" draggable="true">
           <div class="label">Total ROI</div>
           <div class="value" id="totalRoi">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="totalTrades" draggable="true">
           <div class="label">Total trades</div>
           <div class="value" id="totalTrades">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="totalWinRate" draggable="true">
           <div class="label">Win rate</div>
           <div class="value" id="totalWinRate">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="streak" draggable="true">
           <div class="label">Streak</div>
           <div class="value" id="streak">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="totalWithdrawn" draggable="true">
           <div class="label">Withdrawn</div>
           <div class="value" id="totalWithdrawn">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="totalFees" draggable="true">
           <div class="label">Fees paid</div>
           <div class="value" id="totalFees">—</div>
         </div>
-        <div class="card">
+        <div class="card" data-card="netGain" draggable="true">
           <div class="label">Net gain</div>
           <div class="value" id="netGain">—</div>
         </div>
@@ -902,6 +944,121 @@
     }
     fetchStatus();
     setInterval(fetchStatus, 30000);
+
+    // ── Since Start card customization (show/hide + drag-to-reorder) ──────────
+    const CARD_LABELS = {
+      startBalance: 'Start balance', totalPnl: 'Total PnL', totalRoi: 'Total ROI',
+      totalTrades: 'Total trades', totalWinRate: 'Win rate', streak: 'Streak',
+      totalWithdrawn: 'Withdrawn', totalFees: 'Fees paid', netGain: 'Net gain',
+    };
+    const LS_ORDER = 'sg_order', LS_HIDDEN = 'sg_hidden';
+
+    function getSinceCards() {
+      return Array.from(document.querySelectorAll('#sinceGrid .card[data-card]'));
+    }
+    function savePrefs() {
+      const order = getSinceCards().map(c => c.dataset.card);
+      const hidden = getSinceCards().filter(c => c.classList.contains('hidden-card')).map(c => c.dataset.card);
+      localStorage.setItem(LS_ORDER, JSON.stringify(order));
+      localStorage.setItem(LS_HIDDEN, JSON.stringify(hidden));
+    }
+    function loadPrefs() {
+      const grid = document.getElementById('sinceGrid');
+      try {
+        const order = JSON.parse(localStorage.getItem(LS_ORDER) || '[]');
+        if (order.length) {
+          order.forEach(id => {
+            const el = grid.querySelector(`[data-card="${id}"]`);
+            if (el) grid.appendChild(el);
+          });
+        }
+      } catch (_) {}
+      try {
+        const hidden = JSON.parse(localStorage.getItem(LS_HIDDEN) || '[]');
+        hidden.forEach(id => {
+          const el = grid.querySelector(`[data-card="${id}"]`);
+          if (el) el.classList.add('hidden-card');
+        });
+      } catch (_) {}
+    }
+
+    // Build checkbox rows in panel
+    function buildPanel() {
+      const panel = document.getElementById('customizePanel');
+      const title = panel.querySelector('.panel-title');
+      // clear old rows
+      panel.querySelectorAll('.cp-row').forEach(r => r.remove());
+      getSinceCards().forEach(card => {
+        const id = card.dataset.card;
+        const row = document.createElement('div');
+        row.className = 'cp-row';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = 'cb_' + id;
+        cb.checked = !card.classList.contains('hidden-card');
+        cb.addEventListener('change', () => {
+          card.classList.toggle('hidden-card', !cb.checked);
+          savePrefs();
+        });
+        const lbl = document.createElement('label');
+        lbl.htmlFor = 'cb_' + id;
+        lbl.textContent = CARD_LABELS[id] || id;
+        row.appendChild(cb);
+        row.appendChild(lbl);
+        panel.insertBefore(row, null); // append after title
+      });
+    }
+
+    // Toggle panel
+    const customizeBtn = document.getElementById('customizeBtn');
+    const customizePanel = document.getElementById('customizePanel');
+    customizeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      buildPanel();
+      customizePanel.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!customizePanel.contains(e.target) && e.target !== customizeBtn) {
+        customizePanel.classList.remove('open');
+      }
+    });
+
+    // Drag-to-reorder
+    let dragSrc = null;
+    document.getElementById('sinceGrid').addEventListener('dragstart', e => {
+      dragSrc = e.target.closest('.card[data-card]');
+      if (!dragSrc) return;
+      e.dataTransfer.effectAllowed = 'move';
+      setTimeout(() => dragSrc.classList.add('dragging'), 0);
+    });
+    document.getElementById('sinceGrid').addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const target = e.target.closest('.card[data-card]');
+      document.querySelectorAll('#sinceGrid .card.drag-over').forEach(c => c.classList.remove('drag-over'));
+      if (target && target !== dragSrc) target.classList.add('drag-over');
+    });
+    document.getElementById('sinceGrid').addEventListener('drop', e => {
+      e.preventDefault();
+      const target = e.target.closest('.card[data-card]');
+      if (!target || target === dragSrc || !dragSrc) return;
+      const grid = document.getElementById('sinceGrid');
+      const cards = getSinceCards();
+      const fromIdx = cards.indexOf(dragSrc);
+      const toIdx = cards.indexOf(target);
+      if (fromIdx < toIdx) grid.insertBefore(dragSrc, target.nextSibling);
+      else grid.insertBefore(dragSrc, target);
+      savePrefs();
+      if (customizePanel.classList.contains('open')) buildPanel();
+    });
+    document.getElementById('sinceGrid').addEventListener('dragend', e => {
+      document.querySelectorAll('#sinceGrid .card').forEach(c => {
+        c.classList.remove('dragging', 'drag-over');
+      });
+      dragSrc = null;
+    });
+
+    loadPrefs();
   </script>
 </body>
 </html>
