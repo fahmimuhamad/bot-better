@@ -117,11 +117,15 @@ export async function getTp1Tp2Quantities(
   }
   const step = filter.qtyStep;
   const minQty = filter.minOrderQty;
+  // Decimal precision of step (e.g. step=0.1 → 1, step=0.01 → 2, step=1 → 0)
+  const decimals = step >= 1 ? 0 : Math.round(-Math.log10(step));
+  const round = (v: number) => Math.round(v * Math.pow(10, decimals)) / Math.pow(10, decimals);
+
   if (quantity < 2 * minQty) {
     return { tp1Qty: 0, tp2Qty: quantity };
   }
-  const tp1Qty = Math.floor(quantity / 2 / step) * step;
-  const tp2Qty = quantity - tp1Qty;
+  const tp1Qty = round(Math.floor(quantity / 2 / step) * step);
+  const tp2Qty = round(quantity - tp1Qty);
   if (tp1Qty < minQty || tp2Qty < minQty) {
     return { tp1Qty: 0, tp2Qty: quantity };
   }

@@ -413,12 +413,14 @@ export class BybitClient {
     positionIdx: number
   ): Promise<string | null> {
     try {
+      const filter = await this.getLotSizeFilter(symbol);
+      const qty = filter ? this.roundQuantityToLotSize(quantity, filter, price) : quantity;
       const body = {
         category: 'linear',
         symbol,
         side,
         orderType: 'Limit',
-        qty: quantity.toString(),
+        qty: qty.toString(),
         price: price.toString(),
         timeInForce: 'GTC',
         reduceOnly: true,
@@ -426,7 +428,7 @@ export class BybitClient {
       };
       const result = await this.request('POST', '/v5/order/create', body);
       const orderId = result?.orderId ?? null;
-      logger.info(`Reduce-only limit: ${symbol} ${side} qty=${quantity} @ ${price} orderId=${orderId}`);
+      logger.info(`Reduce-only limit: ${symbol} ${side} qty=${qty} @ ${price} orderId=${orderId}`);
       return orderId;
     } catch (error: any) {
       logger.error(`Failed to place reduce-only limit: ${error.message}`);
@@ -446,13 +448,15 @@ export class BybitClient {
     positionIdx: number
   ): Promise<string | null> {
     try {
+      const filter = await this.getLotSizeFilter(symbol);
+      const qty = filter ? this.roundQuantityToLotSize(quantity, filter, triggerPrice) : quantity;
       const triggerDirection = side === 'Sell' ? 1 : 2; // Close long (Sell): trigger when price rises. Close short (Buy): trigger when falls.
       const body = {
         category: 'linear',
         symbol,
         side,
         orderType: 'Market',
-        qty: quantity.toString(),
+        qty: qty.toString(),
         timeInForce: 'GTC',
         reduceOnly: true,
         positionIdx,

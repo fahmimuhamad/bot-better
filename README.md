@@ -1,37 +1,89 @@
 # Trading Bot
 
-Automated crypto futures trading bot using an EMA Trend Pullback strategy with ATR-based risk management and automatic market regime switching.
+Automated crypto futures trading bot with automatic market regime switching, EMA pullback signal generation, and full position lifecycle management on Bybit.
 
 ## Strategy
 
-**EMA20 Pullback** — enters on pullbacks to EMA20 in the direction of the EMA50/EMA200 trend.
+### Bear Regime — EMA Pullback SHORT (1H)
+Enters SHORT on bounces into EMA20 in a confirmed downtrend.
 
-- **LONG**: price pulls back to EMA20 with EMA20 > EMA50 > EMA200 (uptrend)
-- **SHORT**: price bounces into EMA20 with EMA20 < EMA50 < EMA200 (downtrend)
-- **ADX gate**: requires confirmed trend strength
-- **Falling knife filter**: blocks LONG entries when price is >10% below 7-day high
-- **2-stage TP & SL**: SL is set as a limit order; TP1 takes 50% size and moves SL to breakeven, TP2 closes the remaining 50%
-- Confirmation from RSI, StochRSI, MACD, DI spread, ATR
+- **EMA alignment**: EMA20 < EMA50 < EMA200
+- **ADX gate**: ADX ≥ 32, DI spread > 8 (confirmed trend strength)
+- **3-candle reversal pattern**: price bounces into EMA20 then reverses
+- **EMA slope gate**: EMA20 must be declining
+- **Swing proof**: price must have been > 1% away from EMA20 in last 10 candles
+- **36 curated coins** verified profitable in bear regime backtest
+
+### Bull Regime — EMA Pullback LONG (4H)
+Enters LONG on pullbacks to EMA21 zone in a confirmed uptrend.
+
+- **EMA alignment**: EMA21 > EMA50 (price in 4H uptrend)
+- **ADX gate**: ADX ≥ 28, DI spread > 5
+- **EMA21 zone**: price within 7% of EMA21; EMA50 zone within 6%
+- **Fibonacci zone**: price in 38.2–61.8% retracement
+- **Liquidity sweep OR ADX ≥ 33** required for entry confirmation
+- **18 curated coins** verified profitable in bull regime backtest
 
 ## Auto Regime Switching
 
-The bot automatically detects market regime every cycle using **BTC daily EMA200** — no manual configuration needed.
+Every cycle the bot reads **BTC daily EMA200** — no manual config needed.
 
-| Regime | Detection | Coin List | Timeframe |
-|--------|-----------|-----------|-----------|
-| Bull | BTC daily close > EMA200 | 24 curated coins | 4h |
-| Bear | BTC daily close < EMA200 | 35 curated coins | 1h |
+| Regime | Condition | Coin List | Timeframe | Risk/Trade |
+|--------|-----------|-----------|-----------|------------|
+| Bear | BTC close < EMA200 | 36 coins | 1H | `RISK_PER_TRADE` |
+| Bull | BTC close > EMA200 | 18 coins | 4H | `BULL_RISK_PCT` (2%) |
 
-Regime switches instantly when BTC crosses EMA200. A separate Telegram alert fires when BTC 4H EMA20/50/200 alignment changes (3 consecutive confirmations required to avoid noise).
+Override coin list: `SCAN_COINS=BTC,ETH,SOL` in `.env`.
 
-You can override the coin list with `SCAN_COINS=BTC,ETH,SOL` in `.env`.
+## Backtest Results
 
-### Backtest Results (Jan 2024 → Mar 2026, starting $163)
+### Full Regime Backtest (Jan 2024 → Mar 2026, $163 start, 5 max trades, 5% risk/trade)
 
-| Max Open Trades | Final Balance | ROI | Notes |
-|-----------------|---------------|-----|-------|
-| 5 | ~$1,798 | +1,003% | Best risk-adjusted |
-| 10 | ~$2,127 | +1,205% | Best returns |
+| Metric | Value |
+|--------|-------|
+| Starting Balance | $163 |
+| Final Balance | $61,803 |
+| ROI | **+37,816%** |
+| Total Trades | 709 |
+| Overall Win Rate | 43.4% (308W / 401L) |
+| Profit Factor | 3.89x |
+| Avg Win / Avg Loss | $300 / $77 |
+| Max Drawdown | 54.5% |
+
+| Regime | Trades | Win Rate | P&L |
+|--------|--------|----------|-----|
+| Bull (4H) | 513 | 41.9% | +$2,786 |
+| Bear (1H) | 196 | 47.4% | +$58,854 |
+
+### Bear Signal Quality (10 seeds, 90-day windows, $151 start)
+- Average win rate: **72%** (range: 70–73%, all seeds above 70%)
+- Average ROI: **+244%** in 90 days
+
+## Order Management
+
+Every live position gets 3 conditional orders on Bybit at entry:
+
+1. **SL** — conditional trigger-limit order (full size)
+2. **TP1** — reduce-only limit order (50% size)
+3. **TP2** — reduce-only trigger-market order (50% size)
+
+After TP1 fills: bot cancels the original SL order and sets a position-level SL at breakeven (entry price).
+
+TP1 detection runs every cycle via two methods:
+- Price check against `tp1` value
+- Bybit order status poll (checks active orders, falls back to order history)
+
+## State Persistence
+
+Bot saves full position state to `data/bot-state.json` on every mutation:
+- Position fields: `slOrderId`, `tp1OrderId`, `tp1Hit`, `slMovedToEntry`, `trailingStopPrice`
+- Re-entry cooldown timestamps (12h per symbol — matches backtest)
+
+On restart, state loads from disk first, then reconciles against exchange.
+
+## Exchange Reconciliation
+
+Every 10 cycles (~20 min), the bot compares local open positions against live Bybit positions. Any local position not found on exchange is auto-closed (handles SL/TP fills that occurred between cycles when price spiked and recovered).
 
 ## Quick Start
 
@@ -42,7 +94,10 @@ npm install
 # Configure
 cp .env.example .env   # add your API keys
 
-# Run (dry run first)
+# Test first (no real orders)
+ENABLE_DRY_RUN=true npm run dev
+
+# Run live
 npm run dev
 ```
 
@@ -55,7 +110,13 @@ npm run pm2:start     # Run with PM2 (persistent)
 npm run pm2:logs      # View PM2 logs
 
 # Regime-aware portfolio backtest (Jan 2024 → Mar 2026)
-npx ts-node src/backtest/regime-backtest.ts
+npx ts-node src/backtest/regime-backtest.ts --start-date 2024-01-01 --end-date 2026-03-13 --balance 163 --max-trades 5
+
+# Bear-only baseline
+npx ts-node src/backtest/regime-backtest.ts --start-date 2024-01-01 --end-date 2026-03-13 --balance 163 --bear-only
+
+# 90-day bear backtest (reproducible)
+npx ts-node src/backtest/batch-backtest-90d.ts --seed 1 --count 15 --balance 151 --confidence 65
 ```
 
 ## Configuration (`.env`)
@@ -66,17 +127,13 @@ EXCHANGE=bybit                  # bybit | binance
 BYBIT_API_KEY=...
 BYBIT_API_SECRET=...
 BYBIT_TESTNET=false
-```
-
-### Regime Override (optional)
-```env
-# Override auto coin selection (comma-separated base symbols)
-# SCAN_COINS=BTC,ETH,SOL
+# BYBIT_POSITION_MODE=one-way   # uncomment if account is One-Way mode
 ```
 
 ### Risk
 ```env
-RISK_PER_TRADE=3.5        # % of balance per trade
+RISK_PER_TRADE=5          # % of balance per bear trade
+BULL_RISK_PCT=2.0         # % of balance per bull trade (lower — 4H is more volatile)
 LEVERAGE=15
 MAX_OPEN_TRADES=5
 DAILY_LOSS_LIMIT=5        # Stop trading if down 5% in a day
@@ -84,79 +141,96 @@ DAILY_LOSS_LIMIT=5        # Stop trading if down 5% in a day
 
 ### Signals
 ```env
-MIN_CONFIDENCE=75         # Minimum signal score to trade
-ENTRY_MODE=aggressive     # aggressive | conservative
-ALIGN_DIRECTION_WITH_24H=true  # Optional: avoid counter-trend trades vs 24h move
+MIN_CONFIDENCE=65         # Minimum signal score (65 = base + 1 optional indicator)
+ENTRY_MODE=aggressive     # aggressive (market order) | conservative (fib limit order)
+ADX_MIN=32                # Bear strategy ADX gate
 ```
 
-### Take Profit / Stop Loss
+### Stop Loss
 ```env
-TAKE_50_AT_TP1_MOVE_SL=true        # Take 50% at TP1, move SL to entry
-TRAILING_STOP=true
-SL_ATR_MULTIPLIER=1.0
-SL_ATR_MIN_PCT=2
-TP1_R_MULT=1.5
-TP2_R_MULT=3.0
-TP1_PERCENT=2
-TP2_PERCENT=5
+SL_ATR_MULTIPLIER=1.5    # SL = max(ATR × 1.5, MIN_PCT)
+SL_ATR_MIN_PCT=1.5       # Minimum SL distance %
+```
+
+### Take Profit
+```env
+CLOSE_AT_TP1=true                # Close 100% at TP1
+TAKE_50_AT_TP1_MOVE_SL=false    # false = close 100% at TP1 (no partial)
+TRAILING_STOP=true               # Enable trailing stop after TP1
+TP1_R_MULT=2.5                   # TP1 at 2.5× SL distance
+TP2_R_MULT=4.0                   # TP2 at 4× SL distance
+TP1_PERCENT=2                    # Minimum TP1 % (floor)
+TP2_PERCENT=5                    # Minimum TP2 % (floor)
 ```
 
 ### Modes
 ```env
-ENABLE_DRY_RUN=false          # true = no real orders
-ENABLE_PAPER_TRADING=false    # true = simulated execution
+ENABLE_DRY_RUN=false          # true = simulate (no real orders)
+ENABLE_PAPER_TRADING=false    # true = paper trading
+```
+
+### Notifications
+```env
+TELEGRAM_BOT_TOKEN=...
+TELEGRAM_CHAT_ID=...
 ```
 
 ## Telegram Commands
 
 | Command | Description |
 |---------|-------------|
-| `/status` | Regime, balance, open positions, today's PnL |
+| `/status` | Regime, wallet balance, equity, open positions with uPnL |
 | `/report` | Full PnL report |
-| `/stop` | Pause bot (no new trades, open positions still managed) |
-| `/start` | Resume bot |
-| `/restart` | Restart bot process |
+| `/stop` | Pause new trades (open positions still managed) |
+| `/start` | Resume trading |
+| `/restart` | Restart bot |
 
 ## Project Structure
 
 ```
 src/
-├── index.ts                    # Main bot loop + auto regime switching
+├── index.ts                    # Main bot loop, regime switching, reconciliation
 ├── signals/
-│   └── generator.ts            # EMA pullback signal logic
+│   ├── generator.ts            # Bear EMA pullback signal (1H)
+│   ├── bull-signal-generator.ts # Bull EMA pullback signal (4H)
+│   ├── pump-scanner.ts         # Bull: accumulation/pump detection
+│   └── liquidation-analyzer.ts # Bull: synthetic liquidation cluster mapping
 ├── backtest/
 │   ├── regime-backtest.ts      # Regime-aware portfolio backtest
-│   └── data-loader.ts          # Binance OHLCV fetcher + cache
+│   ├── batch-backtest-90d.ts   # Bear-only 90-day batch backtest
+│   └── data-loader.ts          # Binance OHLCV fetcher + disk cache
 ├── trading/
-│   ├── position-manager.ts     # Open position tracking
-│   └── order-executor.ts       # Order placement
+│   ├── position-manager.ts     # Position tracking + disk state persistence
+│   └── order-executor.ts       # Order placement + SL/TP conditional orders
 ├── risk/
-│   └── safety-rules.ts         # Hard risk checks
+│   └── safety-rules.ts         # Hard risk checks (daily loss, max trades, etc.)
 ├── data/
-│   └── fetcher.ts              # Market data (Binance)
+│   ├── fetcher.ts              # Market data (Binance)
+│   └── futures-fetcher.ts      # Futures OI, orderbook, L/S ratio (Binance)
 ├── exchange/
-│   ├── trading-client.ts       # Unified Bybit/Binance client
-│   ├── bybit-client.ts         # Bybit Futures API
+│   ├── trading-client.ts       # Unified exchange interface
+│   ├── bybit-client.ts         # Bybit Futures API (v5)
 │   └── binance-client.ts       # Binance Futures API
 └── utils/
-    ├── regime-detector.ts      # BTC EMA200 regime detection + Telegram alerts
-    ├── telegram-commands.ts    # Telegram bot command handler
+    ├── regime-detector.ts      # BTC EMA200 regime detection
+    ├── telegram-commands.ts    # Telegram command handler
     ├── telegram.ts             # Telegram message sender
-    ├── daily-report.ts         # Daily 7am WIB report scheduler
+    ├── daily-report.ts         # Daily 7am WIB report
     └── logger.ts
 ```
 
 ## Safety Rules
 
-The bot will **never**:
-- Open more than `MAX_OPEN_TRADES` positions
+The bot will never:
+- Open more than `MAX_OPEN_TRADES` concurrent positions
+- Open more than 1 position per symbol
 - Trade after daily loss exceeds `DAILY_LOSS_LIMIT`
-- Enter a LONG when price is >10% below 7-day high (falling knife)
-- Trade without a valid EMA alignment
-- Enter without ADX confirming a real trend
+- Re-enter a symbol within 12h of closing it
+- Place an order with notional < $10
+- Open a position with invalid SL distance (NaN / zero guard)
 
 ## Risk Disclosure
 
-This is a trading bot. **You can lose money.** Crypto is volatile. High leverage amplifies losses. Past backtest performance does not guarantee future results.
+This is a trading bot. **You can lose money.** Crypto is volatile. Leverage amplifies both gains and losses. Past backtest performance does not guarantee future results.
 
-Start with `ENABLE_DRY_RUN=true`. Test thoroughly before going live.
+Always start with `ENABLE_DRY_RUN=true`. Verify behavior before going live.
