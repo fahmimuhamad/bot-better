@@ -668,21 +668,11 @@ export class BybitClient {
    */
   async getTotalFeesSince(since?: number): Promise<number> {
     try {
-      let total = 0;
-      let cursor = '';
       const params: Record<string, string> = { category: 'linear', limit: '100' };
       if (since) params.startTime = since.toString();
-      for (let i = 0; i < 5; i++) {
-        if (cursor) params.cursor = cursor;
-        const result = await this.request('GET', '/v5/execution/list', undefined, params);
-        const list = result?.list || [];
-        for (const e of list) {
-          total += Math.abs(parseFloat(e.execFee) || 0);
-        }
-        cursor = result?.nextPageCursor || '';
-        if (!cursor || list.length === 0) break;
-      }
-      return total;
+      const result = await this.request('GET', '/v5/execution/list', undefined, params);
+      const list = result?.list || [];
+      return list.reduce((sum: number, e: any) => sum + Math.abs(parseFloat(e.execFee) || 0), 0);
     } catch {
       return 0;
     }
