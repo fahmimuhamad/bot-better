@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bot Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #141416;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #71717a;
+      --green: #22c55e;
+      --red: #ef4444;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 0 0 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .dot.online { background: var(--green); }
+    .dot.offline { background: var(--muted); animation: none; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .grid:last-child { margin-bottom: 0; }
+    .block-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 10px 0;
+    }
+    .block-title .sub { font-weight: 400; text-transform: none; letter-spacing: 0; opacity: 0.9; }
+    .stats-block { margin-bottom: 24px; }
+    .stats-block:last-of-type { margin-bottom: 24px; }
+    .ia-section { margin-bottom: 28px; }
+    .ia-section:last-of-type { margin-bottom: 24px; }
+    .ia-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 10px 0;
+    }
+    .ia-header .block-title { margin: 0; }
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--border);
+      border: 1px solid transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { background: rgba(255,255,255,0.06); }
+    .filter-btn .chevron {
+      color: var(--muted);
+      font-size: 10px;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+    .filter-btn.expanded .chevron { transform: rotate(180deg); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .card .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+    .card .value { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+    .card .value.positive { color: var(--green); }
+    .card .value.negative { color: var(--red); }
+    /* Account section: 2 equal cards, slightly larger values */
+    .account-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .account-grid .card .value { font-size: 1.35rem; }
+    /* Since start: 4 cols then wraps to next row */
+    .since-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 0; row-gap: 10px; }
+    @media (max-width: 600px) {
+      .account-grid { grid-template-columns: 1fr 1fr; }
+      .since-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge.bull { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .badge.bear { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .badge.mode { background: var(--border); color: var(--muted); }
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .section h2 { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; color: var(--muted); font-weight: 500; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    td { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: 0; }
+    .pnl-pos { color: var(--green); }
+    .pnl-neg { color: var(--red); }
+    .foot { color: var(--muted); font-size: 12px; margin-top: 24px; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .tabs button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .tabs button:hover { color: var(--text); }
+    .tabs button.active { color: var(--text); border-bottom-color: var(--green); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .journal-table { font-size: 12px; overflow-x: auto; }
+    .journal-table th, .journal-table td { padding: 8px 6px; white-space: nowrap; }
+    .journal-table th { color: var(--muted); }
+    @media (max-width: 600px) {
+      .journal-table { overflow-x: unset; }
+      .journal-table table, .journal-table thead, .journal-table tbody,
+      .journal-table th, .journal-table td, .journal-table tr { display: block; }
+      .journal-table thead { display: none; }
+      .journal-table tbody tr {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 10px 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 12px;
+      }
+      .journal-table tbody td {
+        padding: 0;
+        border: none;
+        font-size: 12px;
+        white-space: normal;
+      }
+      .journal-table tbody td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 2px;
+      }
+      /* Symbol row spans full width, no label */
+      .journal-table tbody tr td.jt-symbol {
+        grid-column: 1 / -1;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .journal-table tbody tr td.jt-symbol::before { display: none; }
+      /* Hide regime column (always —) */
+      .journal-table tbody td.jt-regime { display: none; }
+      .journal-table .empty-row td { grid-column: 1/-1; text-align: center; }
+    }
+
+    /* Positions table: card layout on mobile */
+    .pos-table-wrap { overflow-x: auto; }
+    @media (max-width: 600px) {
+      .pos-table-wrap table, .pos-table-wrap thead, .pos-table-wrap tbody,
+      .pos-table-wrap th, .pos-table-wrap td, .pos-table-wrap tr { display: block; }
+      .pos-table-wrap thead { display: none; }
+      .pos-table-wrap tbody tr {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 10px 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 12px;
+      }
+      .pos-table-wrap tbody td {
+        padding: 0;
+        border: none;
+        font-size: 13px;
+      }
+      .pos-table-wrap tbody td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 2px;
+      }
+      .pos-table-wrap tbody tr td:first-child {
+        grid-column: 1 / -1;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .pos-table-wrap tbody tr td:first-child::before { display: none; }
+    }
+    .empty-row td {
+      padding: 18px 6px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Daily PnL calendar */
+    .cal-wrap { padding-top: 4px; padding-bottom: 4px; }
+    .cal-month-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .cal-month-label { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); }
+    .month-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .month-nav button {
+      background: var(--border);
+      border: none;
+      color: var(--text);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .month-nav button:hover { background: var(--muted); color: var(--text); }
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 6px;
+      font-size: 10px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 500;
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+    .cal-cell {
+      min-height: 48px;
+      padding: 5px 4px;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .cal-cell .day-num { font-weight: 600; font-size: 12px; margin-bottom: 1px; }
+    .cal-cell .day-pnl { font-size: 10px; line-height: 1.2; }
+    .cal-cell.empty { border-color: transparent; background: transparent; min-height: 0; padding: 0; }
+    .cal-cell.profit { border-color: rgba(34, 197, 94, 0.35); background: rgba(34, 197, 94, 0.1); }
+    .cal-cell.profit .day-pnl { color: var(--green); font-weight: 500; }
+    .cal-cell.loss { border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.1); }
+    .cal-cell.loss .day-pnl { color: var(--red); font-weight: 500; }
+    .cal-cell.zero .day-pnl { color: var(--muted); }
+    .cal-cell.today { border-color: var(--amber); background: rgba(245, 158, 11, 0.08); }
+    .cal-cell.today .day-num { color: var(--amber); }
+    .cal-cell.clickable { cursor: pointer; }
+    .cal-cell.clickable:hover { filter: brightness(1.12); }
+    .cal-cell.selected { box-shadow: 0 0 0 2px var(--green); z-index: 1; }
+    .cal-hint { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+    .journal-filter-hint { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .journal-filter-hint span { color: var(--green); cursor: pointer; text-decoration: underline; }
+    .collapse-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 10px 0;
+      margin: 0;
+      text-align: left;
+      border-radius: 6px;
+    }
+    .collapse-trigger:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+    .collapse-trigger .chevron {
+      color: var(--muted);
+      font-size: 11px;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+    .collapse-trigger.expanded .chevron { transform: rotate(180deg); }
+    .collapse-body { overflow: visible; }
+    .collapse-body.collapsed { display: none; }
+    .cal-section.collapsed { display: none; }
+    .status-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .status-footer .label { margin-right: 4px; }
+    .status-footer .badge { font-size: 10px; padding: 2px 6px; }
+    /* Equity curve */
+    .chart-wrap { width: 100%; height: 120px; margin-top: 4px; }
+    .chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
+    /* Streak badge */
+    .streak-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 13px; font-weight: 700; }
+    .streak-badge.win { background: rgba(34,197,94,0.15); color: var(--green); }
+    .streak-badge.loss { background: rgba(239,68,68,0.15); color: var(--red); }
+    /* Last scan */
+    .scan-time { font-size: 11px; color: var(--muted); margin-left: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <span class="dot" id="dot"></span>
+      Bot Monitor
+      <span class="scan-time" id="scanTime"></span>
+    </h1>
+
+    <!-- 1. Account: what you have now -->
+    <div class="ia-section">
+      <h2 class="block-title">Account</h2>
+      <div class="account-grid">
+        <div class="card">
+          <div class="label">Balance</div>
+          <div class="value" id="balance">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Total uPnL</div>
+          <div class="value" id="totalUpnl">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Since start: lifetime performance -->
+    <div class="ia-section">
+      <h2 class="block-title">Since start <span class="sub" id="dateStart"></span></h2>
+      <div class="since-grid">
+        <div class="card">
+          <div class="label">Start balance</div>
+          <div class="value" id="startBalance">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Total PnL</div>
+          <div class="value" id="totalPnl">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Total ROI</div>
+          <div class="value" id="totalRoi">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Total trades</div>
+          <div class="value" id="totalTrades">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Win rate</div>
+          <div class="value" id="totalWinRate">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Streak</div>
+          <div class="value" id="streak">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Withdrawn</div>
+          <div class="value" id="totalWithdrawn">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Net gain</div>
+          <div class="value" id="netGain">—</div>
+        </div>
+      </div>
+      <!-- Equity curve -->
+      <div class="chart-wrap" id="chartWrap" style="display:none">
+        <svg id="equityChart" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+
+    <!-- 3. Performance by day: calendar as a filter (collapse) + PnL/Trades/Win rate -->
+    <div class="ia-section">
+      <div class="ia-header">
+        <h2 class="block-title">Performance by day <span class="sub" id="dayFilterLabel">(last 24h)</span></h2>
+        <button type="button" class="filter-btn" id="calToggle" aria-expanded="false" title="Toggle calendar filter">
+          <span>Calendar</span>
+          <span class="chevron">▼</span>
+        </button>
+      </div>
+      <div class="section cal-section collapsed" id="calSection" style="margin-bottom: 16px;">
+        <div class="collapse-body cal-wrap collapsed" id="calCollapseBody">
+          <div class="cal-month-row">
+            <span class="cal-month-label" id="calMonth">March 2026</span>
+            <div class="month-nav">
+              <button type="button" id="calPrev" aria-label="Previous month">‹</button>
+              <button type="button" id="calNext" aria-label="Next month">›</button>
+            </div>
+          </div>
+          <p class="cal-hint">Click a day to filter stats and journal below.</p>
+          <div class="cal-weekdays">
+            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="label">PnL</div>
+          <div class="value" id="dailyPnl">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Trades</div>
+          <div class="value" id="tradesCount">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Win rate</div>
+          <div class="value" id="winRate">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Activity: positions and history -->
+    <h2 class="block-title" style="margin-bottom: 0;">Activity</h2>
+    <div class="tabs">
+      <button type="button" class="tab-btn active" data-tab="positions">Open positions</button>
+      <button type="button" class="tab-btn" data-tab="journal">Trading journal</button>
+    </div>
+    <div class="section tab-panel active" id="panel-positions">
+      <div class="pos-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Symbol</th><th>Entry</th><th>Price</th><th>SL</th><th>TP1</th><th>TP2</th><th>Size</th><th>uPnL</th><th>Status</th></tr>
+          </thead>
+          <tbody id="positions"></tbody>
+        </table>
+      </div>
+      <p id="noPos" style="display:none; color: var(--muted); margin: 0;">No open positions.</p>
+    </div>
+    <div class="section tab-panel" id="panel-journal">
+      <p class="journal-filter-hint" id="journalFilterHint" style="display:none;"></p>
+      <div class="journal-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Date entry</th>
+              <th>Date close</th>
+              <th>Entry</th>
+              <th>Exit</th>
+              <th>P&L</th>
+              <th>Balance</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody id="journalBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="status-footer">
+      <span><span class="label">Regime</span><span id="regime" class="badge">—</span></span>
+      <span><span class="label">Mode</span><span id="mode" class="badge mode">—</span></span>
+    </div>
+    <p class="foot">Last updated: <span id="updated">—</span> · Refresh every 30s</p>
+  </div>
+  <script>
+    const fmt = (n) => typeof n === 'number' && !Number.isNaN(n) ? n.toFixed(2) : '—';
+    const fmtPrice = (n) => {
+      if (typeof n !== 'number' || Number.isNaN(n)) return '—';
+      if (n >= 100) return n.toFixed(2);
+      if (n >= 1) return n.toFixed(4);
+      return n.toFixed(6);
+    };
+    const fmtPct = (n) => typeof n === 'number' && !Number.isNaN(n) ? n.toFixed(1) + '%' : '—';
+    const fmtTime = (ts) => {
+      if (!ts) return '—';
+      const d = new Date(ts);
+      return d.toLocaleTimeString() + ' ' + d.toLocaleDateString();
+    };
+    const fmtDate = (ts) => {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    };
+    const fmtDateShort = (ts) => {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleDateString(undefined, { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    };
+    const fmtPnL = (n) => {
+      if (n == null || Number.isNaN(n)) return '—';
+      const s = n >= 0 ? '+' : '';
+      return s + n.toFixed(2);
+    };
+
+    let calYear = new Date().getFullYear();
+    let calMonth = new Date().getMonth();
+    let dailyPnLByDate = {}; // { 'YYYY-MM-DD': number }
+    let selectedDateFilter = null; // 'YYYY-MM-DD' or null
+    let lastData = null;
+
+    function buildDailyPnLMap(journalTrades) {
+      const map = {};
+      (journalTrades || []).forEach(t => {
+        if (t.closeTime && (t.pnl !== undefined && t.pnl !== null)) {
+          const d = new Date(t.closeTime);
+          const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+          map[key] = (map[key] || 0) + t.pnl;
+        }
+      });
+      return map;
+    }
+
+    function dateKey(ts) {
+      if (!ts) return '';
+      const d = new Date(ts);
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function getDailyStatsForDate(journalTrades, filterDate) {
+      const trades = (journalTrades || []).filter(t => dateKey(t.closeTime) === filterDate);
+      const totalPnL = trades.reduce((s, t) => s + (Number(t.pnl) || 0), 0);
+      const wins = trades.filter(t => (t.pnl || 0) > 0).length;
+      const winRate = trades.length ? (wins / trades.length) * 100 : 0;
+      return { totalPnL, totalTrades: trades.length, winRate };
+    }
+
+    function formatDayLabel(dateStr) {
+      if (!dateStr) return '(last 24h)';
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const d2 = new Date(y, m - 1, d);
+      return d2.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function updateDailySection(data) {
+      let totalPnL, totalTrades, winRate;
+      if (selectedDateFilter && data.journalTrades) {
+        const stats = getDailyStatsForDate(data.journalTrades, selectedDateFilter);
+        totalPnL = stats.totalPnL;
+        totalTrades = stats.totalTrades;
+        winRate = stats.winRate;
+      } else {
+        totalPnL = data.dailyStats?.totalPnL;
+        totalTrades = data.dailyStats?.totalTrades;
+        winRate = data.dailyStats?.winRate;
+      }
+      document.getElementById('dayFilterLabel').textContent = selectedDateFilter ? formatDayLabel(selectedDateFilter) : '(last 24h)';
+      const dailyEl = document.getElementById('dailyPnl');
+      dailyEl.textContent = totalPnL != null ? '$' + fmt(totalPnL) : '—';
+      dailyEl.className = 'value' + (totalPnL > 0 ? ' positive' : totalPnL < 0 ? ' negative' : '');
+      document.getElementById('tradesCount').textContent = totalTrades ?? '—';
+      document.getElementById('winRate').textContent = fmtPct(winRate);
+    }
+
+    function renderCalendar() {
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      document.getElementById('calMonth').textContent = monthNames[calMonth] + ' ' + calYear;
+      const first = new Date(calYear, calMonth, 1);
+      const last = new Date(calYear, calMonth + 1, 0);
+      const today = new Date();
+      const todayKey = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+      const startPad = first.getDay();
+      const daysInMonth = last.getDate();
+      const cells = [];
+      for (let i = 0; i < startPad; i++) cells.push({ empty: true });
+      for (let d = 1; d <= daysInMonth; d++) {
+        const key = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        const pnl = dailyPnLByDate[key];
+        const isFuture = key > todayKey;
+        const isToday = key === todayKey;
+        cells.push({ day: d, key, pnl, isFuture, isToday });
+      }
+      const totalCells = Math.ceil(cells.length / 7) * 7;
+      while (cells.length < totalCells) cells.push({ empty: true });
+
+      const grid = document.getElementById('calGrid');
+      grid.innerHTML = cells.map(c => {
+        if (c.empty) return '<div class="cal-cell empty"></div>';
+        let cls = 'cal-cell clickable';
+        if (c.key === selectedDateFilter) cls += ' selected';
+        if (c.isToday) cls += ' today';
+        let pnlText = '';
+        if (c.pnl !== undefined && c.pnl !== null) {
+          if (c.pnl > 0) { cls += ' profit'; pnlText = fmtPnL(c.pnl); }
+          else if (c.pnl < 0) { cls += ' loss'; pnlText = fmtPnL(c.pnl); }
+          else { cls += ' zero'; pnlText = '0'; }
+        } else if (c.isFuture) {
+          pnlText = '';
+        } else {
+          cls += ' zero';
+          pnlText = '—';
+        }
+        return '<div class="' + cls + '" data-date="' + c.key + '"><div class="day-num">' + c.day + '</div>' + (pnlText ? '<div class="day-pnl">' + pnlText + '</div>' : '') + '</div>';
+      }).join('');
+    }
+
+    document.getElementById('calPrev').onclick = () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    };
+    document.getElementById('calNext').onclick = () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    };
+
+    document.getElementById('calToggle').addEventListener('click', () => {
+      const body = document.getElementById('calCollapseBody');
+      const section = document.getElementById('calSection');
+      const trigger = document.getElementById('calToggle');
+
+      const willExpand = section.classList.contains('collapsed');
+      if (willExpand) {
+        section.classList.remove('collapsed');
+        body.classList.remove('collapsed');
+      } else {
+        body.classList.add('collapsed');
+        section.classList.add('collapsed');
+      }
+      trigger.classList.toggle('expanded', willExpand);
+      trigger.setAttribute('aria-expanded', String(willExpand));
+    });
+
+    document.getElementById('calGrid').addEventListener('click', (e) => {
+      const cell = e.target.closest('.cal-cell[data-date]');
+      if (!cell) return;
+      const date = cell.getAttribute('data-date');
+      selectedDateFilter = selectedDateFilter === date ? null : date;
+      renderCalendar();
+      if (lastData) {
+        updateDailySection(lastData);
+        renderJournal(lastData);
+      }
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    function renderJournal(data) {
+      const journalBody = document.getElementById('journalBody');
+      const hint = document.getElementById('journalFilterHint');
+      let trades = (data.journalTrades || []).slice().reverse();
+      if (selectedDateFilter) {
+        trades = trades.filter(t => dateKey(t.closeTime) === selectedDateFilter);
+        hint.style.display = 'block';
+        hint.innerHTML = 'Filtered by <span id="clearDateFilter">' + formatDayLabel(selectedDateFilter) + '</span> — click to clear';
+        document.getElementById('clearDateFilter').onclick = () => {
+          selectedDateFilter = null;
+          renderCalendar();
+          if (lastData) updateDailySection(lastData);
+          renderJournal(lastData);
+        };
+      } else {
+        hint.style.display = 'none';
+      }
+      if (trades.length) {
+        journalBody.innerHTML = trades.map(t => {
+          const pnl = t.pnl != null ? t.pnl : 0;
+          const pnlCls = pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
+          return '<tr>'
+            + '<td class="jt-symbol">' + (t.symbol || '—') + ' <span style="color:var(--muted);font-size:11px;font-weight:400">' + (t.side || '') + '</span> <span class="' + pnlCls + '" style="margin-left:auto;font-size:13px;font-weight:600">' + fmtPnL(pnl) + '</span></td>'
+            + '<td data-label="Opened">' + fmtDateShort(t.openTime) + '</td>'
+            + '<td data-label="Closed">' + fmtDateShort(t.closeTime) + '</td>'
+            + '<td data-label="Entry">' + fmtPrice(t.entryPrice) + '</td>'
+            + '<td data-label="Exit">' + fmtPrice(t.exitPrice) + '</td>'
+            + '<td data-label="P&amp;L" class="' + pnlCls + '">' + fmtPnL(pnl) + '</td>'
+            + '<td data-label="Balance">$' + fmt(t.balanceAfter) + '</td>'
+            + '<td data-label="Reason">' + (t.exitReason || '—') + '</td>'
+            + '</tr>';
+        }).join('');
+      } else {
+        const msg = selectedDateFilter
+          ? ('No trades closed on ' + formatDayLabel(selectedDateFilter) + '.')
+          : 'No closed trades in journal.';
+        journalBody.innerHTML = '<tr class="empty-row"><td colspan="10">' + msg + '</td></tr>';
+      }
+    }
+
+    function renderEquityCurve(data) {
+      const wrap = document.getElementById('chartWrap');
+      const svg = document.getElementById('equityChart');
+      const trades = (data.journalTrades || []).slice().sort((a, b) => a.closeTime - b.closeTime);
+      if (trades.length < 2) { wrap.style.display = 'none'; return; }
+      wrap.style.display = 'block';
+
+      const points = [];
+      if (data.startBalance != null && data.startedAt) points.push({ t: data.startedAt, v: data.startBalance });
+      for (const t of trades) points.push({ t: t.closeTime, v: t.balanceAfter });
+
+      const W = 860, H = 110, PAD = 4;
+      const minV = Math.min(...points.map(p => p.v));
+      const maxV = Math.max(...points.map(p => p.v));
+      const range = maxV - minV || 1;
+      const minT = points[0].t, maxT = points[points.length - 1].t, tRange = maxT - minT || 1;
+
+      const px = t => PAD + ((t - minT) / tRange) * (W - PAD * 2);
+      const py = v => H - PAD - ((v - minV) / range) * (H - PAD * 2);
+
+      const pts = points.map(p => `${px(p.t).toFixed(1)},${py(p.v).toFixed(1)}`).join(' ');
+      const first = points[0], last = points[points.length - 1];
+      const color = last.v >= first.v ? '#22c55e' : '#ef4444';
+      const fillPts = `${px(first.t).toFixed(1)},${H} ` + pts + ` ${px(last.t).toFixed(1)},${H}`;
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${color}" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <polygon points="${fillPts}" fill="url(#cg)"/>
+        <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+      `;
+    }
+
+    function render(data) {
+      const r = data.regime?.toLowerCase();
+      const regimeEl = document.getElementById('regime');
+      if (r === 'bull' || r === 'bear') {
+        regimeEl.textContent = data.regime.toUpperCase();
+        regimeEl.className = 'badge ' + r;
+      } else regimeEl.textContent = '—';
+      document.getElementById('mode').textContent = data.mode || '—';
+      document.getElementById('balance').textContent = '$' + fmt(data.balance);
+      const totalUpnl = (data.openPositions || []).reduce((s, p) => s + (p.unrealizedPnl || 0), 0);
+      const upnlEl = document.getElementById('totalUpnl');
+      upnlEl.textContent = data.openPositions?.length ? (totalUpnl >= 0 ? '+' : '') + '$' + fmt(totalUpnl) : '—';
+      upnlEl.className = 'value' + (totalUpnl > 0 ? ' positive' : totalUpnl < 0 ? ' negative' : '');
+      updateDailySection(data);
+      // Date start — shown inline in heading
+      document.getElementById('dateStart').textContent = data.startedAt ? '· ' + fmtDate(data.startedAt) : '';
+      document.getElementById('startBalance').textContent = data.startBalance != null ? '$' + fmt(data.startBalance) : '—';
+
+      // Realized only
+      const totalPnL = data.totalPnL;
+      const totalPnlEl = document.getElementById('totalPnl');
+      totalPnlEl.textContent = totalPnL != null ? (totalPnL >= 0 ? '+' : '') + '$' + fmt(totalPnL) : '—';
+      totalPnlEl.className = 'value' + (totalPnL > 0 ? ' positive' : totalPnL < 0 ? ' negative' : '');
+      document.getElementById('totalRoi').textContent = data.totalRoiPct != null ? (data.totalRoiPct >= 0 ? '+' : '') + fmt(data.totalRoiPct) + '%' : '—';
+      document.getElementById('totalRoi').className = 'value' + (data.totalRoiPct > 0 ? ' positive' : data.totalRoiPct < 0 ? ' negative' : '');
+      const closedTrades = data.totalTrades || 0;
+      const closedWins = (data.journalTrades || []).filter(t => (t.pnl || 0) > 0).length;
+      document.getElementById('totalTrades').textContent = closedTrades || '—';
+      const wrEl = document.getElementById('totalWinRate');
+      wrEl.textContent = closedTrades > 0 ? fmt(closedWins / closedTrades * 100) + '%' : '—';
+      wrEl.className = 'value';
+
+      // Cashflow: withdrawn + net gain (realized PnL + withdrawn)
+      const withdrawn = data.totalWithdrawn || 0;
+      document.getElementById('totalWithdrawn').textContent = withdrawn > 0 ? '$' + fmt(withdrawn) : '—';
+      const netGain = (data.totalPnL || 0) + withdrawn;
+      const netGainEl = document.getElementById('netGain');
+      netGainEl.textContent = data.totalPnL != null ? (netGain >= 0 ? '+' : '') + '$' + fmt(netGain) : '—';
+      netGainEl.className = 'value' + (netGain > 0 ? ' positive' : netGain < 0 ? ' negative' : '');
+
+      // Streak
+      const streakEl = document.getElementById('streak');
+      if (data.streak?.type && data.streak.count > 0) {
+        streakEl.innerHTML = '<span class="streak-badge ' + (data.streak.type === 'W' ? 'win' : 'loss') + '">' + data.streak.count + data.streak.type + '</span>';
+      } else {
+        streakEl.textContent = '—';
+      }
+
+      // Last scan time
+      const scanEl = document.getElementById('scanTime');
+      if (data.lastScanTime) {
+        const ago = Math.round((Date.now() - data.lastScanTime) / 60000);
+        scanEl.textContent = ago < 1 ? 'scanned just now' : 'scanned ' + ago + 'm ago';
+      }
+
+      // Equity curve
+      renderEquityCurve(data);
+
+      dailyPnLByDate = buildDailyPnLMap(data.journalTrades);
+      renderCalendar();
+
+      const tbody = document.getElementById('positions');
+      const noPos = document.getElementById('noPos');
+      if (data.openPositions?.length) {
+        noPos.style.display = 'none';
+        tbody.innerHTML = data.openPositions.map(p => {
+          const u = p.unrealizedPnl != null ? p.unrealizedPnl : 0;
+          const cls = u >= 0 ? 'pnl-pos' : 'pnl-neg';
+          const tp1 = p.tp1Hit ? 'TP1' : '—';
+          const be  = p.slMovedToEntry ? 'SL@BE' : '—';
+          const status = (tp1 !== '—' || be !== '—') ? (tp1 + ' · ' + be) : '—';
+          return '<tr>'
+            + '<td>' + p.symbol + ' <span style="color:var(--muted);font-size:11px">' + p.side + '</span></td>'
+            + '<td data-label="Entry">' + fmtPrice(p.entryPrice) + '</td>'
+            + '<td data-label="Price">' + fmtPrice(p.markPrice) + '</td>'
+            + '<td data-label="SL" style="color:var(--red)">' + (p.sl ? fmtPrice(p.sl) : '—') + '</td>'
+            + '<td data-label="TP1" style="color:var(--green)">' + (p.tp1 ? fmtPrice(p.tp1) : '—') + '</td>'
+            + '<td data-label="TP2" style="color:var(--green)">' + (p.tp2 ? fmtPrice(p.tp2) : '—') + '</td>'
+            + '<td data-label="Size">' + fmt(p.quantity) + '</td>'
+            + '<td data-label="uPnL" class="' + cls + '">' + (u >= 0 ? '+' : '') + fmt(u) + '</td>'
+            + '<td data-label="Status">' + status + '</td>'
+            + '</tr>';
+        }).join('');
+      } else {
+        tbody.innerHTML = '';
+        noPos.style.display = 'block';
+      }
+
+      lastData = data;
+      renderJournal(data);
+
+      document.getElementById('updated').textContent = fmtTime(data.lastUpdated);
+      document.getElementById('dot').className = 'dot ' + (data.botOnline ? 'online' : 'offline');
+    }
+
+    async function fetchStatus() {
+      try {
+        const r = await fetch('/api/status');
+        const data = await r.json();
+        if (data.error) throw new Error(data.error);
+        render(data);
+      } catch (e) {
+        render({ balance: 0, equity: 0, openPositions: [], lastUpdated: 0, botOnline: false, totalTrades: 0, journalTrades: [] });
+        document.getElementById('updated').textContent = 'Error: ' + e.message;
+      }
+    }
+    fetchStatus();
+    setInterval(fetchStatus, 30000);
+  </script>
+</body>
+</html>
