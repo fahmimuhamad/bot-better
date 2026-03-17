@@ -9,6 +9,7 @@ import logger, { tradeLogger } from '../utils/logger';
 import { Position, Trade, TradeSignal, BotConfig } from '../types';
 
 const STATE_FILE = path.join(process.cwd(), 'data', 'bot-state.json');
+const JOURNAL_FILE = path.join(process.cwd(), 'data', 'trading-journal.json');
 
 export class PositionManager {
   private positions: Map<string, Position> = new Map();
@@ -16,6 +17,9 @@ export class PositionManager {
   private nextTradeId = 1;
   // Re-entry cooldown — persisted to disk so restarts don't reset it
   private lastExitTime: Map<string, number> = new Map();
+  // Trading journal: start balance and startedAt set once when journal is created
+  private journalStartBalance: number | null = null;
+  private journalStartedAt: number | null = null;
 
   // ─── State persistence ───────────────────────────────────────────────────
 
@@ -53,6 +57,52 @@ export class PositionManager {
       logger.info(`State loaded from disk: ${this.positions.size} open positions, ${this.lastExitTime.size} exit cooldowns`);
     } catch (e) {
       logger.warn(`Could not load state file (starting fresh): ${e}`);
+    }
+  }
+
+  /**
+   * Ensure trading journal exists: create with startBalance if new, otherwise load closed trades.
+   * Call once at bot startup after balance is known.
+   */
+  ensureJournal(startBalance: number): void {
+    const dir = path.dirname(JOURNAL_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    try {
+      if (fs.existsSync(JOURNAL_FILE)) {
+        const raw = fs.readFileSync(JOURNAL_FILE, 'utf-8');
+        const data = JSON.parse(raw);
+        const closed = (data.trades || []).filter((t: Trade) => t.status === 'CLOSED');
+        this.trades = closed;
+        this.journalStartBalance = typeof data.startBalance === 'number' ? data.startBalance : null;
+        this.journalStartedAt = typeof data.startedAt === 'number' ? data.startedAt : null;
+        logger.info(`Journal loaded: ${this.trades.length} closed trades, start balance $${(this.journalStartBalance ?? 0).toFixed(2)}`);
+      } else {
+        this.journalStartBalance = startBalance;
+        this.journalStartedAt = Date.now();
+        const payload = { startBalance, startedAt: this.journalStartedAt, trades: [] };
+        fs.writeFileSync(JOURNAL_FILE, JSON.stringify(payload));
+        logger.info(`Journal created: start balance $${startBalance.toFixed(2)}`);
+      }
+    } catch (e) {
+      logger.warn(`Could not load/create journal (starting fresh): ${e}`);
+      this.journalStartBalance = startBalance;
+      this.journalStartedAt = Date.now();
+    }
+  }
+
+  /** Persist all closed trades to the journal (call after each close). */
+  private saveJournal(): void {
+    if (this.journalStartBalance == null || this.journalStartedAt == null) return;
+    try {
+      const closed = this.trades.filter(t => t.status === 'CLOSED');
+      const payload = {
+        startBalance: this.journalStartBalance,
+        startedAt: this.journalStartedAt,
+        trades: closed,
+      };
+      fs.writeFileSync(JOURNAL_FILE, JSON.stringify(payload));
+    } catch (e) {
+      logger.error(`Failed to save journal: ${e}`);
     }
   }
 
@@ -152,9 +202,12 @@ export class PositionManager {
       return;
     }
 
-    const pnl = this.calculatePnL(position.side, position.entryPrice, exitPrice, position.quantity);
-    // pnlPercent = return on margin (notional / leverage = margin used)
-    const margin = (position.entryPrice * position.quantity) / (position.leverage || 1);
+    // If TP1 was hit, remaining quantity is 50% — add TP1 partial PnL for combined single journal entry
+    const remainingPnl = this.calculatePnL(position.side, position.entryPrice, exitPrice, position.quantity);
+    const pnl = remainingPnl + (position.tp1Pnl || 0);
+    // pnlPercent = return on margin (notional / leverage = margin used); use original full quantity for margin base
+    const fullQty = position.tp1Hit ? position.quantity * 2 : position.quantity;
+    const margin = (position.entryPrice * fullQty) / (position.leverage || 1);
     const pnlPercent = margin > 0 ? (pnl / margin) * 100 : 0;
 
     position.status = 'CLOSED';
@@ -162,8 +215,8 @@ export class PositionManager {
     position.pnlPercent = pnlPercent;
     this.saveState();
 
-    // Update corresponding trade
-    const trade = this.trades.find(t => t.id === `TRD_${positionId}`);
+    // Update or create corresponding trade (so journal has full history)
+    let trade = this.trades.find(t => t.id === `TRD_${positionId}`);
     if (trade) {
       trade.status = 'CLOSED';
       trade.exitPrice = exitPrice;
@@ -171,9 +224,31 @@ export class PositionManager {
       trade.exitReason = exitReason;
       trade.pnl = pnl;
       trade.pnlPercent = pnlPercent;
+    } else {
+      trade = {
+        id: `TRD_${positionId}`,
+        symbol: position.symbol,
+        side: position.side,
+        entryPrice: position.entryPrice,
+        quantity: position.quantity,
+        leverage: position.leverage,
+        openTime: position.openTime,
+        exitPrice,
+        closeTime: Date.now(),
+        stopLoss: position.stopLoss,
+        tp1: position.tp1,
+        tp2: position.tp2,
+        exitReason,
+        pnl,
+        pnlPercent,
+        riskRewardRatio: 0,
+        status: 'CLOSED',
+      };
+      this.trades.push(trade);
     }
 
     tradeLogger.closeTrade(trade);
+    this.saveJournal();
 
     logger.info('Position closed', {
       id: positionId,
@@ -196,14 +271,22 @@ export class PositionManager {
     }
   }
 
-  /** Mark TP1 as hit (e.g. when TP1 order is Filled on exchange). Updates quantity to 50% and stopLoss to entry. */
+  /** Mark TP1 as hit (e.g. when TP1 order is Filled on exchange). Updates quantity to 50% and stopLoss to entry.
+   *  Stores tp1Pnl on the position so it can be combined into a single journal entry at final close.
+   */
   markTp1Hit(positionId: string): void {
     const position = this.positions.get(positionId);
     if (!position || position.tp1Hit) return;
+    const tp1Qty = position.quantity * 0.5;
+    const tp1Price = position.tp1 || position.entryPrice;
+    const pnl = this.calculatePnL(position.side, position.entryPrice, tp1Price, tp1Qty);
+
     position.tp1Hit = true;
-    position.quantity = position.quantity * 0.5;
+    position.quantity = tp1Qty;
     position.stopLoss = position.entryPrice;
+    position.tp1Pnl = pnl;
     this.saveState();
+    logger.info(`TP1 hit: ${position.symbol} partial PnL +$${pnl.toFixed(2)} stored (combined at final close)`);
   }
 
   /**

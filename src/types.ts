@@ -49,6 +49,8 @@ export interface Position {
   tp1OrderId?: string;
   /** True after we have cancelled SL order and set position SL to entry on exchange. */
   slMovedToEntry?: boolean;
+  /** PnL from the TP1 partial close (50%), accumulated for combined single journal entry at final close. */
+  tp1Pnl?: number;
 }
 
 export interface Trade {
