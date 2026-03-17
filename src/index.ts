@@ -47,7 +47,7 @@ const CURATED_COINS_1H = [
   'OP','SHIB','SUI','FLOW','HBAR','TON',
   'SAND','CHZ','ZIL','ID','CVC','SXP',
   'PEOPLE','STG','OG','PORTO',
-  'QUICK','DENT','IOTX','COTI','FLUX','MEME','DF','GNS',
+  'DENT','IOTX','COTI','FLUX','MEME','DF','GNS',
   'CELR','SUSHI','ACH','HFT','UTK','AUCTION',
 ];
 
