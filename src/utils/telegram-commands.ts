@@ -13,10 +13,21 @@
  */
 
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 import logger from './logger';
 import positionManager from '../trading/position-manager';
 import { buildDailyReportMessage } from './daily-report';
 import { BinanceTickerData } from '../types';
+
+const WITHDRAWALS_FILE = path.join(process.cwd(), 'data', 'withdrawals.json');
+
+function logWithdrawal(amount: number, note: string): void {
+  let data: { withdrawals: { amount: number; timestamp: number; note: string }[] } = { withdrawals: [] };
+  try { if (fs.existsSync(WITHDRAWALS_FILE)) data = JSON.parse(fs.readFileSync(WITHDRAWALS_FILE, 'utf-8')); } catch (_) {}
+  data.withdrawals.push({ amount, timestamp: Date.now(), note });
+  fs.writeFileSync(WITHDRAWALS_FILE, JSON.stringify(data, null, 2));
+}
 
 type BalanceGetter      = () => number;
 type RegimeGetter       = () => string;
@@ -136,14 +147,28 @@ async function handleCommand(
       break;
     }
 
+    case '/withdraw': {
+      const parts = text.trim().split(/\s+/);
+      const amount = parseFloat(parts[1]);
+      if (isNaN(amount) || amount <= 0) {
+        await send(`Usage: /withdraw <amount> [note]\nExample: /withdraw 200 took profit`);
+        break;
+      }
+      const note = parts.slice(2).join(' ') || '';
+      logWithdrawal(amount, note);
+      await send(`✅ Withdrawal recorded: *$${amount.toFixed(2)}*${note ? `\nNote: ${note}` : ''}`);
+      break;
+    }
+
     default: {
       await send([
         `*Available commands:*`,
-        `/status  — regime, balance, open positions`,
-        `/report  — full PnL report`,
-        `/stop    — pause the bot (no new trades)`,
-        `/start   — resume the bot`,
-        `/restart — restart the bot`,
+        `/status   — regime, balance, open positions`,
+        `/report   — full PnL report`,
+        `/stop     — pause the bot (no new trades)`,
+        `/start    — resume the bot`,
+        `/restart  — restart the bot`,
+        `/withdraw <amount> [note] — record a withdrawal`,
       ].join('\n'));
     }
   }

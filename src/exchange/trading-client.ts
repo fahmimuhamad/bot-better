@@ -250,7 +250,19 @@ export async function setLeverage(symbol: string, leverage: number): Promise<boo
   }
 }
 
-export async function getExchangeOpenPositions(): Promise<{ symbol: string; side: 'LONG' | 'SHORT'; quantity: number; entryPrice: number; leverage: number; stopLoss: number; takeProfit: number }[]> {
+export interface ExchangePosition {
+  symbol: string;
+  side: 'LONG' | 'SHORT';
+  quantity: number;
+  entryPrice: number;
+  leverage: number;
+  stopLoss: number;
+  takeProfit: number;
+  unrealizedPnl?: number;
+  markPrice?: number;
+}
+
+export async function getExchangeOpenPositions(): Promise<ExchangePosition[]> {
   const bybit = getBybitClient();
   if (!bybit) return [];
   const raw = await bybit.getOpenPositions();
@@ -262,7 +274,21 @@ export async function getExchangeOpenPositions(): Promise<{ symbol: string; side
     leverage:    parseFloat(p.leverage) || 1,
     stopLoss:    p.stopLoss,
     takeProfit:  p.takeProfit,
+    unrealizedPnl: p.unrealizedPnl,
+    markPrice: p.markPrice,
   }));
+}
+
+export async function getLastClosedPosition(symbol: string): Promise<{ avgExitPrice: number; exitReason: string; closedPnl: number } | null> {
+  const bybit = getBybitClient();
+  if (!bybit) return null;
+  return bybit.getLastClosedPosition(toBybitSymbol(symbol));
+}
+
+export async function getConfirmedWithdrawals(since?: number): Promise<Array<{ withdrawId: string; amount: number; createTime: number; coin: string }>> {
+  const bybit = getBybitClient();
+  if (!bybit) return [];
+  return bybit.getWithdrawalHistory(since);
 }
 
 export async function closePositionBySymbol(symbol: string): Promise<boolean> {

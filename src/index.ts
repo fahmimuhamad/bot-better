@@ -14,12 +14,14 @@ import OrderExecutor from './trading/order-executor';
 import positionManager from './trading/position-manager';
 import { BotConfig, TradeSignal, BinanceTickerData } from './types';
 import { OHLCV } from './backtest/data-loader';
-import { getOrderStatus, getTradingBalance, getExchangeOpenPositions } from './exchange/trading-client';
+import { getOrderStatus, getTradingBalance, getExchangeOpenPositions, getConfirmedWithdrawals, getLastClosedPosition } from './exchange/trading-client';
 const RECONCILE_EVERY_N_CYCLES = 10; // check exchange vs local every ~20 min
 import { sendTelegramMessage } from './utils/telegram';
 import { detectRegime, resampleCandles } from './utils/regime-detector';
 import { DailyReportScheduler } from './utils/daily-report';
 import { TelegramCommandHandler } from './utils/telegram-commands';
+import fs from 'fs';
+import path from 'path';
 
 // Curated coin lists — optimized per timeframe
 // Bull 4H: verified profitable in 2024-01-01→2026-03-13 regime backtest
@@ -177,6 +179,9 @@ class TradingBot {
       // Initialize safety enforcer with real balance so daily loss limit works
       this.orderExecutor.updateStartBalance(this.startBalance);
 
+      // Load or create trading journal (persists across restarts; used for total PnL / ROI on dashboard)
+      positionManager.ensureJournal(this.startBalance);
+
       logger.info('✅ Bot initialized successfully', {
         startBalance: this.startBalance,
         readiness: readiness.checks,
@@ -309,23 +314,57 @@ class TradingBot {
       this.lastBalance = currentBalance;
       logger.info('Balance for position sizing', { currentBalance: currentBalance.toFixed(2), riskPerTrade: this.config.riskPerTrade + '%' });
 
-      // Step 3c: Exchange reconciliation — every N cycles, close local positions not found on exchange
-      // Catches SL/TP2 fills that happened between cycles (price spiked and recovered)
-      if (this.cycleCount % RECONCILE_EVERY_N_CYCLES === 0 && !this.config.dryRun && !this.config.paperTrading) {
+      // Step 3c: Exchange reconciliation — every cycle, free slot immediately when position closes
+      if (!this.config.dryRun && !this.config.paperTrading) {
         try {
           const exchangePositions = await getExchangeOpenPositions();
           const exchangeSymbols = new Set(exchangePositions.map(ep => ep.symbol));
           for (const pos of positionManager.getOpenPositions()) {
             if (!exchangeSymbols.has(pos.symbol)) {
-              const currentPrice = parseFloat(tickers.get(pos.symbol)?.lastPrice ?? '0') || pos.entryPrice;
-              logger.warn(`Reconciliation: ${pos.symbol} not on exchange — closing locally (TP/SL likely filled)`);
-              positionManager.closePosition(pos.id, currentPrice, 'MANUAL');
+              // Get actual exit price from Bybit closed PnL history
+              let exitPrice = parseFloat(tickers.get(pos.symbol)?.lastPrice ?? '0') || pos.entryPrice;
+              let exitReason: 'TP1' | 'TP2' | 'SL' | 'TRAILING_STOP' | 'MANUAL' = 'MANUAL';
+              try {
+                const closed = await getLastClosedPosition(pos.symbol);
+                if (closed && closed.avgExitPrice > 0) {
+                  exitPrice = closed.avgExitPrice;
+                  // Infer reason from price relative to SL/TP2
+                  if (pos.tp2 && Math.abs(exitPrice - pos.tp2) / pos.tp2 < 0.005) exitReason = 'TP2';
+                  else if (pos.stopLoss && Math.abs(exitPrice - pos.stopLoss) / pos.stopLoss < 0.005) exitReason = 'SL';
+                }
+              } catch (_) {}
+              logger.warn(`Reconciliation: ${pos.symbol} not on exchange — closing locally as ${exitReason} @ ${exitPrice}`);
+              positionManager.closePosition(pos.id, exitPrice, exitReason);
               positionManager.recordExit(pos.symbol);
             }
           }
         } catch (e) {
           logger.warn(`Reconciliation failed: ${e}`);
         }
+
+        // Auto-sync confirmed Bybit withdrawals → data/withdrawals.json (every 10 cycles)
+      if (this.cycleCount % RECONCILE_EVERY_N_CYCLES === 0 && !this.config.dryRun && !this.config.paperTrading) {
+        try {
+          const WITHDRAWALS_FILE = path.join(process.cwd(), 'data', 'withdrawals.json');
+          let stored: { withdrawals: { withdrawId?: string; amount: number; timestamp: number; note: string }[] } = { withdrawals: [] };
+          try { if (fs.existsSync(WITHDRAWALS_FILE)) stored = JSON.parse(fs.readFileSync(WITHDRAWALS_FILE, 'utf-8')); } catch (_) {}
+          const knownIds = new Set(stored.withdrawals.map(w => w.withdrawId).filter(Boolean));
+          const fresh = await getConfirmedWithdrawals();
+          let added = 0;
+          for (const w of fresh) {
+            if (!knownIds.has(w.withdrawId)) {
+              stored.withdrawals.push({ withdrawId: w.withdrawId, amount: w.amount, timestamp: w.createTime, note: 'auto-detected' });
+              added++;
+            }
+          }
+          if (added > 0) {
+            fs.writeFileSync(WITHDRAWALS_FILE, JSON.stringify(stored, null, 2));
+            logger.info(`Auto-recorded ${added} new withdrawal(s) from Bybit`);
+          }
+        } catch (e) {
+          logger.warn(`Withdrawal sync failed: ${e}`);
+        }
+      }
       }
 
       // Step 4: Execute new trades (position size calculated from current balance + RISK_PER_TRADE from .env)
@@ -433,6 +472,23 @@ class TradingBot {
 
       const cycleTime = Date.now() - cycleStartTime;
       logger.info(`=== CYCLE #${this.cycleCount} Completed (${cycleTime}ms) ===\n`);
+
+      // Write dashboard status (minimal; dashboard server reads this + exchange)
+      try {
+        const statusPath = path.join(process.cwd(), 'data', 'dashboard-status.json');
+        const dir = path.dirname(statusPath);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        const mode = this.config.dryRun ? 'DRY_RUN' : this.config.paperTrading ? 'PAPER' : 'LIVE';
+        fs.writeFileSync(statusPath, JSON.stringify({
+          regime: this.currentRegime,
+          dailyStats: positionManager.getDailyStats(),
+          mode,
+          uptimeMs: Date.now() - this.botStartTime,
+          openPositionsCount: positionManager.getOpenPositions().length,
+          lastScanTime: Date.now(),
+          timestamp: Date.now(),
+        }, null, 0));
+      } catch (_) { /* ignore */ }
     } catch (error) {
       logger.error(`Cycle failed: ${error}`, 'runCycle');
     }

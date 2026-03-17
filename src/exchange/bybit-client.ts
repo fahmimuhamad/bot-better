@@ -16,6 +16,7 @@ interface BybitPosition {
   leverage: string;
   unrealizedPnl: number;
   unrealizedPnlPercent: number;
+  markPrice: number;
   stopLoss: number;
   takeProfit: number;
 }
@@ -203,8 +204,9 @@ export class BybitClient {
           positionValue: parseFloat(p.positionValue),
           entryPrice: parseFloat(p.avgPrice),
           leverage: p.leverage,
-          unrealizedPnl: parseFloat(p.unrealizedPnl),
-          unrealizedPnlPercent: parseFloat(p.unrealizedPnlPercent),
+          unrealizedPnl: parseFloat(p.unrealisedPnl ?? p.unrealizedPnl),
+          unrealizedPnlPercent: parseFloat(p.unrealisedPnlPercent ?? p.unrealizedPnlPercent),
+          markPrice: parseFloat(p.markPrice) || 0,
           stopLoss: parseFloat(p.stopLoss) || 0,
           takeProfit: parseFloat(p.takeProfit) || 0,
         }));
@@ -616,6 +618,47 @@ export class BybitClient {
       };
     } catch {
       return null;
+    }
+  }
+
+  /**
+   * Get the most recent closed position PnL record for a symbol.
+   * Used to get actual exit price when a position closes between cycles.
+   */
+  async getLastClosedPosition(symbol: string): Promise<{ avgExitPrice: number; exitReason: string; closedPnl: number } | null> {
+    try {
+      const result = await this.request('GET', `/v5/position/closed-pnl?category=linear&symbol=${symbol}&limit=1`);
+      const row = result?.list?.[0];
+      if (!row) return null;
+      return {
+        avgExitPrice: parseFloat(row.avgExitPrice) || 0,
+        exitReason: String(row.orderType ?? ''),
+        closedPnl: parseFloat(row.closedPnl) || 0,
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Get confirmed USDT withdrawal history (on-chain + internal).
+   * Returns records with withdrawId, amount, createTime for deduplication.
+   */
+  async getWithdrawalHistory(since?: number): Promise<Array<{ withdrawId: string; amount: number; createTime: number; coin: string }>> {
+    try {
+      const params: Record<string, string> = { coin: 'USDT', withdrawType: '2', limit: '50' };
+      if (since) params.startTime = since.toString();
+      const result = await this.request('GET', '/v5/asset/withdraw/query-record', undefined, params);
+      return (result?.rows || [])
+        .filter((r: any) => (r.status || '').toLowerCase() === 'success')
+        .map((r: any) => ({
+          withdrawId: String(r.withdrawId),
+          amount: parseFloat(r.amount) || 0,
+          createTime: parseInt(r.createTime) || 0,
+          coin: r.coin ?? 'USDT',
+        }));
+    } catch {
+      return [];
     }
   }
 
