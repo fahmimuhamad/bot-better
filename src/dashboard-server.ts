@@ -159,10 +159,11 @@ async function getStatus(): Promise<{
     // ignore
   }
 
-  // Fetch total fees from exchange since bot started
+  // Fetch total fees — no startTime filter so we catch all executions
+  // (last 100 executions, sufficient for a new account)
   let totalFees = 0;
   try {
-    totalFees = await getTotalFeesSince(startedAt ?? undefined);
+    totalFees = await getTotalFeesSince();
   } catch (_) {}
 
   // Streak: walk closed trades from most recent backwards
