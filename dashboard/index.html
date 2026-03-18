@@ -402,9 +402,6 @@
     }
     .status-footer .label { margin-right: 4px; }
     .status-footer .badge { font-size: 10px; padding: 2px 6px; }
-    /* Equity curve */
-    .chart-wrap { width: 100%; height: 120px; margin-top: 4px; }
-    .chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
     /* Streak badge */
     .streak-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 13px; font-weight: 700; }
     .streak-badge.win { background: rgba(34,197,94,0.15); color: var(--green); }
@@ -484,10 +481,6 @@
           <div class="label">Net gain</div>
           <div class="value" id="netGain">—</div>
         </div>
-      </div>
-      <!-- Equity curve -->
-      <div class="chart-wrap" id="chartWrap" style="display:none">
-        <svg id="equityChart" preserveAspectRatio="none"></svg>
       </div>
     </div>
 
@@ -794,43 +787,6 @@
       }
     }
 
-    function renderEquityCurve(data) {
-      const wrap = document.getElementById('chartWrap');
-      const svg = document.getElementById('equityChart');
-      const trades = (data.journalTrades || []).slice().sort((a, b) => a.closeTime - b.closeTime);
-      if (trades.length < 2) { wrap.style.display = 'none'; return; }
-      wrap.style.display = 'block';
-
-      const points = [];
-      if (data.startBalance != null && data.startedAt) points.push({ t: data.startedAt, v: data.startBalance });
-      for (const t of trades) points.push({ t: t.closeTime, v: t.balanceAfter });
-
-      const W = 860, H = 110, PAD = 4;
-      const minV = Math.min(...points.map(p => p.v));
-      const maxV = Math.max(...points.map(p => p.v));
-      const range = maxV - minV || 1;
-      const minT = points[0].t, maxT = points[points.length - 1].t, tRange = maxT - minT || 1;
-
-      const px = t => PAD + ((t - minT) / tRange) * (W - PAD * 2);
-      const py = v => H - PAD - ((v - minV) / range) * (H - PAD * 2);
-
-      const pts = points.map(p => `${px(p.t).toFixed(1)},${py(p.v).toFixed(1)}`).join(' ');
-      const first = points[0], last = points[points.length - 1];
-      const color = last.v >= first.v ? '#22c55e' : '#ef4444';
-      const fillPts = `${px(first.t).toFixed(1)},${H} ` + pts + ` ${px(last.t).toFixed(1)},${H}`;
-
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-      svg.innerHTML = `
-        <defs>
-          <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="${color}" stop-opacity="0.25"/>
-            <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <polygon points="${fillPts}" fill="url(#cg)"/>
-        <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-      `;
-    }
 
     function render(data) {
       const r = data.regime?.toLowerCase();
@@ -891,8 +847,6 @@
         scanEl.textContent = ago < 1 ? 'scanned just now' : 'scanned ' + ago + 'm ago';
       }
 
-      // Equity curve
-      renderEquityCurve(data);
 
       dailyPnLByDate = buildDailyPnLMap(data.journalTrades);
       renderCalendar();
