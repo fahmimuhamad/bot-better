@@ -71,6 +71,7 @@ interface Args {
   bull1h: boolean; // use 1H candles for bull strategy instead of 4H
   bull1d: boolean; // use daily candles for bull strategy
   bull2h: boolean; // use 2H candles for bull strategy
+  take75AtTp1: boolean; // close 75% at TP1, run 25% to TP2
 }
 
 function parseArgs(): Args {
@@ -84,19 +85,21 @@ function parseArgs(): Args {
     bull1h:        false,
     bull1d:        false,
     bull2h:        false,
+    take75AtTp1:   false,
   };
   for (let i = 2; i < process.argv.length; i++) {
     const k = process.argv[i], v = process.argv[i + 1];
-    if (k === '--start-date'  && v) { args.startDate     = v;             i++; }
-    if (k === '--end-date'    && v) { args.endDate       = v;             i++; }
-    if (k === '--balance'     && v) { args.balance       = parseFloat(v); i++; }
-    if (k === '--confidence'  && v) { args.confidence    = parseInt(v);   i++; }
-    if (k === '--max-trades'  && v) { args.maxOpenTrades = parseInt(v);   i++; }
-    if (k === '--report'      && v) { args.reportPath    = v;             i++; }
-    if (k === '--bear-only')       { args.bearOnly       = true;                }
-    if (k === '--bull-1h')         { args.bull1h         = true;                }
-    if (k === '--bull-1d')         { args.bull1d         = true;                }
-    if (k === '--bull-2h')         { args.bull2h         = true;                }
+    if (k === '--start-date'    && v) { args.startDate     = v;             i++; }
+    if (k === '--end-date'      && v) { args.endDate       = v;             i++; }
+    if (k === '--balance'       && v) { args.balance       = parseFloat(v); i++; }
+    if (k === '--confidence'    && v) { args.confidence    = parseInt(v);   i++; }
+    if (k === '--max-trades'    && v) { args.maxOpenTrades = parseInt(v);   i++; }
+    if (k === '--report'        && v) { args.reportPath    = v;             i++; }
+    if (k === '--bear-only')         { args.bearOnly       = true;                }
+    if (k === '--bull-1h')           { args.bull1h         = true;                }
+    if (k === '--bull-1d')           { args.bull1d         = true;                }
+    if (k === '--bull-2h')           { args.bull2h         = true;                }
+    if (k === '--take-75-at-tp1')    { args.take75AtTp1    = true;                }
   }
   return args;
 }
@@ -312,15 +315,47 @@ async function runRegimeBacktest(
       if (pos.side === 'LONG') {
         if (candle.high >= pos.tp2)                          { exitPrice = pos.tp2;      exitReason = 'TP2'; }
         else if (candle.high >= pos.tp1 && !pos.tp1Hit) {
-          if (CLOSE_AT_TP1)                                  { exitPrice = pos.tp1;      exitReason = 'TP1'; }
-          else                                               { pos.tp1Hit = true; pos.stopLoss = pos.entryPrice; }
+          if (args.take75AtTp1) {
+            // Partial close: record 75% at TP1, keep 25% running with SL at entry
+            const execTp1 = pos.tp1 * (1 - SLIPPAGE_PCT);
+            const qty75   = pos.quantity * 0.75;
+            const pnl75   = (execTp1 - pos.entryPrice) * qty75;
+            const fees75  = (pos.entryPrice + execTp1) * qty75 * FEE_PCT;
+            const netPnl75 = pnl75 - fees75;
+            const balBefore75 = balance;
+            balance += netPnl75;
+            trades.push({ ...pos, quantity: qty75, exitPrice: execTp1, exitReason: 'TP1_75',
+              pnl: netPnl75, closeTime: ts, balanceBefore: balBefore75, balanceAfter: balance,
+              regimeAtEntry: (pos as any).regimeAtEntry || 'BEAR' });
+            tradeCount++;
+            pos.quantity  *= 0.25;
+            pos.tp1Hit     = true;
+            pos.stopLoss   = pos.entryPrice;
+          } else if (CLOSE_AT_TP1)                          { exitPrice = pos.tp1;      exitReason = 'TP1'; }
+          else                                              { pos.tp1Hit = true; pos.stopLoss = pos.entryPrice; }
         }
         else if (candle.low <= pos.stopLoss)                 { exitPrice = pos.stopLoss; exitReason = 'SL';  }
       } else {
         if (candle.low <= pos.tp2)                           { exitPrice = pos.tp2;      exitReason = 'TP2'; }
         else if (candle.low <= pos.tp1 && !pos.tp1Hit) {
-          if (CLOSE_AT_TP1)                                  { exitPrice = pos.tp1;      exitReason = 'TP1'; }
-          else                                               { pos.tp1Hit = true; pos.stopLoss = pos.entryPrice; }
+          if (args.take75AtTp1) {
+            // Partial close: record 75% at TP1, keep 25% running with SL at entry
+            const execTp1 = pos.tp1 * (1 + SLIPPAGE_PCT);
+            const qty75   = pos.quantity * 0.75;
+            const pnl75   = (pos.entryPrice - execTp1) * qty75;
+            const fees75  = (pos.entryPrice + execTp1) * qty75 * FEE_PCT;
+            const netPnl75 = pnl75 - fees75;
+            const balBefore75 = balance;
+            balance += netPnl75;
+            trades.push({ ...pos, quantity: qty75, exitPrice: execTp1, exitReason: 'TP1_75',
+              pnl: netPnl75, closeTime: ts, balanceBefore: balBefore75, balanceAfter: balance,
+              regimeAtEntry: (pos as any).regimeAtEntry || 'BEAR' });
+            tradeCount++;
+            pos.quantity  *= 0.25;
+            pos.tp1Hit     = true;
+            pos.stopLoss   = pos.entryPrice;
+          } else if (CLOSE_AT_TP1)                          { exitPrice = pos.tp1;      exitReason = 'TP1'; }
+          else                                              { pos.tp1Hit = true; pos.stopLoss = pos.entryPrice; }
         }
         else if (candle.high >= pos.stopLoss)                { exitPrice = pos.stopLoss; exitReason = 'SL';  }
       }
@@ -577,7 +612,7 @@ async function main() {
   console.log(`  Max open trades:  ${args.maxOpenTrades}`);
   console.log(`  Confidence:       ${args.confidence}%`);
   console.log(`  Risk per trade:   ${RISK_PCT}% (bear) / ${BULL_RISK_PCT}% (bull)`);
-  console.log(`  Close at TP1:     ${CLOSE_AT_TP1}`);
+  console.log(`  TP1 mode:         ${args.take75AtTp1 ? 'take 75% at TP1, run 25% to TP2' : CLOSE_AT_TP1 ? 'close 100% at TP1' : 'move SL to entry, run to TP2'}`);
   console.log(`  Regime:           BTC daily EMA200`);
   console.log(`  Bull coins:       ${CURATED_COINS_4H.length} (4h signals)`);
   console.log(`  Bear coins:       ${CURATED_COINS_1H.length} (1h signals)`);

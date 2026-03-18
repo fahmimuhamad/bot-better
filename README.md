@@ -106,6 +106,7 @@ npm run dev
 ```bash
 npm run dev           # Run bot with ts-node
 npm run build         # Compile TypeScript
+npm run dashboard     # Web dashboard on http://localhost:3840 (balance, positions, regime)
 npm run pm2:start     # Run with PM2 (persistent)
 npm run pm2:logs      # View PM2 logs
 
@@ -118,6 +119,16 @@ npx ts-node src/backtest/regime-backtest.ts --start-date 2024-01-01 --end-date 2
 # 90-day bear backtest (reproducible)
 npx ts-node src/backtest/batch-backtest-90d.ts --seed 1 --count 15 --balance 151 --confidence 65
 ```
+
+## Dashboard
+
+A minimal web UI to monitor the bot: balance, equity, open positions (with uPnL), regime, mode, and today’s PnL / win rate.
+
+```bash
+npm run dashboard
+```
+
+Then open **http://localhost:3840**. The dashboard reads live balance and positions from the exchange and regime/daily stats from the bot (updated each cycle). Set `DASHBOARD_PORT` in `.env` to use another port.
 
 ## Configuration (`.env`)
 

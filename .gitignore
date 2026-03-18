@@ -65,3 +65,6 @@ tmp/
 temp/
 build/
 backtest-cache/
+
+# Runtime state (bot + dashboard)
+data/
